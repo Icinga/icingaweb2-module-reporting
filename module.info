@@ -1,0 +1,6 @@
+Module: Reporting
+Version: 0.9.0
+Depends: ipl
+Depends: pdfexport
+Depends: reactbundle
+Description: Reporting

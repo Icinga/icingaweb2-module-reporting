@@ -1,0 +1,322 @@
+<?php
+// Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
+
+namespace Icinga\Module\Reporting;
+
+use ipl\Html\HtmlDocument;
+use ipl\Sql;
+
+class Report
+{
+    use Database;
+
+    /** @var int */
+    protected $id;
+
+    /** @var string */
+    protected $name;
+
+    /** @var string */
+    protected $author;
+
+    /** @var Timeframe */
+    protected $timeframe;
+
+    /** @var Reportlet[] */
+    protected $reportlets;
+
+    /** @var Schedule */
+    protected $schedule;
+
+    /**
+     * @param   int $id
+     *
+     * @return  static
+     *
+     * @throws  \Exception
+     */
+    public static function fromDb($id)
+    {
+        $report = new static();
+
+        $db = $report->getDb();
+
+        $select = (new Sql\Select())
+            ->from('report')
+            ->columns('*')
+            ->where(['id = ?' => $id]);
+
+        $row = $db->select($select)->fetch();
+
+        if ($row === false) {
+            throw new \Exception('Report not found');
+        }
+
+        $report
+            ->setId($row->id)
+            ->setName($row->name)
+            ->setAuthor($row->author)
+            ->setTimeframe(Timeframe::fromDb($row->timeframe_id));
+
+        $select = (new Sql\Select())
+            ->from('reportlet')
+            ->columns('*')
+            ->where(['report_id = ?' => $id]);
+
+        $row = $db->select($select)->fetch();
+
+        if ($row === false) {
+            throw new \Exception('No reportlets configured.');
+        }
+
+        $reportlet = new Reportlet();
+
+        $reportlet
+            ->setId($row->id)
+            ->setClass($row->class);
+
+        $select = (new Sql\Select())
+            ->from('config')
+            ->columns('*')
+            ->where(['reportlet_id = ?' => $row->id]);
+
+        $rows = $db->select($select)->fetchAll();
+
+        $config = [];
+
+        foreach ($rows as $row) {
+            $config[$row->name] = $row->value;
+        }
+
+        $reportlet->setConfig($config);
+
+        $report->setReportlets([$reportlet]);
+
+        $select = (new Sql\Select())
+            ->from('schedule')
+            ->columns('*')
+            ->where(['report_id = ?' => $id]);
+
+        $row = $db->select($select)->fetch();
+
+        if ($row !== false) {
+            $schedule = new Schedule();
+
+            $schedule
+                ->setId($row->id)
+                ->setStart((new \DateTime())->setTimestamp((int) $row->start / 1000))
+                ->setFrequency($row->frequency)
+                ->setAction($row->action)
+                ->setConfig(json_decode($row->config, true));
+
+            $report->setSchedule($schedule);
+        }
+
+        return $report;
+    }
+
+    /**
+     * @return  int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param   int $id
+     *
+     * @return  $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return  string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param   string  $name
+     *
+     * @return  $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return  string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param   string  $author
+     *
+     * @return  $this
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return  Timeframe
+     */
+    public function getTimeframe()
+    {
+        return $this->timeframe;
+    }
+
+    /**
+     * @param   Timeframe   $timeframe
+     *
+     * @return  $this
+     */
+    public function setTimeframe(Timeframe $timeframe)
+    {
+        $this->timeframe = $timeframe;
+
+        return $this;
+    }
+
+    /**
+     * @return  Reportlet[]
+     */
+    public function getReportlets()
+    {
+        return $this->reportlets;
+    }
+
+    /**
+     * @param   Reportlet[] $reportlets
+     *
+     * @return  $this
+     */
+    public function setReportlets(array $reportlets)
+    {
+        $this->reportlets = $reportlets;
+
+        return $this;
+    }
+
+    /**
+     * @return  Schedule
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
+
+    /**
+     * @param   Schedule    $schedule
+     *
+     * @return  $this
+     */
+    public function setSchedule(Schedule $schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    public function providesData()
+    {
+        foreach ($this->getReportlets() as $reportlet) {
+            $implementation = $reportlet->getImplementation();
+
+            if ($implementation->providesData()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return  HtmlDocument
+     */
+    public function toHtml()
+    {
+        $timerange = $this->getTimeframe()->getTimerange();
+
+        $html = new HtmlDocument();
+
+        foreach ($this->getReportlets() as $reportlet) {
+            $implementation = $reportlet->getImplementation();
+
+            $html->add($implementation->getHtml($timerange, $reportlet->getConfig()));
+        }
+
+        return $html;
+    }
+
+    /**
+     * @return  string
+     */
+    public function toCsv()
+    {
+        $timerange = $this->getTimeframe()->getTimerange();
+
+        $csv = [];
+
+        foreach ($this->getReportlets() as $reportlet) {
+            $implementation = $reportlet->getImplementation();
+
+            if ($implementation->providesData()) {
+                $data = $implementation->getData($timerange, $reportlet->getConfig());
+                $csv[] = array_merge($data->getDimensions(), $data->getValues());
+                foreach ($data->getRows() as $row) {
+                    $csv[] = array_merge($row->getDimensions(), $row->getValues());
+                }
+
+                break;
+            }
+        }
+
+        return Str::putcsv($csv);
+    }
+
+    /**
+     * @return  string
+     */
+    public function toJson()
+    {
+        $timerange = $this->getTimeframe()->getTimerange();
+
+        $json = [];
+
+        foreach ($this->getReportlets() as $reportlet) {
+            $implementation = $reportlet->getImplementation();
+
+            if ($implementation->providesData()) {
+                $data = $implementation->getData($timerange, $reportlet->getConfig());
+                $dimensions = $data->getDimensions();
+                $values = $data->getValues();
+                foreach ($data->getRows() as $row) {
+                    $json[] = \array_combine($dimensions, $row->getDimensions())
+                        + \array_combine($values, $row->getValues());
+                }
+
+                break;
+            }
+        }
+
+        return json_encode($json);
+    }
+}

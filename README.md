@@ -1,0 +1,9 @@
+# Icinga Reporting
+
+Icinga Reporting is the central component for reporting related functionality in the monitoring web frontend and
+framework Icinga Web 2. The engine allows you to create reports over a specified time period for ad-hoc and scheduled
+generation of reports. Other modules use the provided functionality in order to provide concrete reports.
+
+## Documentation
+
+* [Installation](doc/02-Installation.md)

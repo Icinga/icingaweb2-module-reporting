@@ -1,0 +1,81 @@
+/* Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2 */
+
+.system-report {
+    background-color: #fff;
+    color: #222;
+    font-family: sans-serif;
+
+    width: 100%;
+}
+.system-report pre {
+    margin: 0;
+    font-family: monospace;
+}
+.system-report a:link {
+    color: #009;
+    text-decoration: none;
+    background-color: #fff;
+}
+.system-report a:hover {
+    text-decoration: underline;
+}
+.system-report table {
+    border-collapse: collapse;
+    border: 0;
+    width: 934px;
+    box-shadow: 1px 2px 3px #ccc;
+}
+.system-report .center {
+    text-align: center;
+}
+.system-report .center table {
+    margin: 1em auto;
+    text-align: left;
+}
+.system-report .center th {
+    text-align: center !important;
+}
+.system-report td,
+.system-report th {
+    border: 1px solid #666;
+    font-size: 75%;
+    vertical-align: baseline;
+    padding: 4px 5px;
+}
+.system-report h1 {
+    font-size: 150%;
+}
+.system-report h2 {
+    font-size: 125%;
+}
+.system-report .p {
+    text-align: left;
+}
+.system-report .e {
+    background-color: #ccf;
+    width: 300px;
+    font-weight: bold;
+}
+.system-report .h {
+    background-color: #99c;
+    font-weight: bold;
+}
+.system-report .v {
+    background-color: #ddd;
+    max-width: 300px;
+    overflow-x: auto;
+    word-wrap: break-word;
+}
+.system-report .v i {
+    color: #999;
+}
+.system-report img {
+    float: right;
+    border: 0;
+}
+.system-report hr {
+    width: 934px;
+    background-color: #ccc;
+    border: 0;
+    height: 1px;
+}

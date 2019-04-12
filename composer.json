@@ -1,0 +1,7 @@
+{
+    "name": "icinga/icingaweb2-module-reporting",
+    "require": {
+        "guzzlehttp/psr7": "^1.5",
+        "ext-json": "*"
+    }
+}

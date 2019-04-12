@@ -1,0 +1,10 @@
+[Unit]
+Description=Icinga Reporting Scheduler
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/icingacli reporting schedule run
+Restart=on-success
+
+[Install]
+WantedBy=multi-user.target
