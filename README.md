@@ -7,3 +7,4 @@ generation of reports. Other modules use the provided functionality in order to 
 ## Documentation
 
 * [Installation](doc/02-Installation.md)
+* [Troubleshooting](doc/70-Troubleshooting.md)
