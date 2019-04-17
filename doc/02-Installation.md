@@ -7,7 +7,7 @@
 * MySQL or MariaDB
 * Icinga Web 2 modules:
   * [reactbundle](https://github.com/Icinga/icingaweb2-module-reactbundle) (>= 0.4)
-  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (>= 0.1)
+  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (>= 0.2.1)
   * [pdfexport](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.9)
 
 ## Database Setup
