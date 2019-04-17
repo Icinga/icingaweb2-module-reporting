@@ -1,6 +1,6 @@
-# <a id="Installation"></a>Installation
+# Installation <a id="installation"></a>
 
-## Requirements
+## Requirements <a id="installation-requirements">
 
 * Icinga Web 2 (&gt;= 2.6)
 * PHP (&gt;= 5.6, preferably 7.x)
@@ -10,7 +10,7 @@
   * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (>= 0.1)
   * [pdfexport](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.9)
 
-## Database Setup
+## Database Setup <a id="installation-database-setup">
 
 The module needs a MySQL/MariaDB database with the schema that's provided in the `etc/schema/mysql.sql` file.
 
@@ -35,7 +35,7 @@ After, you can import the schema using the following command:
 mysql -p -u root reporting < schema/mysql.sql
 ```
 
-## Installation
+## Module Installation <a id="installation-module">
 
 1. Just drop this module to a `reporting` subfolder in your Icinga Web 2 module path.
 
@@ -50,7 +50,7 @@ Or use the `icingacli` and run `icingacli module enable reporting`.
 
 This concludes the installation. You should now be able create reports.
 
-## Scheduler Daemon
+## Scheduler Daemon <a id="installation-scheduler-daemon">
 
 There is a daemon for generating and distributing reports on a schedule if configured:
 
