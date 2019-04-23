@@ -52,8 +52,8 @@ class Timeframe
             ->setId($row->id)
             ->setName($row->name)
             ->setTitle($row->title)
-            ->setStart($row->start)
-            ->setEnd($row->end);
+            ->setStart($row->start_time)
+            ->setEnd($row->end_time);
 
         return $timeframe;
     }
