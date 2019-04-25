@@ -43,7 +43,7 @@ mysql -p -u root reporting < schema/mysql.sql
 Or use the `icingacli` and run `icingacli module enable reporting`.
 
 3. Once you've set up the database, create a new Icinga Web 2 resource for it using the
-`Configuration -> Application -> Resources` menu.
+`Configuration -> Application -> Resources` menu. Make sure that you set the character set to `utf8mb4`.
 
 4. The next step involves telling the Reporting module which database resource to use. This can be done in
 `Configuration -> Modules -> reporting -> Backend`.
