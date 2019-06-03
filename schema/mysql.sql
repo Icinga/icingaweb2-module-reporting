@@ -22,7 +22,7 @@ INSERT INTO timeframe (name, title, start, end, ctime, mtime) VALUES
   ('Last Week', null, 'monday last week midnight', 'sunday last week 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
   ('Current Month', null, 'first day of this month midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
   ('Last Month', null, 'first day of last month midnight', 'last day of last month 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Current Year', null, 'first day of this year midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
+  ('Current Year', null, 'first day of January this year midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
   ('Last Year', null, 'first day of January last year midnight', 'last day of December last year 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000);
 
 CREATE TABLE report (
