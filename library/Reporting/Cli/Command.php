@@ -4,6 +4,7 @@
 namespace Icinga\Module\Reporting\Cli;
 
 use Icinga\Application\Icinga;
+use Icinga\Application\Version;
 use Icinga\Module\Reporting\Database;
 
 class Command extends \Icinga\Cli\Command
@@ -15,11 +16,8 @@ class Command extends \Icinga\Cli\Command
 
     public function init()
     {
-        $mm = Icinga::app()->getModuleManager();
-        foreach ($mm->getModule($this->getModuleName())->getDependencies() as $module => $_) {
-            if ($mm->hasInstalled($module)) {
-                $mm->loadModule($module);
-            }
+        if (version_compare(Version::VERSION, '2.7.0', '<')) {
+            Icinga::app()->getModuleManager()->loadEnabledModules();
         }
     }
 }
