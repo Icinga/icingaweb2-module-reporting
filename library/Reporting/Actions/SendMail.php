@@ -3,6 +3,7 @@
 
 namespace Icinga\Module\Reporting\Actions;
 
+use Icinga\Application\Config;
 use Icinga\Application\Hook;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
@@ -30,6 +31,8 @@ class SendMail extends ActionHook
         );
 
         $mail = new Mail();
+
+        $mail->setFrom(Config::module('reporting')->get('mail', 'from', 'reporting@icinga'));
 
         switch ($config['type']) {
             case 'pdf':
