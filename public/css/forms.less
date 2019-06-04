@@ -25,8 +25,7 @@
     margin-right: 1em;
 }
 
-.form-element input[type="text"],
-.form-element input[type="password"],
+.form-element input:not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
 .form-element textarea,
 .form-element select {
     flex-grow: 1;
