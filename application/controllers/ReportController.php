@@ -12,6 +12,7 @@ use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
 use Icinga\Web\StyleSheet;
+use ipl\Html\Error;
 use ipl\Html\Html;
 use ipl\Html\HtmlString;
 use reportingipl\Web\Url;
@@ -36,7 +37,11 @@ class ReportController extends Controller
 
         $this->addControl($this->assembleActions());
 
-        $this->addContent($this->report->toHtml());
+        try {
+            $this->addContent($this->report->toHtml());
+        } catch (\Exception $e) {
+            $this->addContent(Error::show($e));
+        }
     }
 
     public function editAction()
