@@ -1,6 +1,6 @@
 CREATE TABLE timeframe (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
+  name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
   title varchar(255) NULL DEFAULT NULL COLLATE utf8mb4_unicode_ci,
   start varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
   end varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
@@ -8,7 +8,7 @@ CREATE TABLE timeframe (
   mtime bigint(20) unsigned NOT NULL,
   PRIMARY KEY(id),
   UNIQUE KEY timeframe (name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 INSERT INTO timeframe (name, title, start, end, ctime, mtime) VALUES
   ('4 Hours', null, '-4 hours', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
@@ -29,13 +29,13 @@ CREATE TABLE report (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   timeframe_id int(10) unsigned NOT NULL,
   author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
-  name varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
+  name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
   ctime bigint(20) unsigned NOT NULL,
   mtime bigint(20) unsigned NOT NULL,
   PRIMARY KEY(id),
   UNIQUE KEY report (name),
   CONSTRAINT report_timeframe FOREIGN KEY (timeframe_id) REFERENCES timeframe (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=dynamic;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE reportlet (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
