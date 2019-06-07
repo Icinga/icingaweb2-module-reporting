@@ -11,19 +11,19 @@ CREATE TABLE timeframe (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 INSERT INTO timeframe (name, title, start, end, ctime, mtime) VALUES
-  ('4 Hours', null, '-4 hours', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('25 Hours', null, '-25 hours', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('One Week', null, '-1 week', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('One Month', null, '-1 month', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('One Year', null, '-1 year', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Current Day', null, 'midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Last Day', null, 'yesterday midnight', 'yesterday 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Current Week', null, 'monday this week midnight', 'sunday this week 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Last Week', null, 'monday last week midnight', 'sunday last week 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Current Month', null, 'first day of this month midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Last Month', null, 'first day of last month midnight', 'last day of last month 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Current Year', null, 'first day of January this year midnight', 'now', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000),
-  ('Last Year', null, 'first day of January last year midnight', 'last day of December last year 23:59:59', CURRENT_TIMESTAMP() * 1000, CURRENT_TIMESTAMP() * 1000);
+  ('4 Hours', null, '-4 hours', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('25 Hours', null, '-25 hours', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('One Week', null, '-1 week', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('One Month', null, '-1 month', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('One Year', null, '-1 year', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Current Day', null, 'midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Last Day', null, 'yesterday midnight', 'yesterday 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Current Week', null, 'monday this week midnight', 'sunday this week 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Last Week', null, 'monday last week midnight', 'sunday last week 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Current Month', null, 'first day of this month midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Last Month', null, 'first day of last month midnight', 'last day of last month 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Current Year', null, 'first day of January this year midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Last Year', null, 'first day of January last year midnight', 'last day of December last year 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000);
 
 CREATE TABLE report (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
