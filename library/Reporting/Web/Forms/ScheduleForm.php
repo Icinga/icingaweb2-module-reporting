@@ -15,6 +15,7 @@ use ipl\Html\FormElement\TextareaElement;
 class ScheduleForm extends Form
 {
     use Database;
+    use DecoratedElement;
     use ProvidedActions;
 
     /** @var Report */
@@ -62,10 +63,11 @@ class ScheduleForm extends Form
             'monthly'  => 'Monthly'
         ];
 
-        $this->addElement('text', 'start', [
-            'required'  => true,
-            'label'     => 'Start',
-            'class'     => 'flatpickr'
+        $this->addDecoratedElement(new Flatpickr(), 'text', 'start', [
+            'required'         => true,
+            'label'            => 'Start',
+            'placeholder'      => 'Choose date and time',
+            'data-enable-time' => true
         ]);
 
         $this->addElement('select', 'frequency', [
