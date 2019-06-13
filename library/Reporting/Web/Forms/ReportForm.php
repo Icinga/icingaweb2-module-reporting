@@ -5,8 +5,8 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\DivDecorator;
 use Icinga\Module\Reporting\ProvidedReports;
+use Icinga\Module\Reporting\Web\DivDecorator;
 use ipl\Html\Form;
 use ipl\Html\FormElement\SubmitElementInterface;
 

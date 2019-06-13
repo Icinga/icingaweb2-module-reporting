@@ -3,7 +3,6 @@
 
 namespace Icinga\Module\Reporting\Web;
 
-use Icinga\Module\Reporting\DivDecorator;
 use ipl\Html\FormElement\BaseFormElement;
 use ipl\Html\Html;
 
