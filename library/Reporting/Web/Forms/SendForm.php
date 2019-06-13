@@ -5,9 +5,9 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Module\Reporting\Actions\SendMail;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\DivDecorator;
 use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Report;
+use Icinga\Module\Reporting\Web\DivDecorator;
 use ipl\Html\Form;
 
 class SendForm extends Form

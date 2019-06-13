@@ -1,52 +1,50 @@
 <?php
-// Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
+// Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Web\Controller;
-use Icinga\Module\Reporting\Web\Forms\ReportForm;
+use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
 use Icinga\Module\Reporting\Web\ReportsAndTimeframesTabs;
 use ipl\Html\Html;
 use ipl\Sql\Select;
 use reportingipl\Web\Url;
 use reportingipl\Web\Widget\ButtonLink;
 
-class ReportsController extends Controller
+class TimeframesController extends Controller
 {
     use Database;
     use ReportsAndTimeframesTabs;
 
     public function indexAction()
     {
-        $this->createTabs()->activate('reports');
+        $this->createTabs()->activate('timeframes');
 
-        $newReport = new ButtonLink(
-            $this->translate('New Report'),
-            Url::fromPath('reporting/reports/new')->getAbsoluteUrl('&'),
+        $new = new ButtonLink(
+            $this->translate('New Timerfame'),
+            Url::fromPath('reporting/timeframes/new')->getAbsoluteUrl('&'),
             'plus'
         );
 
-        $this->addControl($newReport);
+        $this->addControl($new);
 
         $tableRows = [];
 
         $select = (new Select())
-            ->from('report r')
-            ->columns(['r.*', 'timeframe' => 't.name'])
-            ->join('timeframe t', 'r.timeframe_id = t.id')
-            ->orderBy('r.mtime', SORT_DESC);
+            ->from('timeframe t')
+            ->columns('*');
 
-        foreach ($this->getDb()->select($select) as $report) {
-            $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
+        foreach ($this->getDb()->select($select) as $timeframe) {
+            $url = Url::fromPath('reporting/timeframe/edit', ['id' => $timeframe->id])->getAbsoluteUrl('&');
 
             $tableRows[] = Html::tag('tr', ['href' => $url], [
-                Html::tag('td', null, $report->name),
-                Html::tag('td', null, $report->author),
-                Html::tag('td', null, $report->timeframe),
-                Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000))
+                Html::tag('td', null, $timeframe->name),
+                Html::tag('td', null, $timeframe->start),
+                Html::tag('td', null, $timeframe->end),
+                Html::tag('td', null, date('Y-m-d H:i', $timeframe->ctime / 1000)),
+                Html::tag('td', null, date('Y-m-d H:i', $timeframe->mtime / 1000))
             ]);
         }
 
@@ -63,8 +61,8 @@ class ReportsController extends Controller
                             null,
                             [
                                 Html::tag('th', null, 'Name'),
-                                Html::tag('th', null, 'Author'),
-                                Html::tag('th', null, 'Timeframe'),
+                                Html::tag('th', null, 'Start'),
+                                Html::tag('th', null, 'End'),
                                 Html::tag('th', null, 'Date Created'),
                                 Html::tag('th', null, 'Date Modified')
                             ]
@@ -76,18 +74,18 @@ class ReportsController extends Controller
 
             $this->addContent($table);
         } else {
-            $this->addContent(Html::tag('p', null, 'No reports created yet.'));
+            $this->addContent(Html::tag('p', null, 'No timeframes created yet.'));
         }
     }
 
     public function newAction()
     {
-        $this->setTitle($this->translate('New Report'));
+        $this->setTitle($this->translate('New Timeframe'));
 
-        $form = new ReportForm();
+        $form = new TimeframeForm();
         $form->handleRequest(ServerRequest::fromGlobals());
 
-        $this->redirectForm($form, 'reporting/reports');
+        $this->redirectForm($form, 'reporting/timeframes');
 
         $this->addContent($form);
     }
