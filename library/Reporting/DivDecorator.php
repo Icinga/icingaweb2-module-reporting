@@ -70,7 +70,12 @@ class DivDecorator extends BaseHtmlElement implements DecoratorInterface
 
         $this->add([
             $this->assembleLabel(),
-            $this->formElement,
+            $this->formElement
+        ]);
+
+        $this->afterFormElement();
+
+        $this->add([
             $this->assembleDescription(),
             $this->assembleErrors()
         ]);
@@ -117,5 +122,10 @@ class DivDecorator extends BaseHtmlElement implements DecoratorInterface
         }
 
         return null;
+    }
+
+    protected function afterFormElement()
+    {
+
     }
 }
