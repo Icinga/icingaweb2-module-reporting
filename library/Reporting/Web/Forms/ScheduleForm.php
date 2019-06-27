@@ -5,9 +5,10 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\DivDecorator;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
+use Icinga\Module\Reporting\Web\DivDecorator;
+use Icinga\Module\Reporting\Web\Flatpickr;
 use ipl\Html\Form;
 use ipl\Html\FormElement\SubmitElementInterface;
 use ipl\Html\FormElement\TextareaElement;
