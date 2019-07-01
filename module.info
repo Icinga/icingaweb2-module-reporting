@@ -1,5 +1,5 @@
 Module: Reporting
-Version: 0.9.1
+Version: 0.9.2
 Depends: ipl
 Depends: pdfexport
 Depends: reactbundle
