@@ -23,7 +23,7 @@ class TimeframesController extends Controller
         $this->createTabs()->activate('timeframes');
 
         $new = new ButtonLink(
-            $this->translate('New Timerfame'),
+            $this->translate('New Timeframe'),
             Url::fromPath('reporting/timeframes/new')->getAbsoluteUrl('&'),
             'plus'
         );
