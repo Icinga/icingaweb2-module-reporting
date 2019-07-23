@@ -89,11 +89,13 @@ class TimeframeForm extends Form
 
         $now = time() * 1000;
 
+        $end = $db->quoteIdentifier('end');
+
         if ($this->id === null) {
             $db->insert('timeframe', [
                 'name'  => $values['name'],
                 'start' => $values['start'],
-                'end'   => $values['end'],
+                $end    => $values['end'],
                 'ctime' => $now,
                 'mtime' => $now
             ]);
@@ -101,7 +103,7 @@ class TimeframeForm extends Form
             $db->update('timeframe', [
                 'name'  => $values['name'],
                 'start' => $values['start'],
-                'end'   => $values['end'],
+                $end    => $values['end'],
                 'mtime' => $now
             ], ['id = ?' => $this->id]);
         }
