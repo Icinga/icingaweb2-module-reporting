@@ -13,6 +13,9 @@ namespace Icinga\Module\Reporting {
     if (version_compare(Version::VERSION, '2.7.0', '<')) {
         $this->provideJsFile('vendor/flatpickr.min.js');
         $this->provideCssFile('vendor/flatpickr.min.css');
+    } else {
+        $this->provideJsFile('vendor/4.6.2/flatpickr.min.js');
+        $this->provideCssFile('vendor/4.6.2/flatpickr.min.css');
     }
 
     $this->menuSection(N_('Reporting'))->add(N_('Reports'), array(
