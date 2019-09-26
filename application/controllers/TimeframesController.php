@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
-use Icinga\Module\Reporting\Web\ReportsAndTimeframesTabs;
+use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
 use ipl\Sql\Select;
 use reportingipl\Web\Url;
@@ -16,7 +16,7 @@ use reportingipl\Web\Widget\ButtonLink;
 class TimeframesController extends Controller
 {
     use Database;
-    use ReportsAndTimeframesTabs;
+    use ReportsTimeframesAndTemplatesTabs;
 
     public function indexAction()
     {

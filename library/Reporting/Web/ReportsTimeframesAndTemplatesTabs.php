@@ -3,7 +3,7 @@
 
 namespace Icinga\Module\Reporting\Web;
 
-trait ReportsAndTimeframesTabs
+trait ReportsTimeframesAndTemplatesTabs
 {
     /**
      * Create tabs
