@@ -26,6 +26,12 @@ trait ReportsAndTimeframesTabs
             'url'       => 'reporting/timeframes'
         ]);
 
+        $tabs->add('templates', [
+            'title'     => $this->translate('Show templates'),
+            'label'     => $this->translate('Templates'),
+            'url'       => 'reporting/templates'
+        ]);
+
         return $tabs;
     }
 }
