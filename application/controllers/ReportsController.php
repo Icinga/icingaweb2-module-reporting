@@ -12,6 +12,8 @@ use ipl\Html\Html;
 use ipl\Sql\Select;
 use reportingipl\Web\Url;
 use reportingipl\Web\Widget\ButtonLink;
+use reportingipl\Web\Widget\Icon;
+use reportingipl\Web\Widget\Link;
 
 class ReportsController extends Controller
 {
@@ -42,7 +44,14 @@ class ReportsController extends Controller
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 
             $tableRows[] = Html::tag('tr', ['href' => $url], [
-                Html::tag('td', null, $report->name),
+                Html::tag('td', null, [
+                    $report->name,
+                    new Link(
+                        new Icon('edit'),
+                        Url::fromPath('reporting/report/edit', ['id' => $report->id]),
+                        ['style' => 'float: right']
+                    )
+                ]),
                 Html::tag('td', null, $report->author),
                 Html::tag('td', null, $report->timeframe),
                 Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
