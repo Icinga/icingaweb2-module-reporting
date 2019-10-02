@@ -42,12 +42,14 @@ class SendMail extends ActionHook
                     $pdfexport = Hook::first('Pdfexport');
 
                     if (! $pdfexport->isSupported()) {
-                        throw new \Exception("Can't export");
+                        throw new \Exception(
+                            sprintf("Can't export: %s does not support exporting PDFs", get_class($pdfexport))
+                        );
                     }
                 }
 
                 if (! $pdfexport) {
-                    throw new \Exception("Can't export");
+                    throw new \Exception("Can't export: No module found which provides PDF export");
                 }
 
                 $html = Html::tag(
