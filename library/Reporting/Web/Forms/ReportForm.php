@@ -36,7 +36,8 @@ class ReportForm extends Form
         $this->addElement('select', 'timeframe', [
             'required'  => true,
             'label'     => 'Timeframe',
-            'options'   => [null => 'Please choose'] + $this->listTimeframes()
+            'options'   => [null => 'Please choose'] + $this->listTimeframes(),
+            'class'     => 'autosubmit'
         ]);
 
         $this->addElement('select', 'reportlet', [
