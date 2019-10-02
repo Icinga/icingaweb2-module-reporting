@@ -10,7 +10,7 @@ namespace Icinga\Module\Reporting {
     $this->provideCssFile('forms.less');
     $this->provideCssFile('system-report.css');
 
-    if (version_compare(Version::VERSION, '2.7.0', '<')) {
+    if (version_compare(Version::VERSION, '2.8.0', '<')) {
         $this->provideJsFile('vendor/flatpickr.min.js');
         $this->provideCssFile('vendor/flatpickr.min.css');
     }
