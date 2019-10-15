@@ -14,4 +14,5 @@ namespace Icinga\Module\Reporting {
     $this->provideHook('reporting/Action', '\\Icinga\\Module\\Reporting\\Actions\\SendMail');
 
     Icinga::app()->getLoader()->registerNamespace('reportingipl\Web', __DIR__ . '/library/vendor/ipl/web/src');
+    Icinga::app()->getLoader()->registerNamespace('reportingipl\Html', __DIR__ . '/library/vendor/ipl/Html/src');
 }
