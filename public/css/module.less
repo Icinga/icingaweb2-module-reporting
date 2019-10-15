@@ -97,3 +97,86 @@
 .action-bar > *:not(:last-child) {
   margin-right: .5em;
 }
+
+@font-family-print: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+.page-size-a4 {
+  background-color: white;
+  box-shadow: 0 0 0.25cm rgba(0,0,0,0.5);
+  display: block;
+  margin: 0 auto 0.5cm;
+  font-family: @font-family-print;
+  page-break-after: always;
+  height: 29.7cm;
+  width: 21cm;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-page {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.cover-page-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  height: 100%;
+  width: 100%;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+@gutter: 0.5em;
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+
+  &.with-gutters {
+    margin-left: -0.5 * @gutter;
+    margin-right: -0.5 * @gutter;
+
+    > * {
+      margin-left: 0.5 * @gutter;
+      margin-right: 0.5 * @gutter;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.preview .main {
+  background-image: url(../static/img?file=graph-dummy.svg&module_name=reporting);;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.header,
+.footer {
+  .grid();
+}
+
+@media print {
+  font-family: @font-family-print;
+}
+
+.preview .page {
+  .page-size-a4();
+}
