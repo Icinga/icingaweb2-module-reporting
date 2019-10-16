@@ -3,7 +3,7 @@
 
 namespace Icinga\Module\Reporting\Web;
 
-trait ReportsAndTimeframesTabs
+trait ReportsTimeframesAndTemplatesTabs
 {
     /**
      * Create tabs
@@ -24,6 +24,12 @@ trait ReportsAndTimeframesTabs
             'title'     => $this->translate('Show time frames'),
             'label'     => $this->translate('Time Frames'),
             'url'       => 'reporting/timeframes'
+        ]);
+
+        $tabs->add('templates', [
+            'title'     => $this->translate('Show templates'),
+            'label'     => $this->translate('Templates'),
+            'url'       => 'reporting/templates'
         ]);
 
         return $tabs;

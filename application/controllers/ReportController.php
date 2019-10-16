@@ -5,6 +5,7 @@ namespace Icinga\Module\Reporting\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Application\Hook;
+use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Web\Controller;
@@ -113,49 +114,8 @@ class ReportController extends Controller
 
         switch ($type) {
             case 'pdf':
-                $pdfexport = null;
-
-                if (Hook::has('Pdfexport')) {
-                    $pdfexport = Hook::first('Pdfexport');
-
-                    if (! $pdfexport->isSupported()) {
-                        throw new \Exception(
-                            sprintf("Can't export: %s does not support exporting PDFs", get_class($pdfexport))
-                        );
-                    }
-                }
-
-                if (! $pdfexport) {
-                    throw new \Exception("Can't export: No module found which provides PDF export");
-                }
-
-                $html = Html::tag(
-                    'html',
-                    null,
-                    [
-                        Html::tag(
-                            'head',
-                            null,
-                            Html::tag(
-                                'style',
-                                null,
-                                new HtmlString(StyleSheet::forPdf())
-                            )
-                        ),
-                        Html::tag(
-                            'body',
-                            null,
-                            Html::tag(
-                                'div',
-                                ['class' => 'icinga-module module-reporting'],
-                                new HtmlString($this->report->toHtml())
-                            )
-                        )
-                    ]
-                );
-
                 /** @var Hook\PdfexportHook */
-                $pdfexport->streamPdfFromHtml((string) $html, $name);
+                Pdfexport::first()->streamPdfFromHtml($this->report->toPdf(), $name);
                 exit;
             case 'csv':
                 $response = $this->getResponse();

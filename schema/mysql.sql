@@ -28,13 +28,15 @@ INSERT INTO timeframe (name, title, start, end, ctime, mtime) VALUES
 CREATE TABLE report (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   timeframe_id int(10) unsigned NOT NULL,
+  template_id int(10) unsigned NULL DEFAULT NULL,
   author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
   name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
   ctime bigint(20) unsigned NOT NULL,
   mtime bigint(20) unsigned NOT NULL,
   PRIMARY KEY(id),
   UNIQUE KEY report (name),
-  CONSTRAINT report_timeframe FOREIGN KEY (timeframe_id) REFERENCES timeframe (id)
+  CONSTRAINT report_timeframe FOREIGN KEY (timeframe_id) REFERENCES timeframe (id),
+  CONSTRAINT report_template FOREIGN KEY (template_id) REFERENCES template (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE reportlet (
@@ -70,6 +72,16 @@ CREATE TABLE schedule (
   mtime bigint(20) unsigned NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT schedule_report FOREIGN KEY (report_id) REFERENCES report (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE template (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
+  name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
+  settings longblob NOT NULL,
+  ctime bigint(20) unsigned NOT NULL,
+  mtime bigint(20) unsigned NOT NULL,
+  PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- CREATE TABLE share (

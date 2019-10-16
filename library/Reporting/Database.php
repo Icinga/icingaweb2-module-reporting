@@ -40,4 +40,19 @@ trait Database
 
         return $timeframes;
     }
+
+    protected function listTemplates()
+    {
+        $select = (new Sql\Select())
+            ->from('template')
+            ->columns(['id', 'name']);
+
+        $templates = [];
+
+        foreach ($this->getDb()->select($select) as $row) {
+            $templates[$row->id] = $row->name;
+        }
+
+        return $templates;
+    }
 }

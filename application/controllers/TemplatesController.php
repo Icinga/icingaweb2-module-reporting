@@ -1,52 +1,48 @@
 <?php
-// Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
+// Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Web\Controller;
-use Icinga\Module\Reporting\Web\Forms\ReportForm;
+use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
 use ipl\Sql\Select;
 use reportingipl\Web\Url;
 use reportingipl\Web\Widget\ButtonLink;
 
-class ReportsController extends Controller
+class TemplatesController extends Controller
 {
     use Database;
     use ReportsTimeframesAndTemplatesTabs;
 
     public function indexAction()
     {
-        $this->createTabs()->activate('reports');
+        $this->createTabs()->activate('templates');
 
-        $newReport = new ButtonLink(
-            $this->translate('New Report'),
-            Url::fromPath('reporting/reports/new')->getAbsoluteUrl('&'),
+        $newTemplate = new ButtonLink(
+            $this->translate('New Template'),
+            Url::fromPath('reporting/templates/new')->getAbsoluteUrl('&'),
             'plus'
         );
 
-        $this->addControl($newReport);
-
-        $tableRows = [];
+        $this->addControl($newTemplate);
 
         $select = (new Select())
-            ->from('report r')
-            ->columns(['r.*', 'timeframe' => 't.name'])
-            ->join('timeframe t', 'r.timeframe_id = t.id')
-            ->orderBy('r.mtime', SORT_DESC);
+            ->from('template')
+            ->columns(['id', 'name', 'author', 'ctime', 'mtime'])
+            ->orderBy('mtime', SORT_DESC);
 
-        foreach ($this->getDb()->select($select) as $report) {
-            $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
+        foreach ($this->getDb()->select($select) as $template) {
+            $url = Url::fromPath('reporting/template/edit', ['id' => $template->id])->getAbsoluteUrl('&');
 
             $tableRows[] = Html::tag('tr', ['href' => $url], [
-                Html::tag('td', null, $report->name),
-                Html::tag('td', null, $report->author),
-                Html::tag('td', null, $report->timeframe),
-                Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000))
+                Html::tag('td', null, $template->name),
+                Html::tag('td', null, $template->author),
+                Html::tag('td', null, date('Y-m-d H:i', $template->ctime / 1000)),
+                Html::tag('td', null, date('Y-m-d H:i', $template->mtime / 1000))
             ]);
         }
 
@@ -64,7 +60,6 @@ class ReportsController extends Controller
                             [
                                 Html::tag('th', null, 'Name'),
                                 Html::tag('th', null, 'Author'),
-                                Html::tag('th', null, 'Timeframe'),
                                 Html::tag('th', null, 'Date Created'),
                                 Html::tag('th', null, 'Date Modified')
                             ]
@@ -76,18 +71,19 @@ class ReportsController extends Controller
 
             $this->addContent($table);
         } else {
-            $this->addContent(Html::tag('p', null, 'No reports created yet.'));
+            $this->addContent(Html::tag('p', null, 'No templates created yet.'));
         }
     }
 
     public function newAction()
     {
-        $this->setTitle($this->translate('New Report'));
+        $this->setTitle('New Title');
 
-        $form = new ReportForm();
+        $form = new TemplateForm();
+
         $form->handleRequest(ServerRequest::fromGlobals());
 
-        $this->redirectForm($form, 'reporting/reports');
+        $this->redirectForm($form, 'reporting/templates');
 
         $this->addContent($form);
     }
