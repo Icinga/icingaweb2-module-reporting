@@ -22,13 +22,14 @@ class ReportsController extends Controller
     {
         $this->createTabs()->activate('reports');
 
-        $newReport = new ButtonLink(
-            $this->translate('New Report'),
-            Url::fromPath('reporting/reports/new')->getAbsoluteUrl('&'),
-            'plus'
-        );
-
-        $this->addControl($newReport);
+        if ( $this->hasPermission('reporting/*') ) {
+            $newReport = new ButtonLink(
+                $this->translate('New Report'),
+                Url::fromPath('reporting/reports/new')->getAbsoluteUrl('&'),
+                'plus'
+            );
+            $this->addControl($newReport);
+        }
 
         $tableRows = [];
 

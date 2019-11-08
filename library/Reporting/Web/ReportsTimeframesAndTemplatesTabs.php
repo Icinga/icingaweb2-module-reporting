@@ -20,17 +20,19 @@ trait ReportsTimeframesAndTemplatesTabs
                 'url'       => 'reporting/reports'
         ]);
 
-        $tabs->add('timeframes', [
-            'title'     => $this->translate('Show time frames'),
-            'label'     => $this->translate('Time Frames'),
-            'url'       => 'reporting/timeframes'
-        ]);
+        if ( $this->hasPermission('reporting/*') ) {
+            $tabs->add('timeframes', [
+                'title'     => $this->translate('Show time frames'),
+                'label'     => $this->translate('Time Frames'),
+                'url'       => 'reporting/timeframes'
+            ]);
 
-        $tabs->add('templates', [
-            'title'     => $this->translate('Show templates'),
-            'label'     => $this->translate('Templates'),
-            'url'       => 'reporting/templates'
-        ]);
+            $tabs->add('templates', [
+                'title'     => $this->translate('Show templates'),
+                'label'     => $this->translate('Templates'),
+                'url'       => 'reporting/templates'
+            ]);
+        }
 
         return $tabs;
     }

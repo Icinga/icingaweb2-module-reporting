@@ -158,9 +158,12 @@ class ReportController extends Controller
 
         $actions = new ActionBar();
 
+        if ( $this->hasPermission('reporting/*') ) {
+            $actions
+                ->addLink('Modify', Url::fromPath('reporting/report/edit', ['id' => $reportId]), 'edit')
+                ->addLink('Schedule', Url::fromPath('reporting/report/schedule', ['id' => $reportId]), 'calendar-empty');
+        }
         $actions
-            ->addLink('Modify', Url::fromPath('reporting/report/edit', ['id' => $reportId]), 'edit')
-            ->addLink('Schedule', Url::fromPath('reporting/report/schedule', ['id' => $reportId]), 'calendar-empty')
             ->add($download)
             ->addLink('Send', Url::fromPath('reporting/report/send', ['id' => $reportId]), 'forward');
 
