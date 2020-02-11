@@ -1,5 +1,3 @@
-
-
 CREATE TABLE timeframe (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
@@ -49,6 +47,16 @@ CREATE TABLE reportlet (
   mtime bigint(20) unsigned NOT NULL,
   PRIMARY KEY(id),
   CONSTRAINT reportlet_report FOREIGN KEY (report_id) REFERENCES report (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE template (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
+  name varchar(128) NOT NULL COLLATE utf8mb4_unicode_ci,
+  settings longblob NOT NULL,
+  ctime bigint(20) unsigned NOT NULL,
+  mtime bigint(20) unsigned NOT NULL,
+  PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 CREATE TABLE config (
