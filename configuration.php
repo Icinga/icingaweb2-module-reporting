@@ -19,6 +19,10 @@ namespace Icinga\Module\Reporting {
         'url' => 'reporting/reports',
     ));
 
+    $this->menuSection(N_('Reporting'))->add(N_('Fake Downtimes'), array(
+        'url' => 'reporting/downtimes',
+    ));
+
     $this->provideConfigTab('backend', array(
         'title' => $this->translate('Configure the database backend'),
         'label' => $this->translate('Backend'),
