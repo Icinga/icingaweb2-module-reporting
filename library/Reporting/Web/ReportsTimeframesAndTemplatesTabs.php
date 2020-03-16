@@ -3,7 +3,7 @@
 
 namespace Icinga\Module\Reporting\Web;
 
-trait ReportsTimeframesAndTemplatesTabs // Downtimes ergänzen
+trait ReportsTimeframesAndTemplatesTabs
 {
     /**
      * Create tabs
@@ -30,12 +30,6 @@ trait ReportsTimeframesAndTemplatesTabs // Downtimes ergänzen
             'title'     => $this->translate('Show templates'),
             'label'     => $this->translate('Templates'),
             'url'       => 'reporting/templates'
-        ]);
-
-        $tabs->add('downtimes', [
-            'title'     => $this->translate('Show downtimes'),
-            'label'     => $this->translate('Fake Downtimes'),
-            'url'       => 'reporting/downtimes'
         ]);
 
         return $tabs;
