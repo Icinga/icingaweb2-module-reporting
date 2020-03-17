@@ -32,6 +32,12 @@ trait ReportsTimeframesAndTemplatesTabs
             'url'       => 'reporting/templates'
         ]);
 
+        $tabs->add('downtimes', [
+            'title'     => $this->translate('Show downtimes'),
+            'label'     => $this->translate('Fake Downtimes'),
+            'url'       => 'reporting/downtimes'
+        ]);
+
         return $tabs;
     }
 }
