@@ -4,6 +4,15 @@ CREATE OR REPLACE FUNCTION unix_timestamp(timestamp with time zone DEFAULT NOW()
 
 CREATE TYPE frequency AS ENUM ('minutely', 'hourly', 'daily', 'weekly', 'monthly');
 
+CREATE TABLE template (
+  id serial PRIMARY KEY,
+  author varchar(255) NOT NULL,
+  name varchar(128) NOT NULL,
+  settings text NOT NULL,
+  ctime bigint NOT NULL,
+  mtime bigint NOT NULL
+);
+
 CREATE TABLE timeframe (
   id serial PRIMARY KEY,
   name varchar(128) NOT NULL UNIQUE,
@@ -32,11 +41,13 @@ INSERT INTO timeframe (name, title, start, "end") VALUES
 CREATE TABLE report (
   id serial PRIMARY KEY,
   timeframe_id int NOT NULL,
+  template_id int NULL DEFAULT NULL,
   author varchar(255) NOT NULL,
   name varchar(128) NOT NULL UNIQUE,
   ctime bigint NOT NULL DEFAULT unix_timestamp() * 1000,
   mtime bigint NOT NULL DEFAULT unix_timestamp() * 1000,
-  CONSTRAINT report_timeframe FOREIGN KEY (timeframe_id) REFERENCES timeframe (id)
+  CONSTRAINT report_timeframe FOREIGN KEY (timeframe_id) REFERENCES timeframe (id),
+  CONSTRAINT report_template FOREIGN KEY (template_id) REFERENCES template (id)
 );
 
 CREATE TABLE reportlet (
