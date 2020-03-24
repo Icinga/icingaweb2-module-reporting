@@ -4,13 +4,15 @@
 
 * Icinga Web 2 (&gt;= 2.6)
 * PHP (&gt;= 5.6, preferably 7.x)
-* MySQL or MariaDB
+* MySQL / MariaDB or PostgreSQL
 * Icinga Web 2 modules:
   * [reactbundle](https://github.com/Icinga/icingaweb2-module-reactbundle) (>= 0.4)
   * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (>= 0.2.1)
   * [pdfexport](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.9)
 
 ## Database Setup <a id="installation-database-setup">
+
+### MySQL / MariaDB
 
 The module needs a MySQL/MariaDB database with the schema that's provided in the `etc/schema/mysql.sql` file.
 
@@ -25,6 +27,23 @@ After, you can import the schema using the following command:
 
 ```
 mysql -p -u root reporting < schema/mysql.sql
+```
+
+## PostgreSQL
+
+The module needs a PostgreSQL database with the schema that's provided in the `etc/schema/postgresql.sql` file.
+
+Example command for creating the PostgreSQL database. Please change the password:
+
+```sql
+CREATE USER reporting WITH PASSWORD 'secret';
+CREATE DATABASE reporting WITH OWNER reporting;
+```
+
+After, you can import the schema using the following command:
+
+```
+psql -U reporting reporting -a -f schema/postgresql.sql
 ```
 
 ## Module Installation <a id="installation-module">
