@@ -1,4 +1,4 @@
-Module: Reporting
+Module: reporting
 Version: 0.10.0
 Depends: ipl
 Depends: pdfexport
