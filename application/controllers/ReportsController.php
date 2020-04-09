@@ -44,18 +44,17 @@ class ReportsController extends Controller
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 
             $tableRows[] = Html::tag('tr', ['href' => $url], [
-                Html::tag('td', null, [
-                    $report->name,
-                    new Link(
-                        new Icon('edit'),
-                        Url::fromPath('reporting/report/edit', ['id' => $report->id]),
-                        ['style' => 'float: right']
-                    )
-                ]),
+                Html::tag('td', null, $report->name),
                 Html::tag('td', null, $report->author),
                 Html::tag('td', null, $report->timeframe),
                 Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000))
+                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000)),
+                Html::tag('td', ['class' => 'icon-col'], [
+                    new Link(
+                        new Icon('edit'),
+                        Url::fromPath('reporting/report/edit', ['id' => $report->id])
+                    )
+                ])
             ]);
         }
 
@@ -75,7 +74,8 @@ class ReportsController extends Controller
                                 Html::tag('th', null, 'Author'),
                                 Html::tag('th', null, 'Timeframe'),
                                 Html::tag('th', null, 'Date Created'),
-                                Html::tag('th', null, 'Date Modified')
+                                Html::tag('th', null, 'Date Modified'),
+                                Html::tag('th', null, 'Edit')
                             ]
                         )
                     ),
