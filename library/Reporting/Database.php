@@ -12,7 +12,7 @@ trait Database
     protected function getDb($resource = null)
     {
         $config = new Sql\Config(ResourceFactory::getResourceConfig(
-            $resource ?: Config::module('reporting')->get('backend', 'resource')
+            $resource ?: Config::module('reporting')->get('backend', 'resource', 'reporting')
         ));
 
         $config->options = [
