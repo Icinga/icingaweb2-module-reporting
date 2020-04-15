@@ -30,4 +30,14 @@ namespace Icinga\Module\Reporting {
         'label' => $this->translate('Mail'),
         'url'   => 'config/mail'
     ));
+
+    $this->providePermission(
+        'reporting/reports'
+        $this->translate('Allow managing reports')
+    );
+
+    $this->providePermission(
+        'reporting/schedules',
+        $this->translate('Allow managing schedules')
+    );
 }

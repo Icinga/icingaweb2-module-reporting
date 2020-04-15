@@ -20,7 +20,7 @@ trait ReportsTimeframesAndTemplatesTabs
                 'url'       => 'reporting/reports'
         ]);
 
-        if ( $this->hasPermission('reporting/*') ) {
+        if ($this->hasPermission('reporting/reports')) {
             $tabs->add('timeframes', [
                 'title'     => $this->translate('Show time frames'),
                 'label'     => $this->translate('Time Frames'),
