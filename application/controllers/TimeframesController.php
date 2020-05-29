@@ -12,6 +12,7 @@ use ipl\Html\Html;
 use ipl\Sql\Select;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
+use ipl\Web\Widget\Link;
 
 class TimeframesController extends Controller
 {
@@ -22,13 +23,15 @@ class TimeframesController extends Controller
     {
         $this->createTabs()->activate('timeframes');
 
-        $new = new ButtonLink(
-            $this->translate('New Timeframe'),
-            Url::fromPath('reporting/timeframes/new')->getAbsoluteUrl('&'),
-            'plus'
-        );
+        $canManage = $this->hasPermission('reporting/timeframes');
 
-        $this->addControl($new);
+        if ($canManage) {
+            $this->addControl(new ButtonLink(
+                $this->translate('New Timeframe'),
+                Url::fromPath('reporting/timeframes/new'),
+                'plus'
+            ));
+        }
 
         $tableRows = [];
 
@@ -37,10 +40,17 @@ class TimeframesController extends Controller
             ->columns('*');
 
         foreach ($this->getDb()->select($select) as $timeframe) {
-            $url = Url::fromPath('reporting/timeframe/edit', ['id' => $timeframe->id])->getAbsoluteUrl('&');
+            $subject = $timeframe->name;
 
-            $tableRows[] = Html::tag('tr', ['href' => $url], [
-                Html::tag('td', null, $timeframe->name),
+            if ($canManage) {
+                $subject = new Link($timeframe->name, Url::fromPath(
+                    'reporting/timeframe/edit',
+                    ['id' => $timeframe->id]
+                ));
+            }
+
+            $tableRows[] = Html::tag('tr', null, [
+                Html::tag('td', null, $subject),
                 Html::tag('td', null, $timeframe->start),
                 Html::tag('td', null, $timeframe->end),
                 Html::tag('td', null, date('Y-m-d H:i', $timeframe->ctime / 1000)),
@@ -80,6 +90,7 @@ class TimeframesController extends Controller
 
     public function newAction()
     {
+        $this->assertPermission('reporting/timeframes');
         $this->addTitleTab($this->translate('New Timeframe'));
 
         $form = new TimeframeForm();

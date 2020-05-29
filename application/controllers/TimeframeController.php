@@ -23,6 +23,7 @@ class TimeframeController extends Controller
 
     public function editAction()
     {
+        $this->assertPermission('reporting/timeframes');
         $this->addTitleTab($this->translate('Edit Time Frame'));
 
         $values = [
