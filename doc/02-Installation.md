@@ -37,7 +37,11 @@ Example command for creating the PostgreSQL database. Please change the password
 
 ```sql
 CREATE USER reporting WITH PASSWORD 'secret';
-CREATE DATABASE reporting WITH OWNER reporting;
+CREATE DATABASE reporting
+  WITH OWNER reporting
+  ENCODING 'UTF8'
+  LC_COLLATE = 'en_US.UTF-8'
+  LC_CTYPE = 'en_US.UTF-8';
 ```
 
 After, you can import the schema using the following command:
