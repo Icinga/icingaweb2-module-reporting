@@ -12,6 +12,8 @@ use ipl\Html\Html;
 use ipl\Sql\Select;
 use reportingipl\Web\Url;
 use reportingipl\Web\Widget\ButtonLink;
+use reportingipl\Web\Widget\Icon;
+use reportingipl\Web\Widget\Link;
 
 class ReportsController extends Controller
 {
@@ -46,7 +48,13 @@ class ReportsController extends Controller
                 Html::tag('td', null, $report->author),
                 Html::tag('td', null, $report->timeframe),
                 Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000))
+                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000)),
+                Html::tag('td', ['class' => 'icon-col'], [
+                    new Link(
+                        new Icon('edit'),
+                        Url::fromPath('reporting/report/edit', ['id' => $report->id])
+                    )
+                ])
             ]);
         }
 
@@ -66,7 +74,8 @@ class ReportsController extends Controller
                                 Html::tag('th', null, 'Author'),
                                 Html::tag('th', null, 'Timeframe'),
                                 Html::tag('th', null, 'Date Created'),
-                                Html::tag('th', null, 'Date Modified')
+                                Html::tag('th', null, 'Date Modified'),
+                                Html::tag('th')
                             ]
                         )
                     ),
