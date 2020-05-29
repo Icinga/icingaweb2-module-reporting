@@ -44,4 +44,9 @@ namespace Icinga\Module\Reporting {
         'reporting/templates',
         $this->translate('Allow managing templates')
     );
+
+    $this->providePermission(
+        'reporting/timeframes',
+        $this->translate('Allow managing timeframes')
+    );
 }
