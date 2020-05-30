@@ -45,6 +45,31 @@ class ReportController extends Controller
         }
     }
 
+    public function cloneAction()
+    {
+        $this->setTitle('Clone Report');
+
+        $values = [
+            'name'      => $this->report->getName(),
+            'timeframe' => (string) $this->report->getTimeframe()->getId(),
+        ];
+
+        $reportlet = $this->report->getReportlets()[0];
+
+        $values['reportlet'] = $reportlet->getClass();
+
+        foreach ($reportlet->getConfig() as $name => $value) {
+            $values[$name] = $value;
+        }
+
+        // Form::handleRequest() is left on purpose since the form is handled in a different action
+        $form = (new ReportForm())
+            ->setAction(Url::fromPath('reporting/reports/new'))
+            ->populate($values);
+
+        $this->addContent($form);
+    }
+
     public function editAction()
     {
         $this->setTitle('Edit Report');
@@ -160,6 +185,7 @@ class ReportController extends Controller
 
         $actions
             ->addLink('Modify', Url::fromPath('reporting/report/edit', ['id' => $reportId]), 'edit')
+            ->addLink('Clone', Url::fromPath('reporting/report/clone', ['id' => $reportId]), 'forward')
             ->addLink('Schedule', Url::fromPath('reporting/report/schedule', ['id' => $reportId]), 'calendar-empty')
             ->add($download)
             ->addLink('Send', Url::fromPath('reporting/report/send', ['id' => $reportId]), 'forward');
