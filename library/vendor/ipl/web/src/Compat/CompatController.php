@@ -64,7 +64,8 @@ class CompatController extends Controller
 
     protected function setTitle($title, ...$args)
     {
-        $title = $this->report->getName();
+        $title = str_replace('%', '%%', $title);
+        $title = vsprintf($title, next($args));
 
         $this->view->title = $title;
 
