@@ -160,7 +160,7 @@ class Mail
 
         $mail->setFrom($this->getFrom());
         $mail->addTo($recipient);
-        $mail->setSubject($this->getSubject());
+        $mail->setSubject($this->getSubject().' '.pathinfo(($this->attachments[0]->filename),PATHINFO_FILENAME));
 
         if (strlen($body) !== strlen(strip_tags($body))) {
             $mail->setBodyHtml($body);
