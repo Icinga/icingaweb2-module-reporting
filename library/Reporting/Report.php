@@ -394,6 +394,7 @@ STYLE;
             $this->template->setMacros([
                 'date'       => (new DateTime())->format('jS M, Y'),
                 'time_frame' => $this->timeframe->getName(),
+                'time_frame_absolute' => $this->timeframe->getTimerange()->getStart()->format('r') . ' - ' . $this->timeframe->getTimerange()->getEnd()->format('r'),
                 'title'      => $this->name
             ]);
 
