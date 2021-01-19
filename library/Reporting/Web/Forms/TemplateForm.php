@@ -264,6 +264,7 @@ class TemplateForm extends CompatForm
                     'options' => [
                         'report_title'          => 'Report Title',
                         'time_frame'            => 'Time Frame',
+                        'time_frame_absolute'   => 'Time Frame (absolute)',
                         'page_number'           => 'Page Number',
                         'total_number_of_pages' => 'Total Number of Pages',
                         'page_of'               => 'Page Number + Total Number of Pages',
