@@ -33,6 +33,7 @@ class SendMail extends ActionHook
         $mail = new Mail();
 
         $mail->setFrom(Config::module('reporting')->get('mail', 'from', 'reporting@icinga'));
+        $mail->setSubject(Config::module('reporting')->get('mail', 'subject', 'Monitoring Report'));
 
         switch ($config['type']) {
             case 'pdf':
