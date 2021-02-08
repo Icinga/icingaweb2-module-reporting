@@ -19,5 +19,9 @@ class ConfigureMailForm extends ConfigForm
             'label'       => $this->translate('From'),
             'placeholder' => 'reporting@icinga'
         ]);
+        $this->addElement('text', 'mail_subject', [
+            'label'       => $this->translate('Subject'),
+            'placeholder' => 'Icinga Report'
+        ]);
     }
 }
