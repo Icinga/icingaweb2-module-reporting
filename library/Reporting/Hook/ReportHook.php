@@ -50,7 +50,6 @@ abstract class ReportHook
      */
     public function initConfigForm(Form $form)
     {
-
     }
 
     /**

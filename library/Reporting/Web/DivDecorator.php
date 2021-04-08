@@ -126,6 +126,5 @@ class DivDecorator extends BaseHtmlElement implements DecoratorInterface
 
     protected function afterFormElement()
     {
-
     }
 }
