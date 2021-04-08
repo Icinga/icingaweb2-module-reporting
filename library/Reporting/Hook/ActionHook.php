@@ -25,7 +25,6 @@ abstract class ActionHook
      */
     public function initConfigForm(Form $form, Report $report)
     {
-
     }
 
     /**

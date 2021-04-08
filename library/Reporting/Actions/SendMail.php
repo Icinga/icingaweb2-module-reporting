@@ -90,7 +90,6 @@ class SendMail extends ActionHook
                 break;
             default:
                 throw new \InvalidArgumentException();
-
         }
 
         $recipients = StringHelper::trimSplit($config['recipients']);

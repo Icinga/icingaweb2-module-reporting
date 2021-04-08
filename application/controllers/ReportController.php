@@ -51,7 +51,8 @@ class ReportController extends Controller
 
         $values = [
             'name'      => $this->report->getName(),
-            // TODO(el): Must cast to string here because ipl/html does not support integer return values for attribute callbacks
+            // TODO(el): Must cast to string here because ipl/html does not
+            //           support integer return values for attribute callbacks
             'timeframe' => (string) $this->report->getTimeframe()->getId(),
         ];
 
