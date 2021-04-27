@@ -22,13 +22,17 @@ class TimeframesController extends Controller
     {
         $this->createTabs()->activate('timeframes');
 
-        $new = new ButtonLink(
-            $this->translate('New Timeframe'),
-            Url::fromPath('reporting/timeframes/new')->getAbsoluteUrl('&'),
-            'plus'
-        );
+        $canManage = $this->hasPermission('reporting/timeframes');
 
-        $this->addControl($new);
+        if ($canManage) {
+            $new = new ButtonLink(
+                $this->translate('New Timeframe'),
+                Url::fromPath('reporting/timeframes/new')->getAbsoluteUrl('&'),
+                'plus'
+            );
+
+            $this->addControl($new);
+        }
 
         $tableRows = [];
 
@@ -37,9 +41,16 @@ class TimeframesController extends Controller
             ->columns('*');
 
         foreach ($this->getDb()->select($select) as $timeframe) {
-            $url = Url::fromPath('reporting/timeframe/edit', ['id' => $timeframe->id])->getAbsoluteUrl('&');
+            $attributes = [];
 
-            $tableRows[] = Html::tag('tr', ['href' => $url], [
+            if ($canManage) {
+                $attributes['href'] = Url::fromPath(
+                    'reporting/timeframe/edit',
+                    ['id' => $timeframe->id]
+                )->getAbsoluteUrl('&');
+            }
+
+            $tableRows[] = Html::tag('tr', $attributes, [
                 Html::tag('td', null, $timeframe->name),
                 Html::tag('td', null, $timeframe->start),
                 Html::tag('td', null, $timeframe->end),
@@ -80,6 +91,8 @@ class TimeframesController extends Controller
 
     public function newAction()
     {
+        $this->assertPermission('reporting/timeframes');
+
         $this->setTitle($this->translate('New Timeframe'));
 
         $form = new TimeframeForm();

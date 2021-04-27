@@ -47,6 +47,8 @@ class ReportController extends Controller
 
     public function editAction()
     {
+        $this->assertPermission('reporting/reports');
+
         $this->setTitle('Edit Report');
 
         $values = [
@@ -90,6 +92,8 @@ class ReportController extends Controller
 
     public function scheduleAction()
     {
+        $this->assertPermission('reporting/schedule');
+
         $this->setTitle('Schedule');
 
         $form = new ScheduleForm();
@@ -159,9 +163,15 @@ class ReportController extends Controller
 
         $actions = new ActionBar();
 
+        if ($this->hasPermission('reporting/reports')) {
+            $actions
+                ->addLink('Modify', Url::fromPath('reporting/report/edit', ['id' => $reportId]), 'edit');
+        }
+        if ($this->hasPermission('reporting/schedules')) {
+            $actions
+                ->addLink('Schedule', Url::fromPath('reporting/report/schedule', ['id' => $reportId]), 'calendar-empty');
+        }
         $actions
-            ->addLink('Modify', Url::fromPath('reporting/report/edit', ['id' => $reportId]), 'edit')
-            ->addLink('Schedule', Url::fromPath('reporting/report/schedule', ['id' => $reportId]), 'calendar-empty')
             ->add($download)
             ->addLink('Send', Url::fromPath('reporting/report/send', ['id' => $reportId]), 'forward');
 

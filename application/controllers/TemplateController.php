@@ -38,6 +38,8 @@ class TemplateController extends Controller
 
     public function editAction()
     {
+        $this->assertPermission('reporting/templates');
+
         $this->createTabs()->activate('edit');
 
         $select = (new Select())
@@ -67,11 +69,13 @@ class TemplateController extends Controller
     {
         $tabs = $this->getTabs();
 
-        $tabs->add('edit', [
-            'title'     => $this->translate('Edit template'),
-            'label'     => $this->translate('Edit Template'),
-            'url'       => 'reporting/template/edit?id=' . $this->params->getRequired('id')
-        ]);
+        if ($this->hasPermission('reporting/templates')) {
+            $tabs->add('edit', [
+                'title' => $this->translate('Edit template'),
+                'label' => $this->translate('Edit Template'),
+                'url'   => 'reporting/template/edit?id=' . $this->params->getRequired('id')
+            ]);
+        }
 
         $tabs->add('preview', [
             'title'     => $this->translate('Preview template'),

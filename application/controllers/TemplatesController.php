@@ -22,13 +22,17 @@ class TemplatesController extends Controller
     {
         $this->createTabs()->activate('templates');
 
-        $newTemplate = new ButtonLink(
-            $this->translate('New Template'),
-            Url::fromPath('reporting/templates/new')->getAbsoluteUrl('&'),
-            'plus'
-        );
+        $canManage = $this->hasPermission('reporting/templates');
 
-        $this->addControl($newTemplate);
+        if ($canManage) {
+            $newTemplate = new ButtonLink(
+                $this->translate('New Template'),
+                Url::fromPath('reporting/templates/new')->getAbsoluteUrl('&'),
+                'plus'
+            );
+
+            $this->addControl($newTemplate);
+        }
 
         $select = (new Select())
             ->from('template')
@@ -36,9 +40,23 @@ class TemplatesController extends Controller
             ->orderBy('mtime', SORT_DESC);
 
         foreach ($this->getDb()->select($select) as $template) {
-            $url = Url::fromPath('reporting/template/edit', ['id' => $template->id])->getAbsoluteUrl('&');
+            $attributes = [];
 
-            $tableRows[] = Html::tag('tr', ['href' => $url], [
+            if ($canManage) {
+                // Edit URL
+                $attributes['href'] = Url::fromPath(
+                    'reporting/template/edit',
+                    ['id' => $template->id]
+                )->getAbsoluteUrl('&');
+            } else {
+                // Preview URL
+                $attributes['href'] = Url::fromPath(
+                    'reporting/template',
+                    ['id' => $template->id]
+                )->getAbsoluteUrl('&');
+            }
+
+            $tableRows[] = Html::tag('tr', $attributes, [
                 Html::tag('td', null, $template->name),
                 Html::tag('td', null, $template->author),
                 Html::tag('td', null, date('Y-m-d H:i', $template->ctime / 1000)),
@@ -77,6 +95,8 @@ class TemplatesController extends Controller
 
     public function newAction()
     {
+        $this->assertPermission('reporting/templates');
+
         $this->setTitle('New Title');
 
         $form = new TemplateForm();
