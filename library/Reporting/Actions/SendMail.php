@@ -33,6 +33,7 @@ class SendMail extends ActionHook
         $mail = new Mail();
 
         $mail->setFrom(Config::module('reporting')->get('mail', 'from', 'reporting@icinga'));
+        $mail->setSubject(Config::module('reporting')->get('mail', 'subject', 'Monitoring Report'));
 
         switch ($config['type']) {
             case 'pdf':
@@ -52,33 +53,7 @@ class SendMail extends ActionHook
                     throw new \Exception("Can't export: No module found which provides PDF export");
                 }
 
-                $html = Html::tag(
-                    'html',
-                    null,
-                    [
-                        Html::tag(
-                            'head',
-                            null,
-                            Html::tag(
-                                'style',
-                                null,
-                                new HtmlString(StyleSheet::forPdf())
-                            )
-                        ),
-                        Html::tag(
-                            'body',
-                            null,
-                            Html::tag(
-                                'div',
-                                ['class' => 'icinga-module module-reporting'],
-                                new HtmlString($report->toHtml())
-                            )
-                        )
-                    ]
-                );
-
-                $mail->attachPdf($pdfexport->htmlToPdf((string) $html), $name);
-
+		$mail->attachPdf($pdfexport->htmlToPdf($report->toPdf()), $name);
                 break;
             case 'csv':
                 $mail->attachCsv($report->toCsv(), $name);

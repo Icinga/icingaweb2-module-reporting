@@ -73,6 +73,12 @@ class Mail
      */
     public function getSubject()
     {
+        if (isset($this->subject)) {
+            return $this->subject;
+        }
+
+        $this->subject = 'Icinga Reporting';
+
         return $this->subject;
     }
 
