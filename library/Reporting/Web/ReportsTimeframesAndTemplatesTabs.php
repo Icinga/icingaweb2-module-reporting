@@ -10,7 +10,7 @@ trait ReportsTimeframesAndTemplatesTabs
      *
      * @return  \Icinga\Web\Widget\Tabs
      */
-    protected function createTabs()
+    public function createTabs()
     {
         $tabs = $this->getTabs();
 
@@ -30,6 +30,12 @@ trait ReportsTimeframesAndTemplatesTabs
             'title'     => $this->translate('Show templates'),
             'label'     => $this->translate('Templates'),
             'url'       => 'reporting/templates'
+        ]);
+
+        $tabs->add('downtimes', [
+            'title'     => $this->translate('Show downtimes'),
+            'label'     => $this->translate('Fake Downtimes'),
+            'url'       => 'reporting/downtimes'
         ]);
 
         return $tabs;
