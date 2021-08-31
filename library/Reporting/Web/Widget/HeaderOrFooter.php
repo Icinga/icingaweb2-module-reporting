@@ -3,10 +3,10 @@
 namespace Icinga\Module\Reporting\Web\Widget;
 
 use Icinga\Module\Reporting\Common\Macros;
-use ipl\Html\BaseHtmlElement;
 use ipl\Html\Html;
+use ipl\Html\HtmlDocument;
 
-class HeaderOrFooter extends BaseHtmlElement
+class HeaderOrFooter extends HtmlDocument
 {
     use Macros;
 
@@ -85,8 +85,6 @@ class HeaderOrFooter extends BaseHtmlElement
 
     protected function assemble()
     {
-        $this->getAttributes()->add('class', $this->type);
-
         for ($i = 1; $i <= 3; ++$i) {
             $this->add($this->createColumn($this->data, "{$this->type}_column{$i}"));
         }
