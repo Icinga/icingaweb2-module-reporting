@@ -7,9 +7,7 @@ use DateTime;
 use Exception;
 use Icinga\Module\Pdfexport\PrintableHtmlDocument;
 use Icinga\Module\Reporting\Web\Widget\Template;
-use ipl\Html\Html;
 use ipl\Html\HtmlDocument;
-use ipl\Html\HtmlString;
 use ipl\Sql;
 
 class Report
@@ -357,38 +355,10 @@ class Report
      */
     public function toPdf()
     {
-        $style = <<<'STYLE'
-<style type="text/css">
-@font-face {
-    font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-}
-
-.header,
-.footer {
-    display: flex;
-    justify-content: space-between;
-
-    font-size: 8px;
-    margin-left: 0.75cm;
-    margin-right: 0.75cm;
-    width: 100%;
-
-    > * {
-        margin-left: .25em;
-        margin-right: .25em;
-    }
-}
-
-p {
-    margin: 0;
-}
-</style>
-STYLE;
-
         $html = (new PrintableHtmlDocument())
             ->setTitle($this->getName())
             ->addAttributes(['class' => 'icinga-module module-reporting'])
-            ->add(new HtmlString($this->toHtml()));
+            ->addHtml($this->toHtml());
 
         if ($this->template !== null) {
             $this->template->setMacros([
@@ -398,18 +368,8 @@ STYLE;
             ]);
 
             $html->setCoverPage($this->template->getCoverPage()->setMacros($this->template->getMacros()));
-
-            $header = $this->template->getHeader()->setMacros($this->template->getMacros());
-            $html->setHeader(new HtmlString(
-                $style
-                . $header->render()
-            ));
-
-            $footer = $this->template->getFooter()->setMacros($this->template->getMacros());
-            $html->setFooter(new HtmlString(
-                $style
-                . $footer->render()
-            ));
+            $html->setHeader($this->template->getHeader()->setMacros($this->template->getMacros()));
+            $html->setFooter($this->template->getFooter()->setMacros($this->template->getMacros()));
         }
 
         return $html;
