@@ -35,25 +35,19 @@ class TimeframeForm extends CompatForm
         $flatpickr = new Flatpickr();
 
         $this->addDecoratedElement($flatpickr, 'text', 'start', [
-            'required'            => true,
-            'label'               => 'Start',
-            'placeholder'         => 'Select a start date or provide a textual datetime description',
-            'data-allow-input'    => true,
-            'data-enable-time'    => true,
-            'data-enable-seconds' => true,
-            'data-default-hour'   => '00'
+            'required'                      => true,
+            'label'                         => 'Start',
+            'placeholder'                   => 'Select a start date or provide a textual datetime description',
+            'data-flatpickr-default-hour'   => '00'
         ]);
 
         $this->addDecoratedElement($flatpickr, 'text', 'end', [
-            'required'             => true,
-            'label'                => 'End',
-            'placeholder'          => 'Select a end date or provide a textual datetime description',
-            'data-allow-input'     => true,
-            'data-enable-time'     => true,
-            'data-enable-seconds'  => true,
-            'data-default-hour'    => '23',
-            'data-default-minute'  => '59',
-            'data-default-seconds' => '59'
+            'required'                      => true,
+            'label'                         => 'End',
+            'placeholder'                   => 'Select a end date or provide a textual datetime description',
+            'data-flatpickrDefaultHour'     => '23',
+            'data-flatpickrDefaultMinute'   => '59',
+            'data-flatpickrDefaultSeconds'  => '59'
         ]);
 
         $this->addElement('submit', 'submit', [

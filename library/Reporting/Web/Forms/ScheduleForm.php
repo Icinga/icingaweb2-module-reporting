@@ -3,6 +3,8 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
+use DateTime;
+use Icinga\Application\Version;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedActions;
@@ -34,7 +36,7 @@ class ScheduleForm extends CompatForm
             $this->setId($schedule->getId());
 
             $values = [
-                'start'     => $schedule->getStart()->format('Y-m-d H:i'),
+                'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
                 'frequency' => $schedule->getFrequency(),
                 'action'    => $schedule->getAction()
             ] + $schedule->getConfig();
@@ -64,12 +66,19 @@ class ScheduleForm extends CompatForm
             'monthly'  => 'Monthly'
         ];
 
-        $this->addDecoratedElement(new Flatpickr(), 'text', 'start', [
-            'required'         => true,
-            'label'            => 'Start',
-            'placeholder'      => 'Choose date and time',
-            'data-enable-time' => true
-        ]);
+        if (version_compare(Version::VERSION, '2.9.0', '>=')) {
+            $this->addElement('localDateTime', 'start', [
+                'required'      => true,
+                'label'         => t('Start'),
+                'placeholder'   => t('Choose date and time')
+            ]);
+        } else {
+            $this->addDecoratedElement((new Flatpickr())->setAllowInput(false), 'text', 'start', [
+                'required'         => true,
+                'label'            => t('Start'),
+                'placeholder'      => t('Choose date and time')
+            ]);
+        }
 
         $this->addElement('select', 'frequency', [
             'required'  => true,
@@ -134,8 +143,12 @@ class ScheduleForm extends CompatForm
 
         $now = time() * 1000;
 
+        if (! $values['start'] instanceof DateTime) {
+            $values['start'] = DateTime::createFromFormat('Y-m-d H:i:s', $values['start']);
+        }
+
         $data = [
-            'start'     => \DateTime::createFromFormat('Y-m-d H:i', $values['start'])->getTimestamp() * 1000,
+            'start'     => $values['start']->getTimestamp() * 1000,
             'frequency' => $values['frequency'],
             'action'    => $values['action'],
             'mtime'     => $now
