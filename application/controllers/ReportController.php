@@ -12,10 +12,10 @@ use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
+use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
 use ipl\Html\Error;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
-use ipl\Web\Widget\Dropdown;
 
 class ReportController extends Controller
 {
@@ -146,12 +146,27 @@ class ReportController extends Controller
     {
         $reportId = $this->report->getId();
 
-        $download = (new Dropdown('Download'))
-            ->addLink('PDF', Url::fromPath('reporting/report/download?type=pdf', ['id' => $reportId]));
+        $download = (new CompatDropdown('Download'))
+            ->addLink(
+                'PDF',
+                Url::fromPath('reporting/report/download?type=pdf', ['id' => $reportId]),
+                null,
+                ['target' => '_blank']
+            );
 
         if ($this->report->providesData()) {
-            $download->addLink('CSV', Url::fromPath('reporting/report/download?type=csv', ['id' => $reportId]));
-            $download->addLink('JSON', Url::fromPath('reporting/report/download?type=json', ['id' => $reportId]));
+            $download->addLink(
+                'CSV',
+                Url::fromPath('reporting/report/download?type=csv', ['id' => $reportId]),
+                null,
+                ['target' => '_blank']
+            );
+            $download->addLink(
+                'JSON',
+                Url::fromPath('reporting/report/download?type=json', ['id' => $reportId]),
+                null,
+                ['target' => '_blank']
+            );
         }
 
         $actions = new ActionBar();
