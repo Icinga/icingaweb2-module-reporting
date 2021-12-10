@@ -10,10 +10,10 @@ use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
 use ipl\Sql\Select;
-use reportingipl\Web\Url;
-use reportingipl\Web\Widget\ButtonLink;
-use reportingipl\Web\Widget\Icon;
-use reportingipl\Web\Widget\Link;
+use ipl\Web\Url;
+use ipl\Web\Widget\ButtonLink;
+use ipl\Web\Widget\Icon;
+use ipl\Web\Widget\Link;
 
 class ReportsController extends Controller
 {

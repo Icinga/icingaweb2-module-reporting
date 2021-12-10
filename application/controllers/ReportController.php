@@ -12,13 +12,10 @@ use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
-use Icinga\Web\StyleSheet;
 use ipl\Html\Error;
-use ipl\Html\Html;
-use ipl\Html\HtmlString;
-use reportingipl\Web\Url;
-use reportingipl\Web\Widget\ActionBar;
-use reportingipl\Web\Widget\DropdownLink;
+use ipl\Web\Url;
+use ipl\Web\Widget\ActionBar;
+use ipl\Web\Widget\Dropdown;
 
 class ReportController extends Controller
 {
@@ -149,7 +146,7 @@ class ReportController extends Controller
     {
         $reportId = $this->report->getId();
 
-        $download = (new DropdownLink('Download'))
+        $download = (new Dropdown('Download'))
             ->addLink('PDF', Url::fromPath('reporting/report/download?type=pdf', ['id' => $reportId]));
 
         if ($this->report->providesData()) {

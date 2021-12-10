@@ -10,8 +10,8 @@ use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
 use ipl\Sql\Select;
-use reportingipl\Web\Url;
-use reportingipl\Web\Widget\ButtonLink;
+use ipl\Web\Url;
+use ipl\Web\Widget\ButtonLink;
 
 class TimeframesController extends Controller
 {
