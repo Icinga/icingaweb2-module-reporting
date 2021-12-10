@@ -27,6 +27,17 @@
   }
 }
 
+.sla-table {
+  td:nth-child(1),
+  td:nth-child(2) {
+    word-break: break-word;
+  }
+
+  td:nth-child(3) {
+    white-space: nowrap;
+  }
+}
+
 .sla-table > tbody::before {
   content: "\200C";
   display: block;
