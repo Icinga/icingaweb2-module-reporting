@@ -180,3 +180,28 @@
 .preview .page {
   .page-size-a4();
 }
+
+/* Form fallback styles, remove once <=2.9.5 support is dropped */
+
+.icinga-controls {
+  input[type="file"] {
+    background-color: @low-sat-blue;
+  }
+
+  button[type="button"] {
+    background-color: @low-sat-blue;
+  }
+}
+
+form.icinga-form {
+  input[type="file"] {
+    flex: 1 1 auto;
+    width: 0;
+  }
+
+  button[type="button"] {
+    line-height: normal;
+  }
+}
+
+/* Form fallback styles end */

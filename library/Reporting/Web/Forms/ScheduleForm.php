@@ -7,13 +7,13 @@ use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
-use Icinga\Module\Reporting\Web\DivDecorator;
 use Icinga\Module\Reporting\Web\Flatpickr;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
-use ipl\Html\FormElement\SubmitElementInterface;
-use ipl\Html\FormElement\TextareaElement;
+use ipl\Web\Compat\CompatForm;
 
-class ScheduleForm extends Form
+class ScheduleForm extends CompatForm
 {
     use Database;
     use DecoratedElement;
@@ -54,7 +54,7 @@ class ScheduleForm extends Form
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
         $frequency = [
             'minutely' => 'Minutely',
@@ -105,15 +105,16 @@ class ScheduleForm extends Form
         ]);
 
         if ($this->id !== null) {
-            $this->addElement('submit', 'remove', [
+            /** @var FormSubmitElement $removeButton */
+            $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => 'Remove Schedule',
-                'class'          => 'remove-button',
+                'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
+            $this->registerElement($removeButton);
+            $this->getElement('submit')->getWrapper()->prepend($removeButton);
 
-            /** @var SubmitElementInterface $remove */
-            $remove = $this->getElement('remove');
-            if ($remove->hasBeenPressed()) {
+            if ($removeButton->hasBeenPressed()) {
                 $this->getDb()->delete('schedule', ['id = ?' => $this->id]);
 
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons
@@ -121,13 +122,6 @@ class ScheduleForm extends Form
                 $this->valid = true;
 
                 return;
-            }
-        }
-
-        // TODO(el): Remove once ipl/html's TextareaElement sets the value as content
-        foreach ($this->getElements() as $element) {
-            if ($element instanceof TextareaElement && $element->hasValue()) {
-                $element->setContent($element->getValue());
             }
         }
     }

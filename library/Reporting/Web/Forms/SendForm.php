@@ -7,10 +7,10 @@ use Icinga\Module\Reporting\Actions\SendMail;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Report;
-use Icinga\Module\Reporting\Web\DivDecorator;
-use ipl\Html\Form;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Web\Compat\CompatForm;
 
-class SendForm extends Form
+class SendForm extends CompatForm
 {
     use Database;
     use ProvidedReports;
@@ -27,7 +27,7 @@ class SendForm extends Form
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
         $types = ['pdf' => 'PDF'];
 
