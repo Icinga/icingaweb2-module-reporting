@@ -6,11 +6,12 @@ namespace Icinga\Module\Reporting\Web\Forms;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
-use Icinga\Module\Reporting\Web\DivDecorator;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
-use ipl\Html\FormElement\SubmitElementInterface;
+use ipl\Web\Compat\CompatForm;
 
-class ReportForm extends Form
+class ReportForm extends CompatForm
 {
     use Database;
     use ProvidedReports;
@@ -29,7 +30,7 @@ class ReportForm extends Form
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
         $this->addElement('text', 'name', [
             'required'  => true,
@@ -76,15 +77,16 @@ class ReportForm extends Form
         ]);
 
         if ($this->id !== null) {
-            $this->addElement('submit', 'remove', [
+            /** @var FormSubmitElement $removeButton */
+            $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => 'Remove Report',
-                'class'          => 'remove-button',
+                'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
+            $this->registerElement($removeButton);
+            $this->getElement('submit')->getWrapper()->prepend($removeButton);
 
-            /** @var SubmitElementInterface $remove */
-            $remove = $this->getElement('remove');
-            if ($remove->hasBeenPressed()) {
+            if ($removeButton->hasBeenPressed()) {
                 $this->getDb()->delete('report', ['id = ?' => $this->id]);
 
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons
@@ -93,13 +95,6 @@ class ReportForm extends Form
                 $this->valid = true;
 
                 return;
-            }
-        }
-
-        // TODO(el): Remove once ipl/html's TextareaElement sets the value as content
-        foreach ($this->getElements() as $element) {
-            if ($element instanceof TextareaElement && $element->hasValue()) {
-                $element->setContent($element->getValue());
             }
         }
     }

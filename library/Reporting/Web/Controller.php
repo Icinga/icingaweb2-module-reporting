@@ -4,7 +4,7 @@
 namespace Icinga\Module\Reporting\Web;
 
 use ipl\Html\Form;
-use reportingipl\Web\Compat\CompatController;
+use ipl\Web\Compat\CompatController;
 
 class Controller extends CompatController
 {

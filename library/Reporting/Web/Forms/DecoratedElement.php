@@ -3,11 +3,11 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
-use ipl\Html\FormDecorator\DecoratorInterface;
+use ipl\Html\Contract\FormElementDecorator;
 
 trait DecoratedElement
 {
-    protected function addDecoratedElement(DecoratorInterface $decorator, $type, $name, array $attributes)
+    protected function addDecoratedElement(FormElementDecorator $decorator, $type, $name, array $attributes)
     {
         $element = $this->createElement($type, $name, $attributes);
         $decorator->decorate($element);

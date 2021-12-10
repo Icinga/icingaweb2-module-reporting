@@ -4,12 +4,12 @@
 namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\Web\DivDecorator;
 use Icinga\Module\Reporting\Web\Flatpickr;
-use ipl\Html\Form;
-use ipl\Html\FormElement\SubmitElementInterface;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Html\Contract\FormSubmitElement;
+use ipl\Web\Compat\CompatForm;
 
-class TimeframeForm extends Form
+class TimeframeForm extends CompatForm
 {
     use Database;
     use DecoratedElement;
@@ -25,7 +25,7 @@ class TimeframeForm extends Form
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
         $this->addElement('text', 'name', [
             'required'  => true,
@@ -35,25 +35,19 @@ class TimeframeForm extends Form
         $flatpickr = new Flatpickr();
 
         $this->addDecoratedElement($flatpickr, 'text', 'start', [
-            'required'            => true,
-            'label'               => 'Start',
-            'placeholder'         => 'Select a start date or provide a textual datetime description',
-            'data-allow-input'    => true,
-            'data-enable-time'    => true,
-            'data-enable-seconds' => true,
-            'data-default-hour'   => '00'
+            'required'                      => true,
+            'label'                         => 'Start',
+            'placeholder'                   => 'Select a start date or provide a textual datetime description',
+            'data-flatpickr-default-hour'   => '00'
         ]);
 
         $this->addDecoratedElement($flatpickr, 'text', 'end', [
-            'required'             => true,
-            'label'                => 'End',
-            'placeholder'          => 'Select a end date or provide a textual datetime description',
-            'data-allow-input'     => true,
-            'data-enable-time'     => true,
-            'data-enable-seconds'  => true,
-            'data-default-hour'    => '23',
-            'data-default-minute'  => '59',
-            'data-default-seconds' => '59'
+            'required'                      => true,
+            'label'                         => 'End',
+            'placeholder'                   => 'Select a end date or provide a textual datetime description',
+            'data-flatpickrDefaultHour'     => '23',
+            'data-flatpickrDefaultMinute'   => '59',
+            'data-flatpickrDefaultSeconds'  => '59'
         ]);
 
         $this->addElement('submit', 'submit', [
@@ -61,15 +55,16 @@ class TimeframeForm extends Form
         ]);
 
         if ($this->id !== null) {
-            $this->addElement('submit', 'remove', [
+            /** @var FormSubmitElement $removeButton */
+            $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => 'Remove Time Frame',
-                'class'          => 'remove-button',
+                'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
+            $this->registerElement($removeButton);
+            $this->getElement('submit')->getWrapper()->prepend($removeButton);
 
-            /** @var SubmitElementInterface $remove */
-            $remove = $this->getElement('remove');
-            if ($remove->hasBeenPressed()) {
+            if ($removeButton->hasBeenPressed()) {
                 $this->getDb()->delete('timeframe', ['id = ?' => $this->id]);
 
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons

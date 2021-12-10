@@ -3,17 +3,19 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
+use DateTime;
+use Icinga\Application\Version;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
-use Icinga\Module\Reporting\Web\DivDecorator;
 use Icinga\Module\Reporting\Web\Flatpickr;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
-use ipl\Html\FormElement\SubmitElementInterface;
-use ipl\Html\FormElement\TextareaElement;
+use ipl\Web\Compat\CompatForm;
 
-class ScheduleForm extends Form
+class ScheduleForm extends CompatForm
 {
     use Database;
     use DecoratedElement;
@@ -34,7 +36,7 @@ class ScheduleForm extends Form
             $this->setId($schedule->getId());
 
             $values = [
-                'start'     => $schedule->getStart()->format('Y-m-d H:i'),
+                'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
                 'frequency' => $schedule->getFrequency(),
                 'action'    => $schedule->getAction()
             ] + $schedule->getConfig();
@@ -54,7 +56,7 @@ class ScheduleForm extends Form
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
         $frequency = [
             'minutely' => 'Minutely',
@@ -64,12 +66,19 @@ class ScheduleForm extends Form
             'monthly'  => 'Monthly'
         ];
 
-        $this->addDecoratedElement(new Flatpickr(), 'text', 'start', [
-            'required'         => true,
-            'label'            => 'Start',
-            'placeholder'      => 'Choose date and time',
-            'data-enable-time' => true
-        ]);
+        if (version_compare(Version::VERSION, '2.9.0', '>=')) {
+            $this->addElement('localDateTime', 'start', [
+                'required'      => true,
+                'label'         => t('Start'),
+                'placeholder'   => t('Choose date and time')
+            ]);
+        } else {
+            $this->addDecoratedElement((new Flatpickr())->setAllowInput(false), 'text', 'start', [
+                'required'         => true,
+                'label'            => t('Start'),
+                'placeholder'      => t('Choose date and time')
+            ]);
+        }
 
         $this->addElement('select', 'frequency', [
             'required'  => true,
@@ -105,15 +114,16 @@ class ScheduleForm extends Form
         ]);
 
         if ($this->id !== null) {
-            $this->addElement('submit', 'remove', [
+            /** @var FormSubmitElement $removeButton */
+            $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => 'Remove Schedule',
-                'class'          => 'remove-button',
+                'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
+            $this->registerElement($removeButton);
+            $this->getElement('submit')->getWrapper()->prepend($removeButton);
 
-            /** @var SubmitElementInterface $remove */
-            $remove = $this->getElement('remove');
-            if ($remove->hasBeenPressed()) {
+            if ($removeButton->hasBeenPressed()) {
                 $this->getDb()->delete('schedule', ['id = ?' => $this->id]);
 
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons
@@ -121,13 +131,6 @@ class ScheduleForm extends Form
                 $this->valid = true;
 
                 return;
-            }
-        }
-
-        // TODO(el): Remove once ipl/html's TextareaElement sets the value as content
-        foreach ($this->getElements() as $element) {
-            if ($element instanceof TextareaElement && $element->hasValue()) {
-                $element->setContent($element->getValue());
             }
         }
     }
@@ -140,8 +143,12 @@ class ScheduleForm extends Form
 
         $now = time() * 1000;
 
+        if (! $values['start'] instanceof DateTime) {
+            $values['start'] = DateTime::createFromFormat('Y-m-d H:i:s', $values['start']);
+        }
+
         $data = [
-            'start'     => \DateTime::createFromFormat('Y-m-d H:i', $values['start'])->getTimestamp() * 1000,
+            'start'     => $values['start']->getTimestamp() * 1000,
             'frequency' => $values['frequency'],
             'action'    => $values['action'],
             'mtime'     => $now

@@ -5,16 +5,15 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\Web\DivDecorator;
-use ipl\Html\Form;
-use ipl\Html\FormElement\SubmitElementInterface;
+use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
+use ipl\Web\Compat\CompatForm;
 use reportingipl\Html\FormElement\FileElement;
 
-class TemplateForm extends Form
+class TemplateForm extends CompatForm
 {
     use Database;
-
 
     /** @var bool Hack to disable the {@link onSuccess()} code upon deletion of the template */
     protected $callOnSuccess;
@@ -42,9 +41,9 @@ class TemplateForm extends Form
 
     protected function assemble()
     {
-        $this->setAttribute('enctype', 'multipart/form-data');
+        $this->setDefaultElementDecorator(new CompatDecorator());
 
-        $this->setDefaultElementDecorator(new DivDecorator());
+        $this->setAttribute('enctype', 'multipart/form-data');
 
         $this->add(Html::tag('h2', 'Template Settings'));
 
@@ -66,7 +65,7 @@ class TemplateForm extends Form
         ) {
             $this->add(Html::tag(
                 'p',
-                ['style' => ['margin-left: 15em;']],
+                ['style' => ['margin-left: 14em;']],
                 'Upload a new background image to override the existing one'
             ));
 
@@ -85,7 +84,7 @@ class TemplateForm extends Form
         ) {
             $this->add(Html::tag(
                 'p',
-                ['style' => ['margin-left: 15em;']],
+                ['style' => ['margin-left: 14em;']],
                 'Upload a new logo to override the existing one'
             ));
 
@@ -121,15 +120,16 @@ class TemplateForm extends Form
         ]);
 
         if ($this->template !== null) {
-            $this->addElement('submit', 'remove', [
+            /** @var FormSubmitElement $removeButton */
+            $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => 'Remove Template',
-                'class'          => 'remove-button',
+                'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
+            $this->registerElement($removeButton);
+            $this->getElement('submit')->getWrapper()->prepend($removeButton);
 
-            /** @var SubmitElementInterface $remove */
-            $remove = $this->getElement('remove');
-            if ($remove->hasBeenPressed()) {
+            if ($removeButton->hasBeenPressed()) {
                 $this->getDb()->delete('template', ['id = ?' => $this->template->id]);
 
                 // Stupid cheat because ipl/html is not capable of multiple submit buttons
@@ -253,7 +253,7 @@ class TemplateForm extends Form
                 ) {
                     $this->add(Html::tag(
                         'p',
-                        ['style' => ['margin-left: 15em;']],
+                        ['style' => ['margin-left: 14em;']],
                         'Upload a new image to override the existing one'
                     ));
                 }

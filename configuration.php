@@ -7,7 +7,6 @@ namespace Icinga\Module\Reporting {
 
     /** @var \Icinga\Application\Modules\Module $this */
 
-    $this->provideCssFile('forms.less');
     $this->provideCssFile('system-report.css');
 
     if (version_compare(Version::VERSION, '2.9.0', '<')) {
