@@ -14,7 +14,7 @@
 
 .sla-column {
   border-radius: 0.5em;
-  color: #fff;
+  color: @text-color-on-icinga-blue;
   text-align: center;
   width: 10em;
 
@@ -66,12 +66,11 @@
   .dropdown-menu {
     display: none;
     min-width: 10em;
-    border: 1px solid #ddd;
-    background: white;
+    border: 1px solid @gray-light;
+    background: @body-bg-color;
     margin: -.25em;
     border-radius: .25em;
     padding: .25em;
-
     position: absolute;
   }
 
@@ -87,6 +86,7 @@
 
     &.action-link:hover {
       padding: .5em;
+      background: @tr-hover-color;
       .rounded-corners(0)
     }
   }
