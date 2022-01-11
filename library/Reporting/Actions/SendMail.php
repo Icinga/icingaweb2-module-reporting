@@ -34,6 +34,10 @@ class SendMail extends ActionHook
 
         $mail->setFrom(Config::module('reporting')->get('mail', 'from', 'reporting@icinga'));
 
+        if (isset($config['subject'])) {
+            $mail->setSubject($config['subject']);
+        }
+
         switch ($config['type']) {
             case 'pdf':
                 $pdfexport = null;
@@ -108,13 +112,18 @@ class SendMail extends ActionHook
 
         $form->addElement('select', 'type', [
             'required'  => true,
-            'label'     => 'Type',
+            'label'     => t('Type'),
             'options'   => $types
+        ]);
+
+        $form->addElement('text', 'subject', [
+            'label'         => t('Subject'),
+            'placeholder'   => Mail::DEFAULT_SUBJECT
         ]);
 
         $form->addElement('textarea', 'recipients', [
             'required' => true,
-            'label'    => 'Recipients'
+            'label'    => t('Recipients')
         ]);
     }
 }
