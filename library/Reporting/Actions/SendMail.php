@@ -4,15 +4,12 @@
 namespace Icinga\Module\Reporting\Actions;
 
 use Icinga\Application\Config;
-use Icinga\Application\Hook;
+use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
 use Icinga\Module\Reporting\Report;
 use Icinga\Util\StringHelper;
-use Icinga\Web\StyleSheet;
 use ipl\Html\Form;
-use ipl\Html\Html;
-use ipl\Html\HtmlString;
 
 class SendMail extends ActionHook
 {
@@ -36,48 +33,7 @@ class SendMail extends ActionHook
 
         switch ($config['type']) {
             case 'pdf':
-                $pdfexport = null;
-
-                if (Hook::has('Pdfexport')) {
-                    $pdfexport = Hook::first('Pdfexport');
-
-                    if (! $pdfexport->isSupported()) {
-                        throw new \Exception(
-                            sprintf("Can't export: %s does not support exporting PDFs", get_class($pdfexport))
-                        );
-                    }
-                }
-
-                if (! $pdfexport) {
-                    throw new \Exception("Can't export: No module found which provides PDF export");
-                }
-
-                $html = Html::tag(
-                    'html',
-                    null,
-                    [
-                        Html::tag(
-                            'head',
-                            null,
-                            Html::tag(
-                                'style',
-                                null,
-                                new HtmlString(StyleSheet::forPdf())
-                            )
-                        ),
-                        Html::tag(
-                            'body',
-                            null,
-                            Html::tag(
-                                'div',
-                                ['class' => 'icinga-module module-reporting'],
-                                new HtmlString($report->toHtml())
-                            )
-                        )
-                    ]
-                );
-
-                $mail->attachPdf($pdfexport->htmlToPdf((string) $html), $name);
+                $mail->attachPdf(Pdfexport::first()->htmlToPdf($report->toPdf()), $name);
 
                 break;
             case 'csv':
