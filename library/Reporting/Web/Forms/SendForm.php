@@ -29,23 +29,7 @@ class SendForm extends CompatForm
     {
         $this->setDefaultElementDecorator(new CompatDecorator());
 
-        $types = ['pdf' => 'PDF'];
-
-        if ($this->report->providesData()) {
-            $types['csv'] = 'CSV';
-            $types['json'] = 'JSON';
-        }
-
-        $this->addElement('select', 'type', [
-            'required'  => true,
-            'label'     => 'Type',
-            'options'   => [null => 'Please choose'] + $types
-        ]);
-
-        $this->addElement('textarea', 'recipients', [
-            'required' => true,
-            'label'    => 'Recipients'
-        ]);
+        (new SendMail())->initConfigForm($this, $this->report);
 
         $this->addElement('submit', 'submit', [
             'label' => 'Send Report'
