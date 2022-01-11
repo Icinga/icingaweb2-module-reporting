@@ -11,10 +11,13 @@ use Zend_Mime_Part;
 class Mail
 {
     /** @var string */
+    const DEFAULT_SUBJECT = 'Icinga Reporting';
+
+    /** @var string */
     protected $from;
 
     /** @var string */
-    protected $subject = 'Icinga Reporting';
+    protected $subject = self::DEFAULT_SUBJECT;
 
     /** @var Zend_Mail_Transport_Sendmail */
     protected $transport;
