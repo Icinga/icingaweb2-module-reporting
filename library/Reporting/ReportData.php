@@ -64,7 +64,7 @@ class ReportData implements \Countable
         return $totals;
     }
 
-    public function count()
+    public function count(): int
     {
         return count((array) $this->getRows());
     }
