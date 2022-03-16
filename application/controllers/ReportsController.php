@@ -91,7 +91,7 @@ class ReportsController extends Controller
 
     public function newAction()
     {
-        $this->setTitle($this->translate('New Report'));
+        $this->addTitleTab($this->translate('New Report'));
 
         $form = new ReportForm();
         $form->handleRequest(ServerRequest::fromGlobals());

@@ -77,7 +77,7 @@ class TemplatesController extends Controller
 
     public function newAction()
     {
-        $this->setTitle('New Title');
+        $this->addTitleTab('New Template');
 
         $form = new TemplateForm();
 

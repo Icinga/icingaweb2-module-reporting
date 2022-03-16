@@ -23,7 +23,7 @@ class TimeframeController extends Controller
 
     public function editAction()
     {
-        $this->setTitle($this->translate('Edit Time Frame'));
+        $this->addTitleTab($this->translate('Edit Time Frame'));
 
         $values = [
             'name'  => $this->timeframe->getName(),
