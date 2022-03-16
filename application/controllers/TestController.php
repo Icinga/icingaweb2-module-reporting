@@ -40,7 +40,7 @@ class TestController extends Controller
             ]));
         }
 
-        $this->setTitle('Timeframes');
+        $this->addTitleTab('Timeframes');
 
         $this->addContent($table);
     }

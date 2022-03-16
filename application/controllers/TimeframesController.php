@@ -80,7 +80,7 @@ class TimeframesController extends Controller
 
     public function newAction()
     {
-        $this->setTitle($this->translate('New Timeframe'));
+        $this->addTitleTab($this->translate('New Timeframe'));
 
         $form = new TimeframeForm();
         $form->handleRequest(ServerRequest::fromGlobals());

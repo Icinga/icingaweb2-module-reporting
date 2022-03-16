@@ -31,7 +31,7 @@ class ReportController extends Controller
 
     public function indexAction()
     {
-        $this->setTitle($this->report->getName());
+        $this->addTitleTab($this->report->getName());
 
         $this->addControl($this->assembleActions());
 
@@ -44,7 +44,7 @@ class ReportController extends Controller
 
     public function editAction()
     {
-        $this->setTitle('Edit Report');
+        $this->addTitleTab('Edit Report');
 
         $values = [
             'name'      => $this->report->getName(),
@@ -73,7 +73,7 @@ class ReportController extends Controller
 
     public function sendAction()
     {
-        $this->setTitle('Send Report');
+        $this->addTitleTab('Send Report');
 
         $form = new SendForm();
         $form
@@ -87,7 +87,7 @@ class ReportController extends Controller
 
     public function scheduleAction()
     {
-        $this->setTitle('Schedule');
+        $this->addTitleTab('Schedule');
 
         $form = new ScheduleForm();
         $form
