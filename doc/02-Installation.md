@@ -52,22 +52,21 @@ After, you can import the schema using the following command:
 psql -U reporting reporting -a -f schema/postgresql.sql
 ```
 
-## Module Installation <a id="installation-module">
+## Module Installation
 
-1. Just drop this module to a `reporting` subfolder in your Icinga Web 2 module path.
+1. Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
+Use `reporting` as name.
 
-2. Log in with a privileged user in Icinga Web 2 and enable the module in `Configuration -> Modules -> reporting`.
-Or use the `icingacli` and run `icingacli module enable reporting`.
-
-3. Once you've set up the database, create a new Icinga Web 2 resource for it using the
+2. Once you've set up the database, create a new Icinga Web 2 resource for it using the
 `Configuration -> Application -> Resources` menu. Make sure that you set the character set to `utf8mb4`.
 
-4. The next step involves telling the Reporting module which database resource to use. This can be done in
-`Configuration -> Modules -> reporting -> Backend`.
+3. The next step involves telling the Reporting module which database resource to use. This can be done in
+`Configuration -> Modules -> reporting -> Backend`. If you've used `reporting` as name for the resource,
+you can skip this step.
 
 This concludes the installation. You should now be able create reports.
 
-## Scheduler Daemon <a id="installation-scheduler-daemon">
+## Scheduler Daemon
 
 There is a daemon for generating and distributing reports on a schedule if configured:
 
