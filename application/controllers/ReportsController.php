@@ -24,13 +24,13 @@ class ReportsController extends Controller
     {
         $this->createTabs()->activate('reports');
 
-        $newReport = new ButtonLink(
-            $this->translate('New Report'),
-            Url::fromPath('reporting/reports/new')->getAbsoluteUrl('&'),
-            'plus'
-        );
-
-        $this->addControl($newReport);
+        if ($this->hasPermission('reporting/reports')) {
+            $this->addControl(new ButtonLink(
+                $this->translate('New Report'),
+                Url::fromPath('reporting/reports/new'),
+                'plus'
+            ));
+        }
 
         $tableRows = [];
 
@@ -91,6 +91,7 @@ class ReportsController extends Controller
 
     public function newAction()
     {
+        $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('New Report'));
 
         $form = new ReportForm();
