@@ -2,6 +2,7 @@
 
 1. [Backend](#backend)
 2. [Mail](#mail)
+3. [Permissions](#permissions)
 
 ## Backend
 
@@ -19,3 +20,14 @@ as name for the resource, this is optional.
 
 At `Configuration -> Modules -> reporting -> Mail` you can configure the address
 that is used as the sender's address (From) in E-mails.
+
+## Permissions
+
+There are four permissions that can be used to control what can be managed by whom.
+
+Permission           | Applies to
+---------------------|----------------
+reporting/reports    | Reports (create, edit, delete)
+reporting/schedules  | Schedules (create, edit, delete)
+reporting/templates  | Templates (create, edit, delete)
+reporting/timeframes | Timeframes (create, edit, delete)
