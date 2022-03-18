@@ -8,7 +8,6 @@ use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
 use Icinga\Module\Reporting\Report;
-use Icinga\Util\StringHelper;
 use ipl\Html\Form;
 
 class SendMail extends ActionHook
@@ -52,7 +51,7 @@ class SendMail extends ActionHook
                 throw new \InvalidArgumentException();
         }
 
-        $recipients = StringHelper::trimSplit($config['recipients']);
+        $recipients = array_filter(preg_split('/[\s,]+/', $config['recipients']));
 
         $mail->send(null, $recipients);
     }
