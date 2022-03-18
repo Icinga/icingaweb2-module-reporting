@@ -362,9 +362,14 @@ class Report
 
         if ($this->template !== null) {
             $this->template->setMacros([
-                'date'       => (new DateTime())->format('jS M, Y'),
-                'time_frame' => $this->timeframe->getName(),
-                'title'      => $this->name
+                'title'               => $this->name,
+                'date'                => (new DateTime())->format('jS M, Y'),
+                'time_frame'          => $this->timeframe->getName(),
+                'time_frame_absolute' => sprintf(
+                    'From %s to %s',
+                    $this->timeframe->getTimerange()->getStart()->format('r'),
+                    $this->timeframe->getTimerange()->getEnd()->format('r')
+                )
             ]);
 
             $html->setCoverPage($this->template->getCoverPage()->setMacros($this->template->getMacros()));

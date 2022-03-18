@@ -35,6 +35,9 @@ class HeaderOrFooter extends HtmlDocument
             case 'time_frame':
                 $resolved = Html::tag('p', $this->getMacro('time_frame'));
                 break;
+            case 'time_frame_absolute':
+                $resolved = Html::tag('p', $this->getMacro('time_frame_absolute'));
+                break;
             case 'page_number':
                 $resolved = Html::tag('span', ['class' => 'pageNumber']);
                 break;

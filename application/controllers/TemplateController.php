@@ -27,9 +27,10 @@ class TemplateController extends Controller
 
         $template
             ->setMacros([
-                'date'       => (new DateTime())->format('jS M, Y'),
-                'time_frame' => 'Time Frame',
-                'title'      => 'Icinga Report Preview'
+                'date'                => (new DateTime())->format('jS M, Y'),
+                'time_frame'          => 'Time Frame',
+                'time_frame_absolute' => 'Time Frame (absolute)',
+                'title'               => 'Icinga Report Preview'
             ])
             ->setPreview(true);
 
