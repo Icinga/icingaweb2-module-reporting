@@ -64,7 +64,7 @@ Use `reporting` as name.
 `Configuration -> Modules -> reporting -> Backend`. If you've used `reporting` as name for the resource,
 you can skip this step.
 
-This concludes the installation. You should now be able create reports.
+This concludes the installation. Now continue with the [configuration](03-Configuration.md).
 
 ## Scheduler Daemon
 
