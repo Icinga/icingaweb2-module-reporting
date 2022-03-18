@@ -16,6 +16,7 @@ use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
 use ipl\Html\Error;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
+use Icinga\Util\Environment;
 
 class ReportController extends Controller
 {
@@ -34,6 +35,9 @@ class ReportController extends Controller
         $this->addTitleTab($this->report->getName());
 
         $this->addControl($this->assembleActions());
+
+        Environment::raiseExecutionTime();
+        Environment::raiseMemoryLimit();
 
         try {
             $this->addContent($this->report->toHtml());
@@ -75,6 +79,9 @@ class ReportController extends Controller
     {
         $this->addTitleTab('Send Report');
 
+        Environment::raiseExecutionTime();
+        Environment::raiseMemoryLimit();
+
         $form = new SendForm();
         $form
             ->setReport($this->report)
@@ -102,6 +109,9 @@ class ReportController extends Controller
     public function downloadAction()
     {
         $type = $this->params->getRequired('type');
+
+        Environment::raiseExecutionTime();
+        Environment::raiseMemoryLimit();
 
         $name = sprintf(
             '%s (%s) %s',
