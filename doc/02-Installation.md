@@ -1,8 +1,8 @@
-# Installation <a id="installation"></a>
+# Installation
 
-## Requirements <a id="installation-requirements">
+## Requirements
 
-* PHP (>= 7.2)
+* PHP (>= 7.0)
 * MySQL / MariaDB or PostgreSQL
 * [Icinga Web 2](https://github.com/Icinga/icingaweb2) (>= 2.7)
 * [Icinga PDF Export](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.10)
@@ -12,7 +12,7 @@ If your Icinga Web 2 is **not** v2.9+, the following modules are also required:
 * [reactbundle](https://github.com/Icinga/icingaweb2-module-reactbundle) (0.9.0)
 * [Icinga PHP Library (ipl)](https://github.com/Icinga/icingaweb2-module-ipl) (0.5.0)
 
-## Database Setup <a id="installation-database-setup">
+## Database Setup
 
 ### MySQL / MariaDB
 
