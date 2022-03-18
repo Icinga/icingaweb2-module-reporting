@@ -17,11 +17,18 @@ class SelectBackendForm extends ConfigForm
     public function createElements(array $formData)
     {
         $dbResources = ResourceFactory::getResourceConfigs('db')->keys();
+        $options = array_combine($dbResources, $dbResources);
+
+        $default = null;
+        if (isset($options['reporting'])) {
+            $default = 'reporting';
+        }
 
         $this->addElement('select', 'backend_resource', [
             'label'         => $this->translate('Database'),
             'description'   => $this->translate('Database resource'),
-            'multiOptions'  => array_combine($dbResources, $dbResources),
+            'multiOptions'  => $options,
+            'value'         => $default,
             'required'      => true
         ]);
     }
