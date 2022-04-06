@@ -304,6 +304,7 @@ class Report
     public function toCsv()
     {
         $timerange = $this->getTimeframe()->getTimerange();
+        $convertFloats = version_compare(PHP_VERSION, '8.0.0', '<');
 
         $csv = [];
 
@@ -314,7 +315,16 @@ class Report
                 $data = $implementation->getData($timerange, $reportlet->getConfig());
                 $csv[] = array_merge($data->getDimensions(), $data->getValues());
                 foreach ($data->getRows() as $row) {
-                    $csv[] = array_merge($row->getDimensions(), $row->getValues());
+                    $values = $row->getValues();
+                    if ($convertFloats) {
+                        foreach ($values as &$value) {
+                            if (is_float($value)) {
+                                $value = sprintf('%.4F', $value);
+                            }
+                        }
+                    }
+
+                    $csv[] = array_merge($row->getDimensions(), $values);
                 }
 
                 break;
