@@ -161,7 +161,7 @@ class Mail
     {
         $mail = new Zend_Mail('UTF-8');
 
-        $mail->setFrom($this->getFrom());
+        $mail->setFrom($this->getFrom(), '');
         $mail->addTo($recipient);
         $mail->setSubject($this->getSubject());
 
