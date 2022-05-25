@@ -168,7 +168,7 @@ class Mail
         if ($body && (strlen($body) !== strlen(strip_tags($body)))) {
             $mail->setBodyHtml($body);
         } else {
-            $mail->setBodyText($body);
+            $mail->setBodyText($body ?? '');
         }
 
         foreach ($this->attachments as $attachment) {
