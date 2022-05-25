@@ -165,7 +165,7 @@ class Mail
         $mail->addTo($recipient);
         $mail->setSubject($this->getSubject());
 
-        if (strlen($body) !== strlen(strip_tags($body))) {
+        if ($body && (strlen($body) !== strlen(strip_tags($body)))) {
             $mail->setBodyHtml($body);
         } else {
             $mail->setBodyText($body);
