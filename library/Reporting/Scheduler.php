@@ -149,27 +149,21 @@ class Scheduler
         }
 
         $next = clone $start;
-        $next->modify($modify);
-        $interval = $next->getTimestamp() - $start->getTimestamp();
-
-        $current = $start->getTimestamp() - $now->getTimestamp();
 
         printf("Scheduling job %s to run at %s.\n", $name, $start->format('Y-m-d H:i:s'));
 
-        $loop = function () use (&$loop, $name, $callback, $interval, $schedule) {
+        $loop = function () use (&$loop, $name, $callback, $next, $modify, $schedule) {
             $callback();
+            $next->modify($modify);
 
-            $nextRun = (new \DateTime())
-                ->add(new \DateInterval("PT{$interval}S"));
+            printf("Scheduling job %s to run at %s.\n", $name, $next->format('Y-m-d H:i:s'));
 
-            printf("Scheduling job %s to run at %s.\n", $name, $nextRun->format('Y-m-d H:i:s'));
-
-            $timer = $this->loop->addTimer($interval, $loop);
+            $timer = $this->loop->addTimer(($next->getTimestamp() - (new \DateTime())->getTimestamp()), $loop);
 
             $this->timers[$schedule->getChecksum()] = $timer;
         };
 
-        $timer = $this->loop->addTimer($current, $loop);
+        $timer = $this->loop->addTimer($start->getTimestamp() - $now->getTimestamp(), $loop);
 
         $this->timers[$schedule->getChecksum()] = $timer;
     }
