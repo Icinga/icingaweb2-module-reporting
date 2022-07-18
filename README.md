@@ -10,7 +10,11 @@ Icinga Reporting is the central component for reporting related functionality in
 framework Icinga Web 2. The engine allows you to create reports over a specified time period for ad-hoc and scheduled
 generation of reports. Other modules use the provided functionality in order to provide concrete reports.
 
-If you are looking for SLA reports for your hosts and services, please also install the
+## Host/Service SLA Reports
+
+With Icinga DB Web there is no additional module required.
+
+If you are still using the monitoring module, please also install the
 [idoreports](https://github.com/Icinga/icingaweb2-module-idoreports) module.
 
 ## Documentation
