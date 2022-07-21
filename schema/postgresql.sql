@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION unix_timestamp(timestamp with time zone DEFAULT NOW()
   AS 'SELECT EXTRACT(EPOCH FROM $1)::bigint'
   LANGUAGE SQL;
 
-CREATE TYPE frequency AS ENUM ('minutely', 'hourly', 'daily', 'weekly', 'monthly');
+CREATE TYPE frequency AS ENUM ('minutely', 'hourly', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly');
 
 CREATE TABLE template (
   id serial PRIMARY KEY,

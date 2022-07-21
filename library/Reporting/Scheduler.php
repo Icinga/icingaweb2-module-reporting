@@ -133,6 +133,12 @@ class Scheduler
             case 'monthly':
                 $modify = '+1 month';
                 break;
+            case 'quarterly':
+                $modify = '+3 months';
+                break;
+            case 'yearly':
+                $modify = '+12 months';
+                break;
             default:
                 throw new \InvalidArgumentException('Invalid frequency.');
         }

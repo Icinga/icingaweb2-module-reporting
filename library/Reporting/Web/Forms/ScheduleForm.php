@@ -63,7 +63,9 @@ class ScheduleForm extends CompatForm
             'hourly'   => 'Hourly',
             'daily'    => 'Daily',
             'weekly'   => 'Weekly',
-            'monthly'  => 'Monthly'
+            'monthly'  => 'Monthly',
+            'quarterly'  => 'Quarterly',
+            'yearly'  => 'Yearly'
         ];
 
         if (version_compare(Version::VERSION, '2.9.0', '>=')) {

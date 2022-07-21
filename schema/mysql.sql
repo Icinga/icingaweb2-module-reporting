@@ -75,7 +75,7 @@ CREATE TABLE schedule (
   report_id int(10) unsigned NOT NULL,
   author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,
   start bigint(20) unsigned NOT NULL,
-  frequency enum('minutely', 'hourly', 'daily', 'weekly', 'monthly'),
+  frequency enum('minutely', 'hourly', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly'),
   action varchar(255) NOT NULL,
   config text NULL DEFAULT NULL,
   ctime bigint(20) unsigned NOT NULL,
