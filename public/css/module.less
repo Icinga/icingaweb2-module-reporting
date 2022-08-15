@@ -76,7 +76,7 @@
 
   &:hover > .dropdown-menu {
     display: block;
-    box-shadow: 0 0 2em 0 rgba(0,0,0,.2);
+    box-shadow: 0 0 2em 0 rgba(0, 0, 0, .2);
   }
 
   .dropdown-item {
@@ -110,7 +110,7 @@
 
 .page-size-a4 {
   background-color: white;
-  box-shadow: 0 0 0.25cm rgba(0,0,0,0.5);
+  box-shadow: 0 0 0.25cm rgba(0, 0, 0, 0.5);
   display: block;
   margin: 0 auto 0.5cm;
   font-family: @font-family-print;
@@ -213,3 +213,20 @@ form.icinga-form {
 }
 
 /* Form fallback styles end */
+
+.reportlet-container {
+  border-bottom: 1px solid @gray-lighter;
+
+  .btn-remove-reportlet {
+    background-color: @low-sat-blue !important;
+    color: @color-critical !important;
+    border: 0;
+    height: 27px;
+    width: 27px;
+    padding: 8px;
+
+    &:hover {
+      background-color: @low-sat-blue-dark !important;
+    }
+  }
+}
