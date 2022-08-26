@@ -214,19 +214,31 @@ form.icinga-form {
 
 /* Form fallback styles end */
 
-.reportlet-container {
-  border-bottom: 1px solid @gray-lighter;
+.reportlet {
+  legend {
+    width: 100%;
+    border-bottom: 1px solid @gray-lighter;
+  }
 
-  .btn-remove-reportlet {
-    background-color: @low-sat-blue !important;
-    color: @color-critical !important;
-    border: 0;
-    height: 27px;
-    width: 27px;
-    padding: 8px;
+  .reportlet-container {
+    border-bottom: 1px solid @gray-lighter;
 
-    &:hover {
-      background-color: @low-sat-blue-dark !important;
+    .btn-remove-reportlet {
+      background-color: @low-sat-blue !important;
+      color: @color-critical !important;
+      border: 0;
+      height: 27px;
+      width: 27px;
+      padding: 8px;
+
+      &:hover {
+        background-color: @low-sat-blue-dark !important;
+      }
+    }
+
+    &:last-child {
+      border-bottom: 0;
     }
   }
 }
+
