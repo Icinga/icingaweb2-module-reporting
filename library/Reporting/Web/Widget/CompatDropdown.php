@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2021 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Widget;

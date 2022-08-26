@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Forms;
@@ -25,11 +26,11 @@ class SelectBackendForm extends ConfigForm
         }
 
         $this->addElement('select', 'backend_resource', [
-            'label'         => $this->translate('Database'),
-            'description'   => $this->translate('Database resource'),
-            'multiOptions'  => $options,
-            'value'         => $default,
-            'required'      => true
+            'label'        => $this->translate('Database'),
+            'description'  => $this->translate('Database resource'),
+            'multiOptions' => $options,
+            'value'        => $default,
+            'required'     => true
         ]);
     }
 }

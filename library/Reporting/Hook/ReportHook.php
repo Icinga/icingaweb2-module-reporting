@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Hook;
@@ -20,8 +21,8 @@ abstract class ReportHook
     abstract public function getName();
 
     /**
-     * @param   Timerange   $timerange
-     * @param   array       $config
+     * @param Timerange  $timerange
+     * @param array|null $config
      *
      * @return  ReportData|null
      */
@@ -33,8 +34,8 @@ abstract class ReportHook
     /**
      * Get the HTML of the report
      *
-     * @param   Timerange   $timerange
-     * @param   array       $config
+     * @param Timerange  $timerange
+     * @param array|null $config
      *
      * @return  ValidHtml|null
      */
@@ -46,7 +47,7 @@ abstract class ReportHook
     /**
      * Initialize the report's configuration form
      *
-     * @param   Form    $form
+     * @param Form $form
      */
     public function initConfigForm(Form $form)
     {

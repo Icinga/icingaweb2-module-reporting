@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
@@ -11,7 +12,7 @@ use Zend_Mime_Part;
 class Mail
 {
     /** @var string */
-    const DEFAULT_SUBJECT = 'Icinga Reporting';
+    public const DEFAULT_SUBJECT = 'Icinga Reporting';
 
     /** @var string */
     protected $from;
@@ -58,7 +59,7 @@ class Mail
     /**
      * Set the from part
      *
-     * @param   string $from
+     * @param string $from
      *
      * @return  $this
      */
@@ -82,7 +83,7 @@ class Mail
     /**
      * Set the subject
      *
-     * @param   string $subject
+     * @param string $subject
      *
      * @return  $this
      */

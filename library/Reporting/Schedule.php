@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
@@ -32,7 +33,7 @@ class Schedule
     }
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  $this
      */
@@ -52,7 +53,7 @@ class Schedule
     }
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  $this
      */
@@ -72,7 +73,7 @@ class Schedule
     }
 
     /**
-     * @param   \DateTime  $start
+     * @param \DateTime $start
      *
      * @return  $this
      */
@@ -92,7 +93,7 @@ class Schedule
     }
 
     /**
-     * @param   string  $frequency
+     * @param string $frequency
      *
      * @return  $this
      */
@@ -112,7 +113,7 @@ class Schedule
     }
 
     /**
-     * @param   string  $action
+     * @param string $action
      *
      * @return  $this
      */
@@ -132,7 +133,7 @@ class Schedule
     }
 
     /**
-     * @param   array   $config
+     * @param array $config
      *
      * @return  $this
      */
@@ -152,7 +153,7 @@ class Schedule
             $this->getId()
             . $this->getReportId()
             . $this->getStart()->format('Y-m-d H:i:s')
-            .  $this->getAction()
+            . $this->getAction()
             . $this->getFrequency()
             . \json_encode($this->getConfig())
         );

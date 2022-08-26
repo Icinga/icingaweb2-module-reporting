@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
@@ -23,7 +24,7 @@ class Reportlet
     }
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  $this
      */
@@ -43,7 +44,7 @@ class Reportlet
     }
 
     /**
-     * @param   string  $class
+     * @param string $class
      *
      * @return  $this
      */
@@ -63,7 +64,7 @@ class Reportlet
     }
 
     /**
-     * @param   array   $config
+     * @param array $config
      *
      * @return  $this
      */
@@ -81,6 +82,6 @@ class Reportlet
     {
         $class = $this->getClass();
 
-        return new $class;
+        return new $class();
     }
 }

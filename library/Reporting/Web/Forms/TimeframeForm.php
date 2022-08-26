@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Forms;
@@ -28,26 +29,26 @@ class TimeframeForm extends CompatForm
         $this->setDefaultElementDecorator(new CompatDecorator());
 
         $this->addElement('text', 'name', [
-            'required'  => true,
-            'label'     => 'Name'
+            'required' => true,
+            'label'    => 'Name'
         ]);
 
         $flatpickr = new Flatpickr();
 
         $this->addDecoratedElement($flatpickr, 'text', 'start', [
-            'required'                      => true,
-            'label'                         => 'Start',
-            'placeholder'                   => 'Select a start date or provide a textual datetime description',
-            'data-flatpickr-default-hour'   => '00'
+            'required'                    => true,
+            'label'                       => 'Start',
+            'placeholder'                 => 'Select a start date or provide a textual datetime description',
+            'data-flatpickr-default-hour' => '00'
         ]);
 
         $this->addDecoratedElement($flatpickr, 'text', 'end', [
-            'required'                      => true,
-            'label'                         => 'End',
-            'placeholder'                   => 'Select a end date or provide a textual datetime description',
-            'data-flatpickrDefaultHour'     => '23',
-            'data-flatpickrDefaultMinute'   => '59',
-            'data-flatpickrDefaultSeconds'  => '59'
+            'required'                     => true,
+            'label'                        => 'End',
+            'placeholder'                  => 'Select a end date or provide a textual datetime description',
+            'data-flatpickrDefaultHour'    => '23',
+            'data-flatpickrDefaultMinute'  => '59',
+            'data-flatpickrDefaultSeconds' => '59'
         ]);
 
         $this->addElement('submit', 'submit', [

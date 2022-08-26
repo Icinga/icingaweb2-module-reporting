@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
@@ -36,7 +37,7 @@ class Report
     protected $template;
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  static
      *
@@ -132,7 +133,7 @@ class Report
     }
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  $this
      */
@@ -152,7 +153,7 @@ class Report
     }
 
     /**
-     * @param   string  $name
+     * @param string $name
      *
      * @return  $this
      */
@@ -172,7 +173,7 @@ class Report
     }
 
     /**
-     * @param   string  $author
+     * @param string $author
      *
      * @return  $this
      */
@@ -192,7 +193,7 @@ class Report
     }
 
     /**
-     * @param   Timeframe   $timeframe
+     * @param Timeframe $timeframe
      *
      * @return  $this
      */
@@ -212,7 +213,7 @@ class Report
     }
 
     /**
-     * @param   Reportlet[] $reportlets
+     * @param Reportlet[] $reportlets
      *
      * @return  $this
      */
@@ -232,7 +233,7 @@ class Report
     }
 
     /**
-     * @param   Schedule    $schedule
+     * @param Schedule $schedule
      *
      * @return  $this
      */

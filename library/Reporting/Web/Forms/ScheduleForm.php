@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Forms;
@@ -36,10 +37,10 @@ class ScheduleForm extends CompatForm
             $this->setId($schedule->getId());
 
             $values = [
-                'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
-                'frequency' => $schedule->getFrequency(),
-                'action'    => $schedule->getAction()
-            ] + $schedule->getConfig();
+                    'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
+                    'frequency' => $schedule->getFrequency(),
+                    'action'    => $schedule->getAction()
+                ] + $schedule->getConfig();
 
             $this->populate($values);
         }
@@ -68,29 +69,29 @@ class ScheduleForm extends CompatForm
 
         if (version_compare(Version::VERSION, '2.9.0', '>=')) {
             $this->addElement('localDateTime', 'start', [
-                'required'      => true,
-                'label'         => t('Start'),
-                'placeholder'   => t('Choose date and time')
+                'required'    => true,
+                'label'       => t('Start'),
+                'placeholder' => t('Choose date and time')
             ]);
         } else {
             $this->addDecoratedElement((new Flatpickr())->setAllowInput(false), 'text', 'start', [
-                'required'         => true,
-                'label'            => t('Start'),
-                'placeholder'      => t('Choose date and time')
+                'required'    => true,
+                'label'       => t('Start'),
+                'placeholder' => t('Choose date and time')
             ]);
         }
 
         $this->addElement('select', 'frequency', [
-            'required'  => true,
-            'label'     => 'Frequency',
-            'options'   => [null => 'Please choose'] + $frequency,
+            'required' => true,
+            'label'    => 'Frequency',
+            'options'  => [null => 'Please choose'] + $frequency,
         ]);
 
         $this->addElement('select', 'action', [
-            'required'  => true,
-            'label'     => 'Action',
-            'options'   => [null => 'Please choose'] + $this->listActions(),
-            'class'     => 'autosubmit'
+            'required' => true,
+            'label'    => 'Action',
+            'options'  => [null => 'Please choose'] + $this->listActions(),
+            'class'    => 'autosubmit'
         ]);
 
         $values = $this->getValues();
@@ -100,7 +101,7 @@ class ScheduleForm extends CompatForm
 //            $config->populate($this->getValues());
 
             /** @var \Icinga\Module\Reporting\Hook\ActionHook $action */
-            $action = new $values['action'];
+            $action = new $values['action']();
 
             $action->initConfigForm($config, $this->report);
 
@@ -164,10 +165,10 @@ class ScheduleForm extends CompatForm
 
         if ($this->id === null) {
             $db->insert('schedule', $data + [
-                'author'    => Auth::getInstance()->getUser()->getUsername(),
-                'report_id' => $this->report->getId(),
-                'ctime'     => $now
-            ]);
+                    'author'    => Auth::getInstance()->getUser()->getUsername(),
+                    'report_id' => $this->report->getId(),
+                    'ctime'     => $now
+                ]);
         } else {
             $db->update('schedule', $data, ['id = ?' => $this->id]);
         }
