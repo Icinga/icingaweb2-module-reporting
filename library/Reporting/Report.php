@@ -90,7 +90,10 @@ class Report
 
         $rows = $db->select($select)->fetchAll();
 
-        $config = [];
+        $config = [
+            'name'  => $report->getName(),
+            'id'    => $report->getId()
+        ];
 
         foreach ($rows as $row) {
             $config[$row->name] = $row->value;
