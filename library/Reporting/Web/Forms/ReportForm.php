@@ -13,6 +13,7 @@ use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\FormElement\Collection;
+use ipl\Html\FormElement\Fieldset;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormDecorator\IcingaFormDecorator;
 use ipl\Web\Widget\Icon;
@@ -94,19 +95,23 @@ class ReportForm extends CompatForm
 
         $collection = new Collection('reportlet');
         $collection->setLabel('Reportlets');
-        $collection->setAddTrigger('select', 'reportlet', [
-            'required' => false,
-            'label'    => 'Reportlet',
-            'options'  => [null => 'Please choose'] + $this->listReports(),
-            'class'    => 'autosubmit'
-        ]);
-        $collection->setRemoveTrigger('submitButton', 'remove_reportlet', [
-            'label'          => new Icon('trash'),
-            'class'          => 'btn-remove-reportlet',
-            'formnovalidate' => true,
-            'title'          => 'Remove Reportlet'
-        ]);
-        $collection->on(Collection::ON_LOAD, function ($group, $addElement, $removeElement) {
+
+
+        $collection
+            ->setAddElement('select', 'reportlet', [
+                'required' => false,
+                'label'    => 'Reportlet',
+                'options'  => [null => 'Please choose'] + $this->listReports(),
+                'class'    => 'autosubmit'
+            ])
+            ->setRemoveElement('submitButton', 'remove_reportlet', [
+                'label'          => new Icon('trash'),
+                'class'          => 'btn-remove-reportlet',
+                'formnovalidate' => true,
+                'title'          => 'Remove Reportlet'
+            ]);
+
+        $collection->onAssembleGroup(function (/** @var Fieldset $group */ $group, $addElement, $removeElement) {
             $group->setDefaultElementDecorator(new IcingaFormDecorator());
 
             $this->decorate($addElement);
@@ -115,29 +120,15 @@ class ReportForm extends CompatForm
                 ->registerElement($addElement)
                 ->addHtml($addElement);
 
+            $group->registerElement($removeElement);
             $addElement->getWrapper()->ensureAssembled()->add($removeElement);
 
-            $innerCollection = new Collection('inner');
-            $innerCollection->setLabel('Inner Collection');
-            $innerCollection->setAddTrigger('select', 'reportlet', [
-                'required' => false,
-                'label'    => 'Reportlet',
-                'options'  => [null => 'Please choose'],
-                'class'    => 'autosubmit'
-            ]);
-            $innerCollection->on(Collection::ON_LOAD, function ($group, $addElement) {
-                $group->setDefaultElementDecorator(new IcingaFormDecorator());
-                $group->addElement($addElement);
-            });
-
-            $group->registerElement($innerCollection);
-            $group->addHtml($innerCollection);
-
-            if (isset($items['reportlet']) && ! empty($items['reportlet'])) {
+            $reportletClass = $group->getPopulatedValue('reportlet');
+            if (! empty($reportletClass)) {
                 $config = new Form();
 
                 /** @var ReportHook $reportlet */
-                $reportlet = new $items['reportlet'];
+                $reportlet = new $reportletClass();
                 $reportlet->initConfigForm($config);
 
                 foreach ($config->getElements() as $element) {
