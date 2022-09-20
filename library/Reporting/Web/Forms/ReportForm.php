@@ -203,7 +203,7 @@ class ReportForm extends CompatForm
             $db->delete('reportlet', ['report_id = ?' => $reportId]);
         }
 
-        foreach ($values['reportlet'] as $reportlet) {
+        foreach ($this->getPopulatedValue('reportlet') as $reportlet) {
             array_walk($reportlet, function (&$value) {
                 if ($value === '') {
                     $value = null;
