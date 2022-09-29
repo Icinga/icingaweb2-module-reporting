@@ -21,7 +21,7 @@ Example command for creating the MySQL/MariaDB database. Please change the passw
 
 ```
 CREATE DATABASE reporting;
-GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
+GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
 ```
 
 After, you can import the schema using the following command:
