@@ -28,9 +28,9 @@ class TimeframeController extends Controller
         $this->addTitleTab($this->translate('Edit Time Frame'));
 
         $values = [
-            'name'  => $this->timeframe->getName(),
-            'start' => $this->timeframe->getStart(),
-            'end'   => $this->timeframe->getEnd()
+            'name'              => $this->timeframe->getName(),
+            'start'             => $this->timeframe->getStart(),
+            'end'               => $this->timeframe->getEnd()
         ];
 
 
