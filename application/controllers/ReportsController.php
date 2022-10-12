@@ -4,6 +4,8 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
+use Icinga\Module\Icingadb\ProvidedHook\Reporting\HostSlaReport;
+use Icinga\Module\Icingadb\ProvidedHook\Reporting\ServiceSlaReport;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model\Report;
 use Icinga\Module\Reporting\Web\Controller;
@@ -99,8 +101,24 @@ class ReportsController extends Controller
         $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('New Report'));
 
+        switch ($this->params->shift('report')) {
+            case 'host':
+                $class = HostSlaReport::class;
+                break;
+            case 'service':
+                $class = ServiceSlaReport::class;
+                break;
+            default:
+                $class = null;
+                break;
+        }
+
         $form = (new ReportForm())
             ->setAction((string) Url::fromRequest())
+            ->populate([
+                'filter'    => $this->params->shift('filter'),
+                'reportlet' => $class
+            ])
             ->on(ReportForm::ON_SUCCESS, function () {
                 $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
 
