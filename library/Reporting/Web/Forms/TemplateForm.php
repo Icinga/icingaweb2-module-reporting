@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Forms;
@@ -60,8 +61,9 @@ class TemplateForm extends CompatForm
             'accept' => 'image/png, image/jpeg'
         ]));
 
-        if ($this->template !== null
-                && isset($this->template->settings['cover_page_background_image'])
+        if (
+            $this->template !== null
+            && isset($this->template->settings['cover_page_background_image'])
         ) {
             $this->add(Html::tag(
                 'p',
@@ -79,7 +81,8 @@ class TemplateForm extends CompatForm
             'accept' => 'image/png, image/jpeg'
         ]));
 
-        if ($this->template !== null
+        if (
+            $this->template !== null
             && isset($this->template->settings['cover_page_logo'])
         ) {
             $this->add(Html::tag(
@@ -182,7 +185,8 @@ class TemplateForm extends CompatForm
                 if (isset($settings['remove_cover_page_background_image'])) {
                     unset($settings['cover_page_background_image']);
                     unset($settings['remove_cover_page_background_image']);
-                } elseif (! isset($settings['cover_page_background_image'])
+                } elseif (
+                    ! isset($settings['cover_page_background_image'])
                     && isset($this->template->settings['cover_page_background_image'])
                 ) {
                     $settings['cover_page_background_image'] = $this->template->settings['cover_page_background_image'];
@@ -191,7 +195,8 @@ class TemplateForm extends CompatForm
                 if (isset($settings['remove_cover_page_logo'])) {
                     unset($settings['cover_page_logo']);
                     unset($settings['remove_cover_page_logo']);
-                } elseif (! isset($settings['cover_page_logo'])
+                } elseif (
+                    ! isset($settings['cover_page_logo'])
                     && isset($this->template->settings['cover_page_logo'])
                 ) {
                     $settings['cover_page_logo'] = $this->template->settings['cover_page_logo'];
@@ -204,7 +209,8 @@ class TemplateForm extends CompatForm
                         if ($settings[$type] === 'image') {
                             $value = "{$headerOrFooter}_column{$i}_value";
 
-                            if (! isset($settings[$value])
+                            if (
+                                ! isset($settings[$value])
                                 && isset($this->template->settings[$value])
                             ) {
                                 $settings[$value] = $this->template->settings[$value];
@@ -247,7 +253,8 @@ class TemplateForm extends CompatForm
                     'accept' => 'image/png, image/jpeg'
                 ]));
 
-                if ($this->template !== null
+                if (
+                    $this->template !== null
                     && $this->template->settings[$type] === 'image'
                     && isset($this->template->settings[$value])
                 ) {
@@ -270,7 +277,7 @@ class TemplateForm extends CompatForm
                         'page_of'               => 'Page Number + Total Number of Pages',
                         'date'                  => 'Date'
                     ],
-                    'value' => 'report_title'
+                    'value'   => 'report_title'
                 ]);
                 break;
             case 'text':

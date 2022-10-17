@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Forms;
@@ -33,27 +34,27 @@ class ReportForm extends CompatForm
         $this->setDefaultElementDecorator(new CompatDecorator());
 
         $this->addElement('text', 'name', [
-            'required'  => true,
-            'label'     => 'Name'
+            'required' => true,
+            'label'    => 'Name'
         ]);
 
         $this->addElement('select', 'timeframe', [
-            'required'  => true,
-            'label'     => 'Timeframe',
-            'options'   => [null => 'Please choose'] + $this->listTimeframes(),
-            'class'     => 'autosubmit'
+            'required' => true,
+            'label'    => 'Timeframe',
+            'options'  => [null => 'Please choose'] + $this->listTimeframes(),
+            'class'    => 'autosubmit'
         ]);
 
         $this->addElement('select', 'template', [
-            'label'     => 'Template',
-            'options'   => [null => 'Please choose'] + $this->listTemplates()
+            'label'   => 'Template',
+            'options' => [null => 'Please choose'] + $this->listTemplates()
         ]);
 
         $this->addElement('select', 'reportlet', [
-            'required'  => true,
-            'label'     => 'Report',
-            'options'   => [null => 'Please choose'] + $this->listReports(),
-            'class'     => 'autosubmit'
+            'required' => true,
+            'label'    => 'Report',
+            'options'  => [null => 'Please choose'] + $this->listReports(),
+            'class'    => 'autosubmit'
         ]);
 
         $values = $this->getValues();
@@ -63,7 +64,7 @@ class ReportForm extends CompatForm
 //            $config->populate($this->getValues());
 
             /** @var \Icinga\Module\Reporting\Hook\ReportHook $reportlet */
-            $reportlet = new $values['reportlet'];
+            $reportlet = new $values['reportlet']();
 
             $reportlet->initConfigForm($config);
 
@@ -155,11 +156,11 @@ class ReportForm extends CompatForm
 
         foreach ($values as $name => $value) {
             $db->insert('config', [
-                'reportlet_id'  => $reportletId,
-                'name'          => $name,
-                'value'         => $value,
-                'ctime'         => $now,
-                'mtime'         => $now
+                'reportlet_id' => $reportletId,
+                'name'         => $name,
+                'value'        => $value,
+                'ctime'        => $now,
+                'mtime'        => $now
             ]);
         }
 

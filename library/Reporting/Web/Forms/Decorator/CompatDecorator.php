@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2021 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web\Forms\Decorator;
@@ -26,9 +27,9 @@ class CompatDecorator extends \ipl\Web\Compat\CompatDecorator
         return [
             $checkbox,
             new HtmlElement('label', Attributes::create([
-                'class'         => $classes,
-                'aria-hidden'   => 'true',
-                'for'           => $checkbox->getAttributes()->get('id')->getValue()
+                'class'       => $classes,
+                'aria-hidden' => 'true',
+                'for'         => $checkbox->getAttributes()->get('id')->getValue()
             ]), new HtmlElement('span', Attributes::create(['class' => 'toggle-slider'])))
         ];
     }
@@ -46,6 +47,7 @@ class CompatDecorator extends \ipl\Web\Compat\CompatDecorator
     {
         if (version_compare(Version::VERSION, '2.9.0', '>=')) {
             parent::assemble();
+
             return;
         }
 

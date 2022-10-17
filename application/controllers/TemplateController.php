@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Controllers;
@@ -79,9 +80,9 @@ class TemplateController extends Controller
         }
 
         $tabs->add('preview', [
-            'title'     => $this->translate('Preview template'),
-            'label'     => $this->translate('Preview'),
-            'url'       => 'reporting/template?id=' . $this->params->getRequired('id')
+            'title' => $this->translate('Preview template'),
+            'label' => $this->translate('Preview'),
+            'url'   => 'reporting/template?id=' . $this->params->getRequired('id')
         ]);
 
         return $tabs;

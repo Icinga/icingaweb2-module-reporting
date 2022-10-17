@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
@@ -25,7 +26,7 @@ class Timeframe
     protected $end;
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  static
      *
@@ -67,7 +68,7 @@ class Timeframe
     }
 
     /**
-     * @param   int $id
+     * @param int $id
      *
      * @return  $this
      */
@@ -87,7 +88,7 @@ class Timeframe
     }
 
     /**
-     * @param   string  $name
+     * @param string $name
      *
      * @return  $this
      */
@@ -107,7 +108,7 @@ class Timeframe
     }
 
     /**
-     * @param   string  $title
+     * @param string $title
      *
      * @return  $this
      */
@@ -127,7 +128,7 @@ class Timeframe
     }
 
     /**
-     * @param   string  $start
+     * @param string $start
      *
      * @return  $this
      */
@@ -147,7 +148,7 @@ class Timeframe
     }
 
     /**
-     * @param   string  $end
+     * @param string $end
      *
      * @return  $this
      */

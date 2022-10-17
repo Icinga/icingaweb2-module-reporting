@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2019 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Web;
@@ -60,6 +61,7 @@ class Flatpickr extends CompatDecorator
     {
         if (version_compare(Version::VERSION, '2.9.0', '>=')) {
             parent::assemble();
+
             return;
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Hook;
@@ -15,13 +16,14 @@ abstract class ActionHook
     abstract public function getName();
 
     /**
-     * @param   Report  $report
-     * @param   array   $config
+     * @param Report $report
+     * @param array  $config
      */
     abstract public function execute(Report $report, array $config);
 
     /**
-     * @param   Form    $form
+     * @param Form   $form
+     * @param Report $report
      */
     public function initConfigForm(Form $form, Report $report)
     {

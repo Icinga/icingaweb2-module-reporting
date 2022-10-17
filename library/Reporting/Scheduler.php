@@ -1,9 +1,10 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting;
 
-use Cron\CronExpression;
+use Icinga\Module\Reporting\Hook\ActionHook;
 use ipl\Sql\Connection;
 use ipl\Sql\Select;
 use React\EventLoop\Factory as Loop;
@@ -109,7 +110,7 @@ class Scheduler
         $callback = function () use ($schedule) {
             $actionClass = $schedule->getAction();
             /** @var ActionHook $action */
-            $action = new $actionClass;
+            $action = new $actionClass();
 
             $action->execute(
                 Report::fromDb($schedule->getReportId()),

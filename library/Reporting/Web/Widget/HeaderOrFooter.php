@@ -10,9 +10,9 @@ class HeaderOrFooter extends HtmlDocument
 {
     use Macros;
 
-    const HEADER = 'header';
+    public const HEADER = 'header';
 
-    const FOOTER = 'footer';
+    public const FOOTER = 'footer';
 
     protected $type;
 

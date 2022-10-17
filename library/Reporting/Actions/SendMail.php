@@ -1,4 +1,5 @@
 <?php
+
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
 namespace Icinga\Module\Reporting\Actions;
@@ -68,14 +69,14 @@ class SendMail extends ActionHook
         }
 
         $form->addElement('select', 'type', [
-            'required'  => true,
-            'label'     => t('Type'),
-            'options'   => $types
+            'required' => true,
+            'label'    => t('Type'),
+            'options'  => $types
         ]);
 
         $form->addElement('text', 'subject', [
-            'label'         => t('Subject'),
-            'placeholder'   => Mail::DEFAULT_SUBJECT
+            'label'       => t('Subject'),
+            'placeholder' => Mail::DEFAULT_SUBJECT
         ]);
 
         $form->addElement('textarea', 'recipients', [
