@@ -43,7 +43,7 @@ class Mail
         }
 
         foreach (['HTTP_HOST', 'SERVER_NAME', 'HOSTNAME'] as $key) {
-            if (isset($_SEVER[$key])) {
+            if (isset($_SERVER[$key])) {
                 $this->from = 'icinga-reporting@' . $_SERVER[$key];
 
                 return $this->from;
