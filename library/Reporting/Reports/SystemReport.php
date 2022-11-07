@@ -4,6 +4,7 @@
 
 namespace Icinga\Module\Reporting\Reports;
 
+use Icinga\Application\Icinga;
 use Icinga\Module\Reporting\Hook\ReportHook;
 use Icinga\Module\Reporting\Timerange;
 use ipl\Html\HtmlString;
@@ -21,20 +22,26 @@ class SystemReport extends ReportHook
         phpinfo();
         $html = ob_get_clean();
 
-        $doc = new \DOMDocument();
-        @$doc->loadHTML($html);
+        if (! Icinga::app()->isCli()) {
+            $doc = new \DOMDocument();
+            @$doc->loadHTML($html);
 
-        $style = $doc->getElementsByTagName('style')->item(0);
-        $style->parentNode->removeChild($style);
+            $style = $doc->getElementsByTagName('style')->item(0);
+            $style->parentNode->removeChild($style);
 
-        $title = $doc->getElementsByTagName('title')->item(0);
-        $title->parentNode->removeChild($title);
+            $title = $doc->getElementsByTagName('title')->item(0);
+            $title->parentNode->removeChild($title);
 
-        $meta = $doc->getElementsByTagName('meta')->item(0);
-        $meta->parentNode->removeChild($meta);
+            $meta = $doc->getElementsByTagName('meta')->item(0);
+            $meta->parentNode->removeChild($meta);
 
-        $doc->getElementsByTagName('div')->item(0)->setAttribute('class', 'system-report');
+            $doc->getElementsByTagName('div')->item(0)->setAttribute('class', 'system-report');
 
-        return new HtmlString($doc->saveHTML());
+            $html = $doc->saveHTML();
+        } else {
+            $html = nl2br($html);
+        }
+
+        return new HtmlString($html);
     }
 }
