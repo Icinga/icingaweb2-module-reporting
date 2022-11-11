@@ -10,6 +10,7 @@ use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
 class ReportForm extends CompatForm
