@@ -51,7 +51,7 @@ class CompatDecorator extends \ipl\Web\Compat\CompatDecorator
             return;
         }
 
-        if ($this->formElement->hasBeenValidated() && ! $this->formElement->isValid()) {
+        if ($this->formElement->hasMessages()) {
             $this->getAttributes()->add('class', 'has-error');
         }
 
