@@ -96,22 +96,29 @@ class ReportForm extends CompatForm
         $collection = new Collection('reportlet');
         $collection->setLabel('Reportlets');
 
+        $addElement = $this->createElement('select', 'reportlet', [
+            'required' => false,
+            'label'    => 'Reportlet',
+            'options'  => [null => 'Please choose'] + $this->listReports(),
+            'class'    => 'autosubmit'
+        ]);
+        $this->registerElement($addElement);
+        $this->decorate($addElement);
+
+        $removeElement = $this->createElement('submitButton', 'remove_reportlet', [
+            'label'          => new Icon('trash'),
+            'class'          => 'btn-remove-reportlet',
+            'formnovalidate' => true,
+            'title'          => 'Remove Reportlet'
+        ]);
+        $this->registerElement($removeElement);
+        $this->decorate($removeElement);
 
         $collection
-            ->setAddElement('select', 'reportlet', [
-                'required' => false,
-                'label'    => 'Reportlet',
-                'options'  => [null => 'Please choose'] + $this->listReports(),
-                'class'    => 'autosubmit'
-            ])
-            ->setRemoveElement('submitButton', 'remove_reportlet', [
-                'label'          => new Icon('trash'),
-                'class'          => 'btn-remove-reportlet',
-                'formnovalidate' => true,
-                'title'          => 'Remove Reportlet'
-            ]);
+            ->setAddElement($addElement)
+            ->setRemoveElement($removeElement);
 
-        $collection->onAssembleGroup(function (/** @var Fieldset $group */ $group, $addElement, $removeElement) {
+        $collection->onAssembleGroup(function ($group, $addElement, $removeElement) {
             $group->setDefaultElementDecorator(new IcingaFormDecorator());
 
             $this->decorate($addElement);
