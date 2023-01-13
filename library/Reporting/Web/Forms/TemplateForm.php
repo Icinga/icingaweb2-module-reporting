@@ -49,15 +49,15 @@ class TemplateForm extends CompatForm
         $this->add(Html::tag('h2', 'Template Settings'));
 
         $this->addElement('text', 'name', [
-            'label'       => 'Name',
-            'placeholder' => 'Template name',
+            'label'       => $this->translate('Name'),
+            'placeholder' => $this->translate('Template name'),
             'required'    => true
         ]);
 
-        $this->add(Html::tag('h2', 'Cover Page Settings'));
+        $this->add(Html::tag('h2', $this->translate('Cover Page Settings')));
 
         $this->addElement(new FileElement('cover_page_background_image', [
-            'label'  => 'Background Image',
+            'label'  => $this->translate('Background Image'),
             'accept' => 'image/png, image/jpeg'
         ]));
 
@@ -68,16 +68,16 @@ class TemplateForm extends CompatForm
             $this->add(Html::tag(
                 'p',
                 ['style' => ['margin-left: 14em;']],
-                'Upload a new background image to override the existing one'
+                $this->translate('Upload a new background image to override the existing one')
             ));
 
             $this->addElement('checkbox', 'remove_cover_page_background_image', [
-                'label' => 'Remove background image'
+                'label' => $this->translate('Remove background image')
             ]);
         }
 
         $this->addElement(new FileElement('cover_page_logo', [
-            'label'  => 'Logo',
+            'label'  => $this->translate('Logo'),
             'accept' => 'image/png, image/jpeg'
         ]));
 
@@ -88,44 +88,46 @@ class TemplateForm extends CompatForm
             $this->add(Html::tag(
                 'p',
                 ['style' => ['margin-left: 14em;']],
-                'Upload a new logo to override the existing one'
+                $this->translate('Upload a new logo to override the existing one')
             ));
 
             $this->addElement('checkbox', 'remove_cover_page_logo', [
-                'label' => 'Remove Logo'
+                'label' => $this->translate('Remove Logo')
             ]);
         }
 
         $this->addElement('textarea', 'title', [
-            'label'       => 'Title',
-            'placeholder' => 'Report title'
+            'label'       => $this->translate('Title'),
+            'placeholder' => $this->translate('Report title')
         ]);
 
         $this->addElement('text', 'color', [
-            'label'       => 'Color',
-            'placeholder' => 'CSS color code'
+            'label'       => $this->translate('Color'),
+            'placeholder' => $this->translate('CSS color code')
         ]);
 
-        $this->add(Html::tag('h2', 'Header Settings'));
+        $this->add(Html::tag('h2', $this->translate('Header Settings')));
 
-        $this->addColumnSettings('header_column1', 'Column 1');
-        $this->addColumnSettings('header_column2', 'Column 2');
-        $this->addColumnSettings('header_column3', 'Column 3');
+        $this->addColumnSettings('header_column1', $this->translate('Column 1'));
+        $this->addColumnSettings('header_column2', $this->translate('Column 2'));
+        $this->addColumnSettings('header_column3', $this->translate('Column 3'));
 
-        $this->add(Html::tag('h2', 'Footer Settings'));
+        $this->add(Html::tag('h2', $this->translate('Footer Settings')));
 
-        $this->addColumnSettings('footer_column1', 'Column 1');
-        $this->addColumnSettings('footer_column2', 'Column 2');
-        $this->addColumnSettings('footer_column3', 'Column 3');
+        $this->addColumnSettings('footer_column1', $this->translate('Column 1'));
+        $this->addColumnSettings('footer_column2', $this->translate('Column 2'));
+        $this->addColumnSettings('footer_column3', $this->translate('Column 3'));
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->template === null ? 'Create Template' : 'Update Template'
+            'label' => $this->template === null
+                ? $this->translate('Create Template')
+                : $this->translate('Update Template')
         ]);
 
         if ($this->template !== null) {
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
-                'label'          => 'Remove Template',
+                'label'          => $this->translate('Remove Template'),
                 'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);

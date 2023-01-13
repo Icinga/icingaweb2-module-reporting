@@ -30,35 +30,41 @@ class TimeframeForm extends CompatForm
 
         $this->addElement('text', 'name', [
             'required' => true,
-            'label'    => 'Name'
+            'label'    => $this->translate('Name')
         ]);
 
         $flatpickr = new Flatpickr();
 
         $this->addDecoratedElement($flatpickr, 'text', 'start', [
             'required'                    => true,
-            'label'                       => 'Start',
-            'placeholder'                 => 'Select a start date or provide a textual datetime description',
-            'data-flatpickr-default-hour' => '00'
+            'label'                       => $this->translate('Start'),
+            'data-flatpickr-default-hour' => '00',
+            'placeholder'                 => $this->translate(
+                'Select a start date or provide a textual datetime description'
+            ),
         ]);
 
         $this->addDecoratedElement($flatpickr, 'text', 'end', [
             'required'                     => true,
-            'label'                        => 'End',
-            'placeholder'                  => 'Select a end date or provide a textual datetime description',
+            'label'                        => $this->translate('End'),
             'data-flatpickrDefaultHour'    => '23',
             'data-flatpickrDefaultMinute'  => '59',
-            'data-flatpickrDefaultSeconds' => '59'
+            'data-flatpickrDefaultSeconds' => '59',
+            'placeholder'                  => $this->translate(
+                'Select a end date or provide a textual datetime description'
+            ),
         ]);
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? 'Create Time Frame' : 'Update Time Frame'
+            'label' => $this->id === null
+                ? $this->translate('Create Time Frame')
+                : $this->translate('Update Time Frame')
         ]);
 
         if ($this->id !== null) {
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
-                'label'          => 'Remove Time Frame',
+                'label'          => $this->translate('Remove Time Frame'),
                 'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);

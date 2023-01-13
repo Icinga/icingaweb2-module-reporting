@@ -50,7 +50,7 @@ class ReportController extends Controller
     public function editAction()
     {
         $this->assertPermission('reporting/reports');
-        $this->addTitleTab('Edit Report');
+        $this->addTitleTab($this->translate('Edit Report'));
 
         $values = [
             'name'      => $this->report->getName(),
@@ -79,7 +79,7 @@ class ReportController extends Controller
 
     public function sendAction()
     {
-        $this->addTitleTab('Send Report');
+        $this->addTitleTab($this->translate('Send Report'));
 
         Environment::raiseExecutionTime();
         Environment::raiseMemoryLimit();
@@ -97,7 +97,7 @@ class ReportController extends Controller
     public function scheduleAction()
     {
         $this->assertPermission('reporting/schedules');
-        $this->addTitleTab('Schedule');
+        $this->addTitleTab($this->translate('Schedule'));
 
         $form = new ScheduleForm();
         $form
