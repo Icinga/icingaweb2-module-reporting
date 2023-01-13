@@ -33,7 +33,7 @@ class SendForm extends CompatForm
         (new SendMail())->initConfigForm($this, $this->report);
 
         $this->addElement('submit', 'submit', [
-            'label' => 'Send Report'
+            'label' => $this->translate('Send Report')
         ]);
     }
 

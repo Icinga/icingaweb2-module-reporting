@@ -94,7 +94,7 @@ class TemplatesController extends Controller
     public function newAction()
     {
         $this->assertPermission('reporting/templates');
-        $this->addTitleTab('New Template');
+        $this->addTitleTab($this->translate('New Template'));
 
         $form = new TemplateForm();
 

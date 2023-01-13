@@ -83,14 +83,14 @@ class ScheduleForm extends CompatForm
 
         $this->addElement('select', 'frequency', [
             'required' => true,
-            'label'    => 'Frequency',
-            'options'  => [null => 'Please choose'] + $frequency,
+            'label'    => $this->translate('Frequency'),
+            'options'  => [null => $this->translate('Please choose')] + $frequency,
         ]);
 
         $this->addElement('select', 'action', [
             'required' => true,
-            'label'    => 'Action',
-            'options'  => [null => 'Please choose'] + $this->listActions(),
+            'label'    => $this->translate('Action'),
+            'options'  => [null => $this->translate('Please choose')] + $this->listActions(),
             'class'    => 'autosubmit'
         ]);
 
@@ -111,13 +111,13 @@ class ScheduleForm extends CompatForm
         }
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? 'Create Schedule' : 'Update Schedule'
+            'label' => $this->id === null ? $this->translate('Create Schedule') : $this->translate('Update Schedule')
         ]);
 
         if ($this->id !== null) {
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
-                'label'          => 'Remove Schedule',
+                'label'          => $this->translate('Remove Schedule'),
                 'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);

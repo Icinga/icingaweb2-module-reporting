@@ -35,7 +35,7 @@ class ReportForm extends CompatForm
 
         $this->addElement('text', 'name', [
             'required'    => true,
-            'label'       => 'Name',
+            'label'       => $this->translate('Name'),
             'description' => $this->translate(
                 'A unique name of this report. It is used when exporting to pdf, json or csv format'
                 . ' and also when listing the reports in the cli'
@@ -44,17 +44,17 @@ class ReportForm extends CompatForm
 
         $this->addElement('select', 'timeframe', [
             'required'    => true,
-            'label'       => 'Timeframe',
-            'options'     => [null => 'Please choose'] + $this->listTimeframes(),
             'class'       => 'autosubmit',
+            'label'       => $this->translate('Timeframe'),
+            'options'     => [null => $this->translate('Please choose')] + $this->listTimeframes(),
             'description' => $this->translate(
                 'Specifies the time frame in which this report is to be generated'
             )
         ]);
 
         $this->addElement('select', 'template', [
-            'label'       => 'Template',
-            'options'     => [null => 'Please choose'] + $this->listTemplates(),
+            'label'       => $this->translate('Template'),
+            'options'     => [null => $this->translate('Please choose')] + $this->listTemplates(),
             'description' => $this->translate(
                 'Specifies the template to use when exporting this report to pdf. (Default Icinga template)'
             )
@@ -62,9 +62,9 @@ class ReportForm extends CompatForm
 
         $this->addElement('select', 'reportlet', [
             'required'    => true,
-            'label'       => 'Report',
-            'options'     => [null => 'Please choose'] + $this->listReports(),
             'class'       => 'autosubmit',
+            'label'       => $this->translate('Report'),
+            'options'     => [null => $this->translate('Please choose')] + $this->listReports(),
             'description' => $this->translate('Specifies the type of the reportlet to be generated')
         ]);
 
@@ -85,13 +85,13 @@ class ReportForm extends CompatForm
         }
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? 'Create Report' : 'Update Report'
+            'label' => $this->id === null ? $this->translate('Create Report') : $this->translate('Update Report')
         ]);
 
         if ($this->id !== null) {
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
-                'label'          => 'Remove Report',
+                'label'          => $this->translate('Remove Report'),
                 'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
