@@ -34,27 +34,38 @@ class ReportForm extends CompatForm
         $this->setDefaultElementDecorator(new CompatDecorator());
 
         $this->addElement('text', 'name', [
-            'required' => true,
-            'label'    => 'Name'
+            'required'    => true,
+            'label'       => 'Name',
+            'description' => $this->translate(
+                'A unique name of this report. It is used when exporting to pdf, json or csv format'
+                . ' and also when listing the reports in the cli'
+            )
         ]);
 
         $this->addElement('select', 'timeframe', [
-            'required' => true,
-            'label'    => 'Timeframe',
-            'options'  => [null => 'Please choose'] + $this->listTimeframes(),
-            'class'    => 'autosubmit'
+            'required'    => true,
+            'label'       => 'Timeframe',
+            'options'     => [null => 'Please choose'] + $this->listTimeframes(),
+            'class'       => 'autosubmit',
+            'description' => $this->translate(
+                'Specifies the time frame in which this report is to be generated'
+            )
         ]);
 
         $this->addElement('select', 'template', [
-            'label'   => 'Template',
-            'options' => [null => 'Please choose'] + $this->listTemplates()
+            'label'       => 'Template',
+            'options'     => [null => 'Please choose'] + $this->listTemplates(),
+            'description' => $this->translate(
+                'Specifies the template to use when exporting this report to pdf. (Default Icinga template)'
+            )
         ]);
 
         $this->addElement('select', 'reportlet', [
-            'required' => true,
-            'label'    => 'Report',
-            'options'  => [null => 'Please choose'] + $this->listReports(),
-            'class'    => 'autosubmit'
+            'required'    => true,
+            'label'       => 'Report',
+            'options'     => [null => 'Please choose'] + $this->listReports(),
+            'class'       => 'autosubmit',
+            'description' => $this->translate('Specifies the type of the reportlet to be generated')
         ]);
 
         $values = $this->getValues();
