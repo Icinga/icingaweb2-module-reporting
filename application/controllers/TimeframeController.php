@@ -4,11 +4,11 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Timeframe;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
+use ipl\Web\Url;
 
 class TimeframeController extends Controller
 {
@@ -33,13 +33,14 @@ class TimeframeController extends Controller
             'end'   => $this->timeframe->getEnd()
         ];
 
-
         $form = TimeframeForm::fromId($this->timeframe->getId())
-            ->on(TimeframeForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/timeframes');
-            })
+            ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->on(TimeframeForm::ON_SUCCESS, function () {
+                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+
+                $this->redirectNow('__CLOSE__');
+            })->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
