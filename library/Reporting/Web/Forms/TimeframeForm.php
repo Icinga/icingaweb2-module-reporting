@@ -4,16 +4,15 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
+use DateTime;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\Web\Flatpickr;
-use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
+use ipl\Html\FormElement\LocalDateTimeElement;
 use ipl\Web\Compat\CompatForm;
 
 class TimeframeForm extends CompatForm
 {
     use Database;
-    use DecoratedElement;
 
     /** @var int */
     protected $id;
@@ -41,34 +40,93 @@ class TimeframeForm extends CompatForm
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new CompatDecorator());
-
         $this->addElement('text', 'name', [
-            'required' => true,
-            'label'    => $this->translate('Name')
+            'required'    => true,
+            'label'       => $this->translate('Name'),
+            'description' => $this->translate('A unique name of this timeframe')
         ]);
 
-        $flatpickr = new Flatpickr();
+        $default = new DateTime('00:00:00');
+        $start = $this->getPopulatedValue('start', $default);
+        if (! $start instanceof DateTime) {
+            $datetime = DateTime::createFromFormat(LocalDateTimeElement::FORMAT, $start);
+            if ($datetime) {
+                $start = $datetime;
+            }
+        }
 
-        $this->addDecoratedElement($flatpickr, 'text', 'start', [
-            'required'                    => true,
-            'label'                       => $this->translate('Start'),
-            'data-flatpickr-default-hour' => '00',
-            'placeholder'                 => $this->translate(
-                'Select a start date or provide a textual datetime description'
-            ),
+        $relativeStart = $this->getPopulatedValue('relative-start', $start instanceof DateTime ? 'n' : 'y');
+        $this->addElement('checkbox', 'relative-start', [
+            'required' => false,
+            'class'    => 'autosubmit',
+            'value'    => $relativeStart,
+            'label'    => $this->translate('Relative Start')
         ]);
 
-        $this->addDecoratedElement($flatpickr, 'text', 'end', [
-            'required'                     => true,
-            'label'                        => $this->translate('End'),
-            'data-flatpickrDefaultHour'    => '23',
-            'data-flatpickrDefaultMinute'  => '59',
-            'data-flatpickrDefaultSeconds' => '59',
-            'placeholder'                  => $this->translate(
-                'Select a end date or provide a textual datetime description'
-            ),
-        ]);
+        if ($relativeStart === 'n') {
+            if (! $start instanceof DateTime) {
+                $start = $default;
+                $this->clearPopulatedValue('start');
+            }
+
+            $this->addElement(
+                new LocalDateTimeElement('start', [
+                    'required'    => true,
+                    'value'       => $start,
+                    'label'       => $this->translate('Start'),
+                    'description' => $this->translate('Specifies the start time of this timeframe')
+                ])
+            );
+        } else {
+            $this->addElement('text', 'start', [
+                'required'    => true,
+                'label'       => $this->translate('Start'),
+                'placeholder' => $this->translate('First day of this month'),
+                'description' => $this->translate('Specifies the start time of this timeframe')
+            ]);
+        }
+
+        $default = new DateTime('23:59:59');
+        $end = $this->getPopulatedValue('end', $default);
+        if (! $end instanceof DateTime) {
+            $datetime = DateTime::createFromFormat(LocalDateTimeElement::FORMAT, $end);
+            if ($datetime) {
+                $end = $datetime;
+            }
+        }
+
+        $relativeEnd = $this->getPopulatedValue('relative-end', $end instanceof DateTime ? 'n' : 'y');
+        if ($relativeStart === 'y') {
+            $this->addElement('checkbox', 'relative-end', [
+                'required' => false,
+                'class'    => 'autosubmit',
+                'value'    => $relativeEnd,
+                'label'    => $this->translate('Relative End')
+            ]);
+        }
+
+        if ($relativeEnd === 'n' || $relativeStart === 'n') {
+            if (! $end instanceof DateTime) {
+                $end = $default;
+                $this->clearPopulatedValue('end');
+            }
+
+            $this->addElement(
+                new LocalDateTimeElement('end', [
+                    'required'    => true,
+                    'value'       => $end,
+                    'label'       => $this->translate('End'),
+                    'description' => $this->translate('Specifies the end time of this timeframe')
+                ])
+            );
+        } else {
+            $this->addElement('text', 'end', [
+                'required'    => true,
+                'label'       => $this->translate('End'),
+                'placeholder' => $this->translate('Last day of this month'),
+                'description' => $this->translate('Specifies the end time of this timeframe')
+            ]);
+        }
 
         $this->addElement('submit', 'submit', [
             'label' => $this->id === null
@@ -99,6 +157,13 @@ class TimeframeForm extends CompatForm
         }
 
         $values = $this->getValues();
+        if ($values['start'] instanceof DateTime) {
+            $values['start'] = $values['start']->format(LocalDateTimeElement::FORMAT);
+        }
+
+        if ($values['end'] instanceof DateTime) {
+            $values['end'] = $values['end']->format(LocalDateTimeElement::FORMAT);
+        }
 
         $now = time() * 1000;
 
