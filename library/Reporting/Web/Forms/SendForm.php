@@ -45,8 +45,7 @@ class SendForm extends CompatForm
 
         if ($radio->getValue('source_radio') === 'contacts') {
             $emails = [null => 'Select Contacts'];
-            foreach (EmailProviderHook::getProvider() as $provider) {
-                var_dump($provider);
+            foreach (EmailProviderHook::getProviders() as $provider) {
                 $emails = array_merge($emails, $provider->getContactEmails());
             }
 

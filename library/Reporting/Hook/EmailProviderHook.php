@@ -16,7 +16,7 @@ abstract class EmailProviderHook
     /**
      * @return array
      */
-    final public static function getProvider(): array
+    final public static function getProviders(): array
     {
         return Hook::all('Reporting/EmailProvider');
     }
