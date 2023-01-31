@@ -9,9 +9,9 @@ abstract class EmailProviderHook
     /**
      * Get all Contact eMails
      *
-     * @return mixed
+     * @return array
      */
-    abstract public function getContactEmails();
+    abstract public function getContactEmails(): array;
 
     /**
      * @return array
