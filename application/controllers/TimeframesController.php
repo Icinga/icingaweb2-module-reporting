@@ -94,10 +94,11 @@ class TimeframesController extends Controller
         $this->assertPermission('reporting/timeframes');
         $this->addTitleTab($this->translate('New Timeframe'));
 
-        $form = new TimeframeForm();
-        $form->handleRequest(ServerRequest::fromGlobals());
-
-        $this->redirectForm($form, 'reporting/timeframes');
+        $form = (new TimeframeForm())
+            ->on(TimeframeForm::ON_SUCCESS, function () {
+                $this->redirectNow('reporting/timeframes');
+            })
+            ->handleRequest(ServerRequest::fromGlobals());
 
         $this->addContent($form);
     }

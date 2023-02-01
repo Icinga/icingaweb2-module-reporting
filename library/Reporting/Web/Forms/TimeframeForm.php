@@ -15,13 +15,28 @@ class TimeframeForm extends CompatForm
     use Database;
     use DecoratedElement;
 
+    /** @var int */
     protected $id;
 
-    public function setId($id)
+    /**
+     * Create a new form instance with the given report
+     *
+     * @param int $id
+     *
+     * @return static
+     */
+    public static function fromId(int $id): self
     {
-        $this->id = $id;
+        $form = new static();
 
-        return $this;
+        $form->id = $id;
+
+        return $form;
+    }
+
+    public function hasBeenSubmitted(): bool
+    {
+        return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
     }
 
     protected function assemble()
@@ -64,22 +79,18 @@ class TimeframeForm extends CompatForm
             ]);
             $this->registerElement($removeButton);
             $this->getElement('submit')->getWrapper()->prepend($removeButton);
-
-            if ($removeButton->hasBeenPressed()) {
-                $this->getDb()->delete('timeframe', ['id = ?' => $this->id]);
-
-                // Stupid cheat because ipl/html is not capable of multiple submit buttons
-                $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
-                $this->valid = true;
-
-                return;
-            }
         }
     }
 
     public function onSuccess()
     {
         $db = $this->getDb();
+
+        if ($this->getPopulatedValue('remove')) {
+            $db->delete('timeframe', ['id = ?' => $this->id]);
+
+            return;
+        }
 
         $values = $this->getValues();
 
