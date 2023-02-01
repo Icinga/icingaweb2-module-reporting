@@ -95,10 +95,11 @@ class ReportsController extends Controller
         $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('New Report'));
 
-        $form = new ReportForm();
-        $form->handleRequest(ServerRequest::fromGlobals());
-
-        $this->redirectForm($form, 'reporting/reports');
+        $form = (new ReportForm())
+            ->on(ReportForm::ON_SUCCESS, function () {
+                $this->redirectNow('reporting/reports');
+            })
+            ->handleRequest(ServerRequest::fromGlobals());
 
         $this->addContent($form);
     }

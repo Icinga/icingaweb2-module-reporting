@@ -67,12 +67,12 @@ class ReportController extends Controller
             $values[$name] = $value;
         }
 
-        $form = new ReportForm();
-        $form->setId($this->report->getId());
-        $form->populate($values);
-        $form->handleRequest(ServerRequest::fromGlobals());
-
-        $this->redirectForm($form, 'reporting/reports');
+        $form = ReportForm::fromId($this->report->getId())
+            ->on(ReportForm::ON_SUCCESS, function () {
+                $this->redirectNow('reporting/reports');
+            })
+            ->populate($values)
+            ->handleRequest(ServerRequest::fromGlobals());
 
         $this->addContent($form);
     }
@@ -84,12 +84,12 @@ class ReportController extends Controller
         Environment::raiseExecutionTime();
         Environment::raiseMemoryLimit();
 
-        $form = new SendForm();
-        $form
+        $form = (new SendForm())
             ->setReport($this->report)
+            ->on(SendForm::ON_SUCCESS, function () {
+                $this->redirectNow("reporting/report?id={$this->report->getId()}");
+            })
             ->handleRequest(ServerRequest::fromGlobals());
-
-        $this->redirectForm($form, "reporting/report?id={$this->report->getId()}");
 
         $this->addContent($form);
     }
