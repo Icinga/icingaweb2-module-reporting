@@ -96,11 +96,11 @@ class TemplatesController extends Controller
         $this->assertPermission('reporting/templates');
         $this->addTitleTab('New Template');
 
-        $form = new TemplateForm();
-
-        $form->handleRequest(ServerRequest::fromGlobals());
-
-        $this->redirectForm($form, 'reporting/templates');
+        $form = (new TemplateForm())
+            ->on(TemplateForm::ON_SUCCESS, function () {
+                $this->redirectNow('reporting/templates');
+            })
+            ->handleRequest(ServerRequest::fromGlobals());
 
         $this->addContent($form);
     }
