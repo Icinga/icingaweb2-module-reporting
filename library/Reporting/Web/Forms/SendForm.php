@@ -35,7 +35,7 @@ class SendForm extends CompatForm
 
         (new SendMail())->initConfigForm($this, $this->report);
 
-        $radio = $this->addElement('radio', 'source_radio', [
+        $this->addElement('radio', 'source_radio', [
             'label'   => $this->translate('E-Mail Source'),
             'options' => [
                 'manual'   => $this->translate('Manual input'),
@@ -45,7 +45,7 @@ class SendForm extends CompatForm
             'class'   => 'autosubmit'
         ]);
 
-        if ($radio->getValue('source_radio') === 'contacts') {
+        if ($this->getPopulatedValue('source_radio', 'contacts') === 'contacts') {
             $emails = [null => $this->translate('Select Contacts')];
             foreach (EmailProviderHook::getProviders() as $provider) {
                 $emails = array_merge($emails, $provider->getContactEmails());
