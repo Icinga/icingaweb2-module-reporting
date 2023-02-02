@@ -7,7 +7,7 @@ use Icinga\Application\Hook;
 abstract class EmailAddressBookHook
 {
     /**
-     * Get all Contact eMails
+     * Get a list of email addresses as email-label pairs
      *
      * @return array
      */
