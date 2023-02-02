@@ -17,16 +17,26 @@ class ReportForm extends CompatForm
     use Database;
     use ProvidedReports;
 
-    /** @var bool Hack to disable the {@link onSuccess()} code upon deletion of the report */
-    protected $callOnSuccess;
-
     protected $id;
 
-    public function setId($id)
+    /**
+     * Create a new form instance with the given report id
+     *
+     * @param $id
+     *
+     * @return static
+     */
+    public static function fromId($id): self
     {
-        $this->id = $id;
+        $form = new static();
+        $form->id = $id;
 
-        return $this;
+        return $form;
+    }
+
+    public function hasBeenSubmitted(): bool
+    {
+        return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
     }
 
     protected function assemble()
@@ -97,27 +107,18 @@ class ReportForm extends CompatForm
             ]);
             $this->registerElement($removeButton);
             $this->getElement('submit')->getWrapper()->prepend($removeButton);
-
-            if ($removeButton->hasBeenPressed()) {
-                $this->getDb()->delete('report', ['id = ?' => $this->id]);
-
-                // Stupid cheat because ipl/html is not capable of multiple submit buttons
-                $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
-                $this->callOnSuccess = false;
-                $this->valid = true;
-
-                return;
-            }
         }
     }
 
     public function onSuccess()
     {
-        if ($this->callOnSuccess === false) {
+        $db = $this->getDb();
+
+        if ($this->getPopulatedValue('remove')) {
+            $db->delete('report', ['id = ?' => $this->id]);
+
             return;
         }
-
-        $db = $this->getDb();
 
         $values = $this->getValues();
 

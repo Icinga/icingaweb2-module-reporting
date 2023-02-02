@@ -8,6 +8,7 @@ use DateTime;
 use Icinga\Application\Version;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Web\Flatpickr;
@@ -25,16 +26,26 @@ class ScheduleForm extends CompatForm
     /** @var Report */
     protected $report;
 
+    /** @var int */
     protected $id;
 
-    public function setReport(Report $report)
+    /**
+     * Create a new form instance with the given report
+     *
+     * @param Report $report
+     *
+     * @return static
+     */
+    public static function fromReport(Report $report): self
     {
-        $this->report = $report;
+        $form = new static();
+
+        $form->report = $report;
 
         $schedule = $report->getSchedule();
 
         if ($schedule !== null) {
-            $this->setId($schedule->getId());
+            $form->setId($schedule->getId());
 
             $values = [
                     'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
@@ -42,17 +53,27 @@ class ScheduleForm extends CompatForm
                     'action'    => $schedule->getAction()
                 ] + $schedule->getConfig();
 
-            $this->populate($values);
+            $form->populate($values);
         }
 
-        return $this;
+        return $form;
     }
 
-    public function setId($id)
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId(int $id): ScheduleForm
     {
         $this->id = $id;
 
         return $this;
+    }
+
+    public function hasBeenSubmitted(): bool
+    {
+        return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
     }
 
     protected function assemble()
@@ -100,7 +121,7 @@ class ScheduleForm extends CompatForm
             $config = new Form();
 //            $config->populate($this->getValues());
 
-            /** @var \Icinga\Module\Reporting\Hook\ActionHook $action */
+            /** @var ActionHook $action */
             $action = new $values['action']();
 
             $action->initConfigForm($config, $this->report);
@@ -123,22 +144,18 @@ class ScheduleForm extends CompatForm
             ]);
             $this->registerElement($removeButton);
             $this->getElement('submit')->getWrapper()->prepend($removeButton);
-
-            if ($removeButton->hasBeenPressed()) {
-                $this->getDb()->delete('schedule', ['id = ?' => $this->id]);
-
-                // Stupid cheat because ipl/html is not capable of multiple submit buttons
-                $this->getSubmitButton()->setValue($this->getSubmitButton()->getButtonLabel());
-                $this->valid = true;
-
-                return;
-            }
         }
     }
 
     public function onSuccess()
     {
         $db = $this->getDb();
+
+        if ($this->getPopulatedValue('remove')) {
+            $db->delete('schedule', ['id = ?' => $this->id]);
+
+            return;
+        }
 
         $values = $this->getValues();
 
