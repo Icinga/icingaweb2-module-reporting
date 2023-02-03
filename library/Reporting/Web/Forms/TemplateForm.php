@@ -4,6 +4,7 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
+use Exception;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
@@ -186,7 +187,7 @@ class TemplateForm extends CompatForm
                     'mtime'    => $now
                 ]);
             } else {
-                if (isset($settings['remove_cover_page_background_image'])) {
+                if ($this->getValue('remove_cover_page_background_image', 'n') === 'y') {
                     unset($settings['cover_page_background_image']);
                     unset($settings['remove_cover_page_background_image']);
                 } elseif (
@@ -196,7 +197,7 @@ class TemplateForm extends CompatForm
                     $settings['cover_page_background_image'] = $this->template->settings['cover_page_background_image'];
                 }
 
-                if (isset($settings['remove_cover_page_logo'])) {
+                if ($this->getValue('remove_cover_page_logo', 'n') === 'y') {
                     unset($settings['cover_page_logo']);
                     unset($settings['remove_cover_page_logo']);
                 } elseif (
@@ -229,7 +230,7 @@ class TemplateForm extends CompatForm
                     'mtime'    => $now
                 ], ['id = ?' => $this->template->id]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
