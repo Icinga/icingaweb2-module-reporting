@@ -14,6 +14,8 @@ use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\FormElement\Collection;
 use ipl\Html\FormElement\Fieldset;
+use ipl\Html\FormElement\SelectElement;
+use ipl\Html\FormElement\SubmitElement;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormDecorator\IcingaFormDecorator;
 use ipl\Web\Widget\Icon;
@@ -115,9 +117,9 @@ class ReportForm extends CompatForm
 
             $group
                 ->registerElement($addElement)
-                ->addHtml($addElement);
+                ->addHtml($addElement)
+                ->registerElement($removeElement);
 
-            $group->registerElement($removeElement);
             $addElement->getWrapper()->ensureAssembled()->add($removeElement);
 
             $reportletClass = $group->getPopulatedValue('reportlet');
