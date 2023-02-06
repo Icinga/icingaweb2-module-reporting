@@ -12,6 +12,7 @@ use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\FormElement\Collection;
+use ipl\Html\FormElement\FieldsetElement;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormDecorator\IcingaFormDecorator;
 use ipl\Web\Widget\Icon;
@@ -85,7 +86,7 @@ class ReportForm extends CompatForm
 
         $collection = (new Collection('reportlet'))
             ->setLabel('Reportlets')
-            ->setAddElement($this->createElement('select', 'reportlet', [
+            ->setAddElement($this->createElement('select', 'add_reportlet', [
                 'required' => false,
                 'label'    => 'Reportlet',
                 'options'  => [null => 'Please choose'] + $this->listReports(),
