@@ -8,14 +8,10 @@ use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Hook\ReportHook;
 use Icinga\Module\Reporting\ProvidedReports;
-use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\FormElement\Collection;
-use ipl\Html\FormElement\Fieldset;
-use ipl\Html\FormElement\SelectElement;
-use ipl\Html\FormElement\SubmitElement;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormDecorator\IcingaFormDecorator;
 use ipl\Web\Widget\Icon;
@@ -54,14 +50,6 @@ class ReportForm extends CompatForm
                 $this->getDb()->delete('report', ['id = ?' => $this->id]);
             }
         });
-    }
-
-    public static function fromReport(Report $report): ReportForm
-    {
-        $self = new static();
-        $self->setId($report->getId());
-
-        return $self;
     }
 
     protected function assemble()
