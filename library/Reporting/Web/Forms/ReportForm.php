@@ -111,7 +111,7 @@ class ReportForm extends CompatForm
 
             $addElement->getWrapper()->ensureAssembled()->add($removeElement);
 
-            $reportletClass = $group->getPopulatedValue('reportlet');
+            $reportletClass = $group->getPopulatedValue('add_reportlet');
             if (! empty($reportletClass)) {
                 $config = new Form();
 
