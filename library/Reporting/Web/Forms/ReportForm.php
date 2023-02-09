@@ -12,7 +12,6 @@ use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\FormElement\Collection;
-use ipl\Html\FormElement\FieldsetElement;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormDecorator\IcingaFormDecorator;
 use ipl\Web\Widget\Icon;
@@ -86,7 +85,7 @@ class ReportForm extends CompatForm
 
         $collection = (new Collection('reportlet'))
             ->setLabel('Reportlets')
-            ->setAddElement($this->createElement('select', 'add_reportlet', [
+            ->setAddElement($this->createElement('select', 'reportlet_class', [
                 'required' => false,
                 'label'    => 'Reportlet',
                 'options'  => [null => 'Please choose'] + $this->listReports(),
@@ -111,7 +110,7 @@ class ReportForm extends CompatForm
 
             $addElement->getWrapper()->ensureAssembled()->add($removeElement);
 
-            $reportletClass = $group->getPopulatedValue('add_reportlet');
+            $reportletClass = $group->getPopulatedValue('reportlet_class');
             if (! empty($reportletClass)) {
                 $config = new Form();
 
@@ -198,13 +197,13 @@ class ReportForm extends CompatForm
                 }
             });
 
-            if (empty($reportlet['reportlet'])) {
+            if (empty($reportlet['reportlet_class'])) {
                 continue;
             }
 
             $db->insert('reportlet', [
                 'report_id' => $reportId,
-                'class'     => $reportlet['reportlet'],
+                'class'     => $reportlet['reportlet_class'],
                 'ctime'     => $now,
                 'mtime'     => $now
             ]);
@@ -212,35 +211,17 @@ class ReportForm extends CompatForm
             $reportletId = $db->lastInsertId();
 
             foreach ($reportlet as $key => $value) {
-                if ($key === 'reportlet') {
+                if ($key === 'reportlet_class') {
                     continue;
                 }
 
-                foreach ($values as $name => $value) {
-                    $db->insert('config', [
-                        'reportlet_id' => $reportletId,
-                        'name'         => $name,
-                        'value'        => $value,
-                        'ctime'        => $now,
-                        'mtime'        => $now
-                    ]);
-
-                    $reportletId = $db->lastInsertId();
-
-                    foreach ($reportlet as $key => $value) {
-                        if ($key === '__class') {
-                            continue;
-                        }
-
-                        $db->insert('config', [
-                            'reportlet_id' => $reportletId,
-                            'name'         => $key,
-                            'value'        => $value,
-                            'ctime'        => $now,
-                            'mtime'        => $now
-                        ]);
-                    }
-                }
+                $db->insert('config', [
+                    'reportlet_id' => $reportletId,
+                    'name'         => $key,
+                    'value'        => $value,
+                    'ctime'        => $now,
+                    'mtime'        => $now
+                ]);
             }
         }
 
