@@ -4,10 +4,13 @@
 
 namespace Icinga\Module\Reporting;
 
+use Icinga\Module\Reporting\Common\SlaTimelines;
+
 class ReportData implements \Countable
 {
     use Dimensions;
     use Values;
+    use SlaTimelines;
 
     /** @var ReportRow[]|null */
     protected $rows;
@@ -22,6 +25,27 @@ class ReportData implements \Countable
         $this->rows = $rows;
 
         return $this;
+    }
+
+    public function getIcingaDBAvg()
+    {
+        $totals = 0.0;
+        $count = 0;
+        foreach ($this->getAllTimelines() as $name => $timelines) {
+            $totalTime = 0;
+            $problemTime = 0;
+
+            /** @var SlaTimeline $timeline */
+            foreach ($timelines as $timeline) {
+                $totalTime += $timeline->getTotalTime();
+                $problemTime += $timeline->getProblemTime();
+            }
+
+            ++$count;
+            $totals += 100 * ($totalTime - $problemTime) / $totalTime;
+        }
+
+        return $totals / $count;
     }
 
     public function getAverages()
