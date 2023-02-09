@@ -61,7 +61,7 @@ class ReportController extends Controller
         ];
 
         foreach ($this->report->getReportlets() as $key => $reportlet) {
-            $values['reportlet'][$key]['reportlet'] = $reportlet->getClass();
+            $values['reportlet'][$key]['reportlet_class'] = $reportlet->getClass();
 
             foreach ($reportlet->getConfig() as $name => $value) {
                 $values['reportlet'][$key][$name] = $value;
