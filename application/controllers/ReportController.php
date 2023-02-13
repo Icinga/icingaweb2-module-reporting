@@ -14,6 +14,7 @@ use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
 use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
+use Icinga\Web\Notification;
 use ipl\Html\Error;
 use ipl\Stdlib\Filter;
 use ipl\Web\Url;
@@ -149,14 +150,30 @@ class ReportController extends Controller
         $this->assertPermission('reporting/schedules');
         $this->addTitleTab($this->translate('Schedule'));
 
-        $form = ScheduleForm::fromReport($this->report)
-            ->setAction((string) Url::fromRequest())
-            ->on(ScheduleForm::ON_SUCCESS, function () {
+        $form = ScheduleForm::fromReport($this->report);
+        $form->setAction((string) Url::fromRequest())
+            ->on(ScheduleForm::ON_SUCCESS, function () use ($form) {
+                $pressedButton = $form->getPressedSubmitElement()->getName();
+                if ($pressedButton === 'remove') {
+                    Notification::success($this->translate('Removed schedule successfully'));
+                } elseif ($pressedButton === 'send') {
+                    Notification::success($this->translate('Report sent successfully'));
+                } elseif ($this->report->getSchedule() !== null) {
+                    Notification::success($this->translate('Updated schedule successfully'));
+                } else {
+                    Notification::success($this->translate('Created schedule successfully'));
+                }
+
                 $this->redirectNow("reporting/report?id={$this->report->getId()}");
             })
             ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
+
+        $parts = $form->getPartUpdates();
+        if (! empty($parts)) {
+            $this->sendMultipartUpdate(...$parts);
+        }
     }
 
     public function downloadAction()
