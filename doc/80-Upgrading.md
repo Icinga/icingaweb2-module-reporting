@@ -3,6 +3,18 @@
 Upgrading Icinga Reporting is straightforward.
 Usually the only manual steps involved are schema updates for the database.
 
+## Upgrading to Version 1.0.0
+
+Icinga Reporting version 1.0.0 requires a schema update for the database. We have deprecated the `start` and `frequency`
+column of the schedule table and will likely be dropped in a feature releases. Please find the upgrade
+script in **schema/<mysql,postgresql>-migrations**.
+
+You may use the following command to apply the database schema upgrade file:
+
+```
+# mysql -u root -p reporting schema/mysql-migrations/v1.0.0.sql
+```
+
 ## Upgrading to Version 0.10.0
 
 Icinga Reporting version 0.10.0 requires a schema update for the database.
