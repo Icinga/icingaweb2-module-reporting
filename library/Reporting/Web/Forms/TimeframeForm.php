@@ -5,9 +5,11 @@
 namespace Icinga\Module\Reporting\Web\Forms;
 
 use DateTime;
+use Exception;
 use Icinga\Module\Reporting\Database;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\FormElement\LocalDateTimeElement;
+use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
 class TimeframeForm extends CompatForm
@@ -82,7 +84,22 @@ class TimeframeForm extends CompatForm
                 'required'    => true,
                 'label'       => $this->translate('Start'),
                 'placeholder' => $this->translate('First day of this month'),
-                'description' => $this->translate('Specifies the start time of this timeframe')
+                'description' => $this->translate('Specifies the start time of this timeframe'),
+                'validators' => [
+                    new CallbackValidator(function ($value, CallbackValidator $validator) {
+                        if ($value !== null) {
+                            try {
+                                new DateTime($value);
+                            } catch (Exception $_) {
+                                $validator->addMessage($this->translate('Invalid textual date time'));
+
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    })
+                ]
             ]);
         }
 
@@ -124,7 +141,22 @@ class TimeframeForm extends CompatForm
                 'required'    => true,
                 'label'       => $this->translate('End'),
                 'placeholder' => $this->translate('Last day of this month'),
-                'description' => $this->translate('Specifies the end time of this timeframe')
+                'description' => $this->translate('Specifies the end time of this timeframe'),
+                'validators' => [
+                    new CallbackValidator(function ($value, CallbackValidator $validator) {
+                        if ($value !== null) {
+                            try {
+                                new DateTime($value);
+                            } catch (Exception $_) {
+                                $validator->addMessage($this->translate('Invalid textual date time'));
+
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    })
+                ]
             ]);
         }
 
