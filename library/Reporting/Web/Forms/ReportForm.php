@@ -85,18 +85,18 @@ class ReportForm extends CompatForm
 
         $collection = (new Collection('reportlet'))
             ->setLabel('Reportlets')
-            ->setAddElement($this->createElement('select', 'reportlet_class', [
+            ->setAddElement('select', 'reportlet_class', [
                 'required' => false,
                 'label'    => 'Reportlet',
                 'options'  => [null => 'Please choose'] + $this->listReports(),
                 'class'    => 'autosubmit'
-            ]))
-            ->setRemoveElement($this->createElement('submitButton', 'remove_reportlet', [
+            ])
+            ->setRemoveElement('submitButton', 'remove_reportlet', [
                 'label'          => new Icon('trash'),
                 'class'          => 'btn-remove-reportlet',
                 'formnovalidate' => true,
                 'title'          => 'Remove Reportlet'
-            ]));
+            ]);
 
         $collection->onAssembleGroup(function ($group, $addElement, $removeElement) {
             $group->setDefaultElementDecorator(new IcingaFormDecorator());
