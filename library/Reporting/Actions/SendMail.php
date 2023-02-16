@@ -10,6 +10,9 @@ use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
 use Icinga\Module\Reporting\Report;
 use ipl\Html\Form;
+use ipl\Stdlib\Str;
+use ipl\Validator\CallbackValidator;
+use ipl\Validator\EmailAddressValidator;
 
 class SendMail extends ActionHook
 {
@@ -81,7 +84,22 @@ class SendMail extends ActionHook
 
         $form->addElement('textarea', 'recipients', [
             'required' => true,
-            'label'    => t('Recipients')
+            'label'    => t('Recipients'),
+            'validators' => [
+                new CallbackValidator(function ($value, CallbackValidator $validator): bool {
+                    $mailValidator = new EmailAddressValidator();
+                    $mails = Str::trimSplit($value);
+                    foreach ($mails as $mail) {
+                        if (! $mailValidator->isValid($mail)) {
+                            $validator->addMessage(...$mailValidator->getMessages());
+
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+            ]
         ]);
     }
 }
