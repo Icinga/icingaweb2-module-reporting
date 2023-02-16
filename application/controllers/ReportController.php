@@ -18,6 +18,7 @@ use ipl\Html\Error;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
 use Icinga\Util\Environment;
+use ipl\Web\Widget\ActionLink;
 
 class ReportController extends Controller
 {
@@ -68,11 +69,12 @@ class ReportController extends Controller
         }
 
         $form = ReportForm::fromId($this->report->getId())
-            ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/reports');
-            })
+            ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->on(ReportForm::ON_SUCCESS, function () {
+                $this->redirectNow('__CLOSE__');
+            })
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -184,10 +186,16 @@ class ReportController extends Controller
         $actions = new ActionBar();
 
         if ($this->hasPermission('reporting/reports')) {
-            $actions->addLink(
-                'Modify',
-                Url::fromPath('reporting/report/edit', ['id' => $reportId]),
-                'edit'
+            $actions->addHtml(
+                new ActionLink(
+                    $this->translate('Modify'),
+                    Url::fromPath('reporting/report/edit', ['id' => $reportId]),
+                    'edit',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
             );
         }
 
