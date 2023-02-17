@@ -5,11 +5,11 @@
 namespace Icinga\Module\Reporting\Controllers;
 
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
-use ipl\Sql\Select;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
 use ipl\Web\Widget\Link;
@@ -39,11 +39,9 @@ class TimeframesController extends Controller
 
         $tableRows = [];
 
-        $select = (new Select())
-            ->from('timeframe t')
-            ->columns('*');
+        $timeframes = Model\Timeframe::on($this->getDb());
 
-        foreach ($this->getDb()->select($select) as $timeframe) {
+        foreach ($timeframes as $timeframe) {
             $subject = $timeframe->name;
 
             if ($canManage) {
@@ -64,8 +62,8 @@ class TimeframesController extends Controller
                 Html::tag('td', null, $subject),
                 Html::tag('td', null, $timeframe->start),
                 Html::tag('td', null, $timeframe->end),
-                Html::tag('td', null, date('Y-m-d H:i', $timeframe->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $timeframe->mtime / 1000))
+                Html::tag('td', null, $timeframe->ctime->format('Y-m-d H:i')),
+                Html::tag('td', null, $timeframe->mtime->format('Y-m-d H:i'))
             ]);
         }
 

@@ -24,6 +24,34 @@ class Schedule
     /** @var array */
     protected $config;
 
+    /** @var Report */
+    protected $report;
+
+    /**
+     * Create schedule from the given model
+     *
+     * @param Model\Schedule $scheduleModel
+     *
+     * @return static
+     */
+
+    public static function fromModel(Model\Schedule $scheduleModel): self
+    {
+        $schedule = new static();
+
+        $schedule->id = $scheduleModel->id;
+        $schedule->reportId = $scheduleModel->report_id;
+        $schedule->start = $scheduleModel->start;
+        $schedule->frequency = $scheduleModel->frequency;
+        $schedule->action = $scheduleModel->action;
+
+        if ($scheduleModel->config) {
+            $schedule->config = json_decode($scheduleModel->config, true);
+        }
+
+        return $schedule;
+    }
+
     /**
      * @return  int
      */
@@ -33,35 +61,11 @@ class Schedule
     }
 
     /**
-     * @param int $id
-     *
-     * @return  $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * @return  int
+     * @return int
      */
     public function getReportId()
     {
         return $this->reportId;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return  $this
-     */
-    public function setReportId($id)
-    {
-        $this->reportId = $id;
-
-        return $this;
     }
 
     /**
@@ -73,35 +77,11 @@ class Schedule
     }
 
     /**
-     * @param \DateTime $start
-     *
-     * @return  $this
-     */
-    public function setStart(\DateTime $start)
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
-    /**
      * @return  string
      */
     public function getFrequency()
     {
         return $this->frequency;
-    }
-
-    /**
-     * @param string $frequency
-     *
-     * @return  $this
-     */
-    public function setFrequency($frequency)
-    {
-        $this->frequency = $frequency;
-
-        return $this;
     }
 
     /**
@@ -113,19 +93,7 @@ class Schedule
     }
 
     /**
-     * @param string $action
-     *
-     * @return  $this
-     */
-    public function setAction($action)
-    {
-        $this->action = $action;
-
-        return $this;
-    }
-
-    /**
-     * @return  array
+     * @return array
      */
     public function getConfig()
     {
@@ -133,13 +101,25 @@ class Schedule
     }
 
     /**
-     * @param array $config
+     * Get the report this schedule belongs to
      *
-     * @return  $this
+     * @return Report
      */
-    public function setConfig(array $config)
+    public function getReport(): Report
     {
-        $this->config = $config;
+        return $this->report;
+    }
+
+    /**
+     * Set the report this schedule belongs to
+     *
+     * @param Report $report
+     *
+     * @return $this
+     */
+    public function setReport(Report $report): self
+    {
+        $this->report = $report;
 
         return $this;
     }

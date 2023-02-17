@@ -4,11 +4,14 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
+use Exception;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Timeframe;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
 use ipl\Web\Url;
+use ipl\Stdlib\Filter;
 
 class TimeframeController extends Controller
 {
@@ -19,7 +22,15 @@ class TimeframeController extends Controller
 
     public function init()
     {
-        $this->timeframe = Timeframe::fromDb($this->params->getRequired('id'));
+        $timeframe = Model\Timeframe::on($this->getDb())
+            ->filter(Filter::equal('id', $this->params->getRequired('id')))
+            ->first();
+
+        if ($timeframe === null) {
+            throw new Exception('Timeframe not found');
+        }
+
+        $this->timeframe = Timeframe::fromModel($timeframe);
     }
 
     public function editAction()

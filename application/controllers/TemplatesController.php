@@ -6,11 +6,11 @@ namespace Icinga\Module\Reporting\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
-use ipl\Sql\Select;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
 use ipl\Web\Widget\Link;
@@ -34,12 +34,9 @@ class TemplatesController extends Controller
             ));
         }
 
-        $select = (new Select())
-            ->from('template')
-            ->columns(['id', 'name', 'author', 'ctime', 'mtime'])
-            ->orderBy('mtime', SORT_DESC);
+        $templates = Model\Template::on($this->getDb());
 
-        foreach ($this->getDb()->select($select) as $template) {
+        foreach ($templates as $template) {
             if ($canManage) {
                 // Edit URL
                 $subjectUrl = Url::fromPath(
@@ -57,8 +54,8 @@ class TemplatesController extends Controller
             $tableRows[] = Html::tag('tr', null, [
                 Html::tag('td', null, new Link($template->name, $subjectUrl)),
                 Html::tag('td', null, $template->author),
-                Html::tag('td', null, date('Y-m-d H:i', $template->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $template->mtime / 1000))
+                Html::tag('td', null, $template->ctime->format('Y-m-d H:i')),
+                Html::tag('td', null, $template->mtime->format('Y-m-d H:i'))
             ]);
         }
 

@@ -5,12 +5,14 @@
 namespace Icinga\Module\Reporting\Controllers;
 
 use DateTime;
+use Exception;
 use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\Widget\Template;
-use ipl\Sql\Select;
+use ipl\Stdlib\Filter;
 
 class TemplateController extends Controller
 {
@@ -20,13 +22,15 @@ class TemplateController extends Controller
     {
         $this->createTabs()->activate('preview');
 
-        $template = Template::fromDb($this->params->getRequired('id'));
+        $template = Model\Template::on($this->getDb())
+            ->filter(Filter::equal('id', $this->params->getRequired('id')))
+            ->first();
 
         if ($template === null) {
-            throw new \Exception('Template not found');
+            throw new Exception('Template not found');
         }
 
-        $template
+        $template = Template::fromModel($template)
             ->setMacros([
                 'date'                => (new DateTime())->format('jS M, Y'),
                 'time_frame'          => 'Time Frame',
@@ -44,15 +48,12 @@ class TemplateController extends Controller
 
         $this->createTabs()->activate('edit');
 
-        $select = (new Select())
-            ->from('template')
-            ->columns(['id', 'settings'])
-            ->where(['id = ?' => $this->params->getRequired('id')]);
-
-        $template = $this->getDb()->select($select)->fetch();
+        $template = Model\Template::on($this->getDb())
+            ->filter(Filter::equal('id', $this->params->getRequired('id')))
+            ->first();
 
         if ($template === false) {
-            throw new \Exception('Template not found');
+            throw new Exception('Template not found');
         }
 
         $template->settings = json_decode($template->settings, true);
