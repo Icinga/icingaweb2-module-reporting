@@ -65,16 +65,21 @@ class ReportController extends Controller
         $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('Clone Report'));
 
-        $values = [
-            'name'      => $this->report->getName() . ' Clone',
-            'timeframe' => (string) $this->report->getTimeframe()->getId(),
-        ];
+        $values = ['timeframe' => (string) $this->report->getTimeframe()->getId()];
 
         $reportlet = $this->report->getReportlets()[0];
 
         $values['reportlet'] = $reportlet->getClass();
 
         foreach ($reportlet->getConfig() as $name => $value) {
+            if ($name === 'name') {
+                if (preg_match('/(?:Clone )(\d+)$/', $value, $matches)) {
+                    $value = preg_replace('/\d+$/', ++$matches[1], $value);
+                } else {
+                    $value .= ' Clone 1';
+                }
+            }
+
             $values[$name] = $value;
         }
 
@@ -83,7 +88,7 @@ class ReportController extends Controller
             ->setAction((string) Url::fromRequest())
             ->populate($values)
             ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/reports');
+                $this->redirectNow('__CLOSE__');
             })
             ->handleRequest($this->getServerRequest());
 
