@@ -72,37 +72,41 @@ class Report
             ->columns('*')
             ->where(['report_id = ?' => $id]);
 
-        $row = $db->select($select)->fetch();
+        $row = $db->select($select)->fetchAll();
 
         if ($row === false) {
             throw new Exception('No reportlets configured.');
         }
 
-        $reportlet = new Reportlet();
+        $reportlets = [];
+        foreach ($row as $reportletRow) {
+            $reportlet = new Reportlet();
 
-        $reportlet
-            ->setId($row->id)
-            ->setClass($row->class);
+            $reportlet
+                ->setId($reportletRow->id)
+                ->setClass($reportletRow->class);
 
-        $select = (new Sql\Select())
-            ->from('config')
-            ->columns('*')
-            ->where(['reportlet_id = ?' => $row->id]);
+            $select = (new Sql\Select())
+                ->from('config')
+                ->columns('*')
+                ->where(['reportlet_id = ?' => $reportletRow->id]);
 
-        $rows = $db->select($select)->fetchAll();
+            $rows = $db->select($select)->fetchAll();
 
-        $config = [
-            'name'  => $report->getName(),
-            'id'    => $report->getId()
-        ];
+            $config = [
+                'name'  => $report->getName(),
+                'id'    => $report->getId()
+            ];
 
-        foreach ($rows as $row) {
-            $config[$row->name] = $row->value;
+            foreach ($rows as $row) {
+                $config[$row->name] = $row->value;
+            }
+
+            $reportlet->setConfig($config);
+
+            $reportlets[] = $reportlet;
         }
-
-        $reportlet->setConfig($config);
-
-        $report->setReportlets([$reportlet]);
+        $report->setReportlets($reportlets);
 
         $select = (new Sql\Select())
             ->from('schedule')

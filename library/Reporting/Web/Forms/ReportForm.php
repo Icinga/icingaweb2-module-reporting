@@ -6,11 +6,15 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Hook\ReportHook;
 use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Html\FormElement\Collection;
 use ipl\Web\Compat\CompatForm;
+use ipl\Web\FormDecorator\IcingaFormDecorator;
+use ipl\Web\Widget\Icon;
 
 class ReportForm extends CompatForm
 {
@@ -37,6 +41,15 @@ class ReportForm extends CompatForm
     public function hasBeenSubmitted(): bool
     {
         return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
+    }
+
+    public function __construct()
+    {
+        $this->on(static::ON_SENT, function () {
+            if ($this->getPressedSubmitElement() && $this->getPressedSubmitElement()->getName() === 'remove') {
+                $this->getDb()->delete('report', ['id = ?' => $this->id]);
+            }
+        });
     }
 
     protected function assemble()
@@ -70,38 +83,63 @@ class ReportForm extends CompatForm
             )
         ]);
 
-        $this->addElement('select', 'reportlet', [
-            'required'    => true,
-            'class'       => 'autosubmit',
-            'label'       => $this->translate('Report'),
-            'options'     => [null => $this->translate('Please choose')] + $this->listReports(),
-            'description' => $this->translate('Specifies the type of the reportlet to be generated')
-        ]);
+        $collection = (new Collection('reportlet'))
+            ->setLabel('Reportlets')
+            ->setAddElement('select', 'reportlet_class', [
+                'required' => false,
+                'label'    => 'Reportlet',
+                'options'  => [null => 'Please choose'] + $this->listReports(),
+                'class'    => 'autosubmit'
+            ])
+            ->setRemoveElement('submitButton', 'remove_reportlet', [
+                'label'          => new Icon('trash'),
+                'class'          => 'btn-remove-reportlet',
+                'formnovalidate' => true,
+                'title'          => 'Remove Reportlet'
+            ]);
 
-        $values = $this->getValues();
+        $collection->onAssembleGroup(function ($group, $addElement, $removeElement) {
+            $group->setDefaultElementDecorator(new IcingaFormDecorator());
 
-        if (isset($values['reportlet'])) {
-            $config = new Form();
-//            $config->populate($this->getValues());
+            $this->decorate($addElement);
 
-            /** @var \Icinga\Module\Reporting\Hook\ReportHook $reportlet */
-            $reportlet = new $values['reportlet']();
+            $group
+                ->registerElement($addElement)
+                ->addHtml($addElement)
+                ->registerElement($removeElement);
 
-            $reportlet->initConfigForm($config);
+            $addElement->getWrapper()->ensureAssembled()->add($removeElement);
 
-            foreach ($config->getElements() as $element) {
-                $this->addElement($element);
+            $reportletClass = $group->getPopulatedValue('reportlet_class');
+            if (! empty($reportletClass)) {
+                $config = new Form();
+
+                /** @var ReportHook $reportlet */
+                $reportlet = new $reportletClass();
+                $reportlet->initConfigForm($config);
+
+                foreach ($config->getElements() as $element) {
+                    $this->decorate($element);
+
+                    $group
+                        ->registerElement($element)
+                        ->addHtml($element);
+                }
             }
-        }
+        });
+
+        $this->registerElement($collection);
+        $this->add($collection);
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? $this->translate('Create Report') : $this->translate('Update Report')
+            'label' => $this->id === null ? 'Create Report' : 'Update Report'
         ]);
+        $this->setSubmitButton($this->getElement('submit'));
 
         if ($this->id !== null) {
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
-                'label'          => $this->translate('Remove Report'),
+                'label'          => 'Remove Report',
                 'class'          => 'btn-remove',
                 'formnovalidate' => true
             ]);
@@ -148,32 +186,43 @@ class ReportForm extends CompatForm
             $reportId = $this->id;
         }
 
-        unset($values['name']);
-        unset($values['timeframe']);
-
         if ($this->id !== null) {
             $db->delete('reportlet', ['report_id = ?' => $reportId]);
         }
 
-        $db->insert('reportlet', [
-            'report_id' => $reportId,
-            'class'     => $values['reportlet'],
-            'ctime'     => $now,
-            'mtime'     => $now
-        ]);
+        foreach ($this->getPopulatedValue('reportlet') as $reportlet) {
+            array_walk($reportlet, function (&$value) {
+                if ($value === '') {
+                    $value = null;
+                }
+            });
 
-        $reportletId = $db->lastInsertId();
+            if (empty($reportlet['reportlet_class'])) {
+                continue;
+            }
 
-        unset($values['reportlet']);
-
-        foreach ($values as $name => $value) {
-            $db->insert('config', [
-                'reportlet_id' => $reportletId,
-                'name'         => $name,
-                'value'        => $value,
-                'ctime'        => $now,
-                'mtime'        => $now
+            $db->insert('reportlet', [
+                'report_id' => $reportId,
+                'class'     => $reportlet['reportlet_class'],
+                'ctime'     => $now,
+                'mtime'     => $now
             ]);
+
+            $reportletId = $db->lastInsertId();
+
+            foreach ($reportlet as $key => $value) {
+                if ($key === 'reportlet_class') {
+                    continue;
+                }
+
+                $db->insert('config', [
+                    'reportlet_id' => $reportletId,
+                    'name'         => $key,
+                    'value'        => $value,
+                    'ctime'        => $now,
+                    'mtime'        => $now
+                ]);
+            }
         }
 
         $db->commitTransaction();
