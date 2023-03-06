@@ -26,7 +26,7 @@ class ReportsController extends Controller
     {
         $this->createTabs()->activate('reports');
 
-        if ($this->hasPermission('reporting/reports')) {
+        if ($this->hasPermission('reporting/reports/modify')) {
             $this->addControl(new ButtonLink(
                 $this->translate('New Report'),
                 Url::fromPath('reporting/reports/new'),
@@ -43,6 +43,8 @@ class ReportsController extends Controller
         $reports = Report::on($this->getDb())
             ->withColumns(['report.timeframe.name']);
 
+        $this->applyRestriction($reports, 'name');
+
         $sortControl = $this->createSortControl(
             $reports,
             [
@@ -58,13 +60,16 @@ class ReportsController extends Controller
         foreach ($reports as $report) {
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 
-            $tableRows[] = Html::tag('tr', ['href' => $url], [
+            $content = [
                 Html::tag('td', null, $report->name),
                 Html::tag('td', null, $report->author),
                 Html::tag('td', null, $report->timeframe->name),
                 Html::tag('td', null, $report->ctime->format('Y-m-d H:i')),
                 Html::tag('td', null, $report->mtime->format('Y-m-d H:i')),
-                Html::tag('td', ['class' => 'icon-col'], [
+            ];
+
+            if ($this->hasPermission('reporting/reports/modify')) {
+                $content[] = Html::tag('td', ['class' => 'icon-col'], [
                     new Link(
                         new Icon('edit'),
                         Url::fromPath('reporting/report/edit', ['id' => $report->id]),
@@ -73,8 +78,10 @@ class ReportsController extends Controller
                             'data-no-icinga-ajax' => true
                         ]
                     )
-                ])
-            ]);
+                ]);
+            }
+
+            $tableRows[] = Html::tag('tr', ['href' => $url], $content);
         }
 
         if (! empty($tableRows)) {
@@ -110,7 +117,7 @@ class ReportsController extends Controller
 
     public function newAction()
     {
-        $this->assertPermission('reporting/reports');
+        $this->assertPermission('reporting/reports/modify');
         $this->addTitleTab($this->translate('New Report'));
 
         switch ($this->params->shift('report')) {

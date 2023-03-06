@@ -37,6 +37,11 @@ namespace Icinga\Module\Reporting {
     );
 
     $this->providePermission(
+        'reporting/reports/modify',
+        $this->translate('Allow creating, editing and removing reports')
+    );
+
+    $this->providePermission(
         'reporting/schedules',
         $this->translate('Allow managing schedules')
     );
@@ -49,5 +54,10 @@ namespace Icinga\Module\Reporting {
     $this->providePermission(
         'reporting/timeframes',
         $this->translate('Allow managing timeframes')
+    );
+
+    $this->provideRestriction(
+        'reporting/prefix',
+        $this->translate('Restrict access to reports with the given prefix')
     );
 }

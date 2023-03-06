@@ -83,17 +83,52 @@ class ReportForm extends CompatForm
                 . ' and also when listing the reports in the cli'
             ),
             'validators' => [
-                'Callback' => function ($value, CallbackValidator $validator) {
-                    if ($value !== null && strpos($value, '..') !== false) {
-                        $validator->addMessage(
-                            $this->translate('Double dots are not allowed in the report name')
-                        );
+                new CallbackValidator(
+                    function ($value, CallbackValidator $validator) {
+                        if ($value !== null && strpos($value, '..') !== false) {
+                            $validator->addMessage(
+                                $this->translate('Double dots are not allowed in the report name')
+                            );
 
-                        return false;
+                            return false;
+                        }
+
+                        return true;
                     }
+                ),
+                new CallbackValidator(
+                    function ($value, $validator) {
+                        /** @var CallbackValidator $validator */
+                        $restrictions = Auth::getInstance()->getRestrictions('reporting/prefix');
+                        $prefixes = [];
+                        foreach ($restrictions as $restriction) {
+                            $prefixes = array_merge(
+                                $prefixes,
+                                explode(',', trim($restriction))
+                            );
+                        }
 
-                    return true;
-                }
+                        if (! empty($prefixes)) {
+                            foreach ($prefixes as $prefix) {
+                                $prefix = trim($prefix);
+                                if (substr($value, 0, strlen($prefix)) === $prefix) {
+                                    return true;
+                                }
+                            }
+
+                            $validator->addMessage(
+                                sprintf(
+                                    $this->translate('Please prefix the name with "%s"'),
+                                    implode(' | ', $prefixes)
+                                )
+                            );
+
+                            return false;
+                        }
+
+                        return true;
+                    }
+                )
             ]
         ]);
 
