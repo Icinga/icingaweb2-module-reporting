@@ -43,6 +43,18 @@ class ReportsController extends Controller
         $reports = Report::on($this->getDb())
             ->withColumns(['report.timeframe.name']);
 
+        $sortControl = $this->createSortControl(
+            $reports,
+            [
+                'name'   => $this->translate('Name'),
+                'author' => $this->translate('Author'),
+                'ctime'  => $this->translate('Created At'),
+                'mtime'  => $this->translate('Modified At')
+            ]
+        );
+
+        $this->addControl($sortControl);
+
         foreach ($reports as $report) {
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 

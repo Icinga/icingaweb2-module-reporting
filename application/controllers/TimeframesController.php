@@ -41,6 +41,17 @@ class TimeframesController extends Controller
 
         $timeframes = Model\Timeframe::on($this->getDb());
 
+        $sortControl = $this->createSortControl(
+            $timeframes,
+            [
+                'name'   => $this->translate('Name'),
+                'ctime'  => $this->translate('Created At'),
+                'mtime'  => $this->translate('Modified At')
+            ]
+        );
+
+        $this->addControl($sortControl);
+
         foreach ($timeframes as $timeframe) {
             $subject = $timeframe->name;
 
