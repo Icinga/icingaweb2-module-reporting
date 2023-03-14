@@ -4,7 +4,6 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
@@ -29,7 +28,11 @@ class ReportsController extends Controller
             $this->addControl(new ButtonLink(
                 $this->translate('New Report'),
                 Url::fromPath('reporting/reports/new'),
-                'plus'
+                'plus',
+                [
+                    'data-icinga-modal'   => true,
+                    'data-no-icinga-ajax' => true
+                ]
             ));
         }
 
@@ -53,7 +56,11 @@ class ReportsController extends Controller
                 Html::tag('td', ['class' => 'icon-col'], [
                     new Link(
                         new Icon('edit'),
-                        Url::fromPath('reporting/report/edit', ['id' => $report->id])
+                        Url::fromPath('reporting/report/edit', ['id' => $report->id]),
+                        [
+                            'data-icinga-modal'   => true,
+                            'data-no-icinga-ajax' => true
+                        ]
                     )
                 ])
             ]);
@@ -96,10 +103,13 @@ class ReportsController extends Controller
         $this->addTitleTab($this->translate('New Report'));
 
         $form = (new ReportForm())
+            ->setAction((string) Url::fromRequest())
             ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/reports');
+                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+
+                $this->redirectNow('__CLOSE__');
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }

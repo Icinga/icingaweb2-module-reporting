@@ -4,7 +4,6 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Application\Hook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
@@ -18,6 +17,7 @@ use ipl\Html\Error;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
 use Icinga\Util\Environment;
+use ipl\Web\Widget\ActionLink;
 
 class ReportController extends Controller
 {
@@ -68,11 +68,12 @@ class ReportController extends Controller
         }
 
         $form = ReportForm::fromId($this->report->getId())
-            ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/reports');
-            })
+            ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->on(ReportForm::ON_SUCCESS, function () {
+                $this->redirectNow('__CLOSE__');
+            })
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -86,10 +87,11 @@ class ReportController extends Controller
 
         $form = (new SendForm())
             ->setReport($this->report)
+            ->setAction((string) Url::fromRequest())
             ->on(SendForm::ON_SUCCESS, function () {
                 $this->redirectNow("reporting/report?id={$this->report->getId()}");
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -100,10 +102,11 @@ class ReportController extends Controller
         $this->addTitleTab($this->translate('Schedule'));
 
         $form = ScheduleForm::fromReport($this->report)
+            ->setAction((string) Url::fromRequest())
             ->on(ScheduleForm::ON_SUCCESS, function () {
                 $this->redirectNow("reporting/report?id={$this->report->getId()}");
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -184,24 +187,46 @@ class ReportController extends Controller
         $actions = new ActionBar();
 
         if ($this->hasPermission('reporting/reports')) {
-            $actions->addLink(
-                'Modify',
-                Url::fromPath('reporting/report/edit', ['id' => $reportId]),
-                'edit'
+            $actions->addHtml(
+                new ActionLink(
+                    $this->translate('Modify'),
+                    Url::fromPath('reporting/report/edit', ['id' => $reportId]),
+                    'edit',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
             );
         }
 
         if ($this->hasPermission('reporting/schedules')) {
-            $actions->addLink(
-                'Schedule',
-                Url::fromPath('reporting/report/schedule', ['id' => $reportId]),
-                'calendar-empty'
+            $actions->addHtml(
+                new ActionLink(
+                    $this->translate('Schedule'),
+                    Url::fromPath('reporting/report/schedule', ['id' => $reportId]),
+                    'calendar-empty',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
             );
         }
 
         $actions
             ->add($download)
-            ->addLink('Send', Url::fromPath('reporting/report/send', ['id' => $reportId]), 'forward');
+            ->addHtml(
+                new ActionLink(
+                    $this->translate('Send'),
+                    Url::fromPath('reporting/report/send', ['id' => $reportId]),
+                    'forward',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
+            );
 
         return $actions;
     }
