@@ -4,7 +4,6 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Application\Hook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
@@ -88,10 +87,11 @@ class ReportController extends Controller
 
         $form = (new SendForm())
             ->setReport($this->report)
+            ->setAction((string) Url::fromRequest())
             ->on(SendForm::ON_SUCCESS, function () {
                 $this->redirectNow("reporting/report?id={$this->report->getId()}");
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -102,10 +102,11 @@ class ReportController extends Controller
         $this->addTitleTab($this->translate('Schedule'));
 
         $form = ScheduleForm::fromReport($this->report)
+            ->setAction((string) Url::fromRequest())
             ->on(ScheduleForm::ON_SUCCESS, function () {
                 $this->redirectNow("reporting/report?id={$this->report->getId()}");
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
@@ -200,16 +201,32 @@ class ReportController extends Controller
         }
 
         if ($this->hasPermission('reporting/schedules')) {
-            $actions->addLink(
-                'Schedule',
-                Url::fromPath('reporting/report/schedule', ['id' => $reportId]),
-                'calendar-empty'
+            $actions->addHtml(
+                new ActionLink(
+                    $this->translate('Schedule'),
+                    Url::fromPath('reporting/report/schedule', ['id' => $reportId]),
+                    'calendar-empty',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
             );
         }
 
         $actions
             ->add($download)
-            ->addLink('Send', Url::fromPath('reporting/report/send', ['id' => $reportId]), 'forward');
+            ->addHtml(
+                new ActionLink(
+                    $this->translate('Send'),
+                    Url::fromPath('reporting/report/send', ['id' => $reportId]),
+                    'forward',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
+            );
 
         return $actions;
     }
