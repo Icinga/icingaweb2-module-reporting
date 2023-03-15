@@ -13,6 +13,7 @@ use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Web\Flatpickr;
 use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
+use Icinga\Web\Notification;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Web\Compat\CompatForm;
@@ -39,7 +40,6 @@ class ScheduleForm extends CompatForm
     public static function fromReport(Report $report): self
     {
         $form = new static();
-
         $form->report = $report;
 
         $schedule = $report->getSchedule();
@@ -73,7 +73,11 @@ class ScheduleForm extends CompatForm
 
     public function hasBeenSubmitted(): bool
     {
-        return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
+        return $this->hasBeenSent() && (
+                $this->getPopulatedValue('submit')
+                || $this->getPopulatedValue('remove')
+                || $this->getPopulatedValue('send')
+            );
     }
 
     protected function assemble()
@@ -136,6 +140,13 @@ class ScheduleForm extends CompatForm
         ]);
 
         if ($this->id !== null) {
+            $sendButton = $this->createElement('submit', 'send', [
+                'label'          => $this->translate('Send Report Now'),
+                'formnovalidate' => true
+            ]);
+            $this->registerElement($sendButton);
+            $this->getElement('submit')->getWrapper()->prepend($sendButton);
+
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => $this->translate('Remove Schedule'),
@@ -158,6 +169,14 @@ class ScheduleForm extends CompatForm
         }
 
         $values = $this->getValues();
+        if ($this->getPopulatedValue('send')) {
+            $action = new $values['action']();
+            $action->execute($this->report, $values);
+
+            Notification::success($this->translate('Report sent successfully'));
+
+            return;
+        }
 
         $now = time() * 1000;
 
