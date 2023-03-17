@@ -50,7 +50,20 @@ class ReportForm extends CompatForm
             'description' => $this->translate(
                 'A unique name of this report. It is used when exporting to pdf, json or csv format'
                 . ' and also when listing the reports in the cli'
-            )
+            ),
+            'validators' => [
+                'Callback' => function ($value, CallbackValidator $validator) {
+                    if ($value !== null && strpos($value, '..') !== false) {
+                        $validator->addMessage(
+                            $this->translate('Double dots are not allowed in the report name')
+                        );
+
+                        return false;
+                    }
+
+                    return true;
+                }
+            ]
         ]);
 
         $this->addElement('select', 'timeframe', [
