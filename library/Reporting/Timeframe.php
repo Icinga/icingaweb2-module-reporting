@@ -4,7 +4,7 @@
 
 namespace Icinga\Module\Reporting;
 
-use ipl\Sql\Select;
+use Icinga\Module\Reporting\Model;
 
 class Timeframe
 {
@@ -26,35 +26,21 @@ class Timeframe
     protected $end;
 
     /**
-     * @param int $id
+     * Create timeframe from the given model
      *
-     * @return  static
+     * @param Model\Timeframe $timeframeModel
      *
-     * @throws  \Exception
+     * @return static
      */
-    public static function fromDb($id)
+    public static function fromModel(Model\Timeframe $timeframeModel): self
     {
         $timeframe = new static();
 
-        $db = $timeframe->getDb();
-
-        $select = (new Select())
-            ->from('timeframe')
-            ->columns('*')
-            ->where(['id = ?' => $id]);
-
-        $row = $db->select($select)->fetch();
-
-        if ($row === false) {
-            throw new \Exception('Timeframe not found');
-        }
-
-        $timeframe
-            ->setId($row->id)
-            ->setName($row->name)
-            ->setTitle($row->title)
-            ->setStart($row->start)
-            ->setEnd($row->end);
+        $timeframe->id = $timeframeModel->id;
+        $timeframe->name = $timeframeModel->name;
+        $timeframe->title = $timeframeModel->title;
+        $timeframe->start = $timeframeModel->start;
+        $timeframe->end = $timeframeModel->end;
 
         return $timeframe;
     }
@@ -68,35 +54,11 @@ class Timeframe
     }
 
     /**
-     * @param int $id
-     *
-     * @return  $this
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * @return  string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return  $this
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -108,18 +70,6 @@ class Timeframe
     }
 
     /**
-     * @param string $title
-     *
-     * @return  $this
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
      * @return  string
      */
     public function getStart()
@@ -128,35 +78,11 @@ class Timeframe
     }
 
     /**
-     * @param string $start
-     *
-     * @return  $this
-     */
-    public function setStart($start)
-    {
-        $this->start = $start;
-
-        return $this;
-    }
-
-    /**
      * @return  string
      */
     public function getEnd()
     {
         return $this->end;
-    }
-
-    /**
-     * @param string $end
-     *
-     * @return  $this
-     */
-    public function setEnd($end)
-    {
-        $this->end = $end;
-
-        return $this;
     }
 
     public function getTimerange()

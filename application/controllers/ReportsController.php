@@ -5,11 +5,11 @@
 namespace Icinga\Module\Reporting\Controllers;
 
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model\Report;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
-use ipl\Sql\Select;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
 use ipl\Web\Widget\Icon;
@@ -38,21 +38,18 @@ class ReportsController extends Controller
 
         $tableRows = [];
 
-        $select = (new Select())
-            ->from('report r')
-            ->columns(['r.*', 'timeframe' => 't.name'])
-            ->join('timeframe t', 'r.timeframe_id = t.id')
-            ->orderBy('r.mtime', SORT_DESC);
+        $reports = Report::on($this->getDb())
+            ->withColumns(['report.timeframe.name']);
 
-        foreach ($this->getDb()->select($select) as $report) {
+        foreach ($reports as $report) {
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 
             $tableRows[] = Html::tag('tr', ['href' => $url], [
                 Html::tag('td', null, $report->name),
                 Html::tag('td', null, $report->author),
-                Html::tag('td', null, $report->timeframe),
-                Html::tag('td', null, date('Y-m-d H:i', $report->ctime / 1000)),
-                Html::tag('td', null, date('Y-m-d H:i', $report->mtime / 1000)),
+                Html::tag('td', null, $report->timeframe->name),
+                Html::tag('td', null, $report->ctime->format('Y-m-d H:i')),
+                Html::tag('td', null, $report->mtime->format('Y-m-d H:i')),
                 Html::tag('td', ['class' => 'icon-col'], [
                     new Link(
                         new Icon('edit'),

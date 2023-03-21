@@ -6,9 +6,8 @@ namespace Icinga\Module\Reporting\Web\Widget;
 
 use Icinga\Module\Reporting\Common\Macros;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use ipl\Html\BaseHtmlElement;
-use ipl\Html\Html;
-use ipl\Sql\Select;
 
 class Template extends BaseHtmlElement
 {
@@ -39,39 +38,35 @@ class Template extends BaseHtmlElement
         return sprintf('data:%s;base64,%s', $image['mime_type'], $image['content']);
     }
 
-    public static function fromDb($id)
+    /**
+     * Create template from the given model
+     *
+     * @param Model\Template $templateModel
+     *
+     * @return static
+     */
+    public static function fromModel(Model\Template $templateModel): self
     {
         $template = new static();
 
-        $select = (new Select())
-            ->from('template')
-            ->columns('*')
-            ->where(['id = ?' => $id]);
-
-        $row = $template->getDb()->select($select)->fetch();
-
-        if ($row === false) {
-            return null;
-        }
-
-        $row->settings = json_decode($row->settings, true);
+        $templateModel->settings = json_decode($templateModel->settings, true);
 
         $coverPage = (new CoverPage())
-            ->setColor($row->settings['color'])
-            ->setTitle($row->settings['title']);
+            ->setColor($templateModel->settings['color'])
+            ->setTitle($templateModel->settings['title']);
 
-        if (isset($row->settings['cover_page_background_image'])) {
-            $coverPage->setBackgroundImage($row->settings['cover_page_background_image']);
+        if (isset($templateModel->settings['cover_page_background_image'])) {
+            $coverPage->setBackgroundImage($templateModel->settings['cover_page_background_image']);
         }
 
-        if (isset($row->settings['cover_page_logo'])) {
-            $coverPage->setLogo($row->settings['cover_page_logo']);
+        if (isset($templateModel->settings['cover_page_logo'])) {
+            $coverPage->setLogo($templateModel->settings['cover_page_logo']);
         }
 
         $template
             ->setCoverPage($coverPage)
-            ->setHeader(new HeaderOrFooter(HeaderOrFooter::HEADER, $row->settings))
-            ->setFooter(new HeaderOrFooter(HeaderOrFooter::FOOTER, $row->settings));
+            ->setHeader(new HeaderOrFooter(HeaderOrFooter::HEADER, $templateModel->settings))
+            ->setFooter(new HeaderOrFooter(HeaderOrFooter::FOOTER, $templateModel->settings));
 
         return $template;
     }

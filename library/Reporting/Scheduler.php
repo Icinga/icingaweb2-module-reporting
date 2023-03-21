@@ -5,8 +5,8 @@
 namespace Icinga\Module\Reporting;
 
 use Icinga\Module\Reporting\Hook\ActionHook;
+use Icinga\Module\Reporting\Model;
 use ipl\Sql\Connection;
-use ipl\Sql\Select;
 use React\EventLoop\Factory as Loop;
 
 function datetime_get_time_of_day(\DateTime $dateTime)
@@ -53,20 +53,10 @@ class Scheduler
     protected function fetchSchedules()
     {
         $schedules = [];
+        $query = Model\Schedule::on($this->db)->with(['report.timeframe', 'report']);
 
-        $select = (new Select())
-            ->from('schedule')
-            ->columns('*');
-
-        foreach ($this->db->select($select) as $row) {
-            $schedule = (new Schedule())
-                ->setId((int) $row->id)
-                ->setReportId((int) $row->report_id)
-                ->setAction($row->action)
-                ->setConfig(\json_decode($row->config, true))
-                ->setStart((new \DateTime())->setTimestamp((int) $row->start / 1000))
-                ->setFrequency($row->frequency);
-
+        foreach ($query as $schedule) {
+            $schedule = Schedule::fromModel($schedule)->setReport(Report::fromModel($schedule->report));
             $schedules[$schedule->getChecksum()] = $schedule;
         }
 
@@ -101,7 +91,6 @@ class Scheduler
         $this->schedules = $schedules;
     }
 
-
     protected function add(Schedule $schedule)
     {
         $name = "Schedule {$schedule->getId()}";
@@ -111,11 +100,7 @@ class Scheduler
             $actionClass = $schedule->getAction();
             /** @var ActionHook $action */
             $action = new $actionClass();
-
-            $action->execute(
-                Report::fromDb($schedule->getReportId()),
-                $schedule->getConfig()
-            );
+            $action->execute($schedule->getReport(), $schedule->getConfig());
         };
 
         switch ($frequency) {

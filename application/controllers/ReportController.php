@@ -7,6 +7,7 @@ namespace Icinga\Module\Reporting\Controllers;
 use Icinga\Application\Hook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
@@ -14,6 +15,7 @@ use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
 use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
 use ipl\Html\Error;
+use ipl\Stdlib\Filter;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
 use Icinga\Util\Environment;
@@ -28,7 +30,18 @@ class ReportController extends Controller
 
     public function init()
     {
-        $this->report = Report::fromDb($this->params->getRequired('id'));
+        $reportId = $this->params->getRequired('id');
+
+        $report = Model\Report::on($this->getDb())
+            ->with(['timeframe'])
+            ->filter(Filter::equal('id', $reportId))
+            ->first();
+
+        if ($report === null) {
+            $this->httpNotFound($this->translate('Report not found'));
+        }
+
+        $this->report = Report::fromModel($report);
     }
 
     public function indexAction()

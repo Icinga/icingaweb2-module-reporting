@@ -4,10 +4,13 @@
 
 namespace Icinga\Module\Reporting\Clicommands;
 
-use InvalidArgumentException;
+use Icinga\Exception\NotFoundError;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Cli\Command;
+use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
+use InvalidArgumentException;
+use ipl\Stdlib\Filter;
 
 class DownloadCommand extends Command
 {
@@ -44,7 +47,17 @@ class DownloadCommand extends Command
             $this->fail($this->translate('Argument id is mandatory'));
         }
 
-        $report = Report::fromDb($id);
+        $report = Model\Report::on($this->getDb())
+            ->with('timeframe')
+            ->filter(Filter::equal('id', $id))
+            ->first();
+
+        if ($report === null) {
+            throw new NotFoundError('Report not found');
+        }
+
+        $report = Report::fromModel($report);
+
         $format = strtolower($this->params->get('format', 'pdf'));
         switch ($format) {
             case 'pdf':
