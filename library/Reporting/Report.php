@@ -73,7 +73,7 @@ class Report
 
         $schedule = $reportModel->schedule->first();
         if ($schedule !== null) {
-            $report->schedule = Schedule::fromModel($schedule)->setReport($report);
+            $report->schedule = Schedule::fromModel($schedule, $report);
         }
 
         return $report;

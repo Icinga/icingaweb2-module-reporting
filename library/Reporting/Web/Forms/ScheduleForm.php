@@ -47,13 +47,10 @@ class ScheduleForm extends CompatForm
         if ($schedule !== null) {
             $form->setId($schedule->getId());
 
-            $values = [
-                    'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
-                    'frequency' => $schedule->getFrequency(),
-                    'action'    => $schedule->getAction()
-                ] + $schedule->getConfig();
+            $config = $schedule->getConfig();
+            $config['action'] = $schedule->getAction();
 
-            $form->populate($values);
+            $form->populate($config);
         }
 
         return $form;
