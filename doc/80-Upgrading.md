@@ -7,12 +7,12 @@ Usually the only manual steps involved are schema updates for the database.
 
 Icinga Reporting version 0.10.0 requires a schema update for the database.
 A new table `template`, linked to table `report`, has been introduced.
-Please find the upgrade script in **schema/mysql-migrations**.
+Please find the upgrade script in **schema/mysql-upgrades**.
 
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting <schema/mysql-migrations/v0.10.0.sql
+# mysql -u root -p reporting <schema/mysql-upgrades/0.10.0.sql
 ```
 
 ## Upgrading to Version 0.9.1
@@ -26,5 +26,5 @@ Please find the upgrade script in **schema/mysql-migrations**.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting <schema/mysql-migrations/v0.9.1.sql
+# mysql -u root -p reporting <schema/mysql-upgrades/0.9.1.sql
 ```

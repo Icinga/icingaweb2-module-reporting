@@ -16,7 +16,7 @@
 
 ### MySQL / MariaDB
 
-The module needs a MySQL/MariaDB database with the schema that's provided in the `etc/schema/mysql.sql` file.
+The module needs a MySQL/MariaDB database with the schema that's provided in the `etc/schema/mysql.schema.sql` file.
 
 Example command for creating the MySQL/MariaDB database. Please change the password:
 
@@ -28,12 +28,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, CREATE VIEW, INDEX, EXECUTE 
 After, you can import the schema using the following command:
 
 ```
-mysql -p -u root reporting < schema/mysql.sql
+mysql -p -u root reporting < schema/mysql.schema.sql
 ```
 
 ## PostgreSQL
 
-The module needs a PostgreSQL database with the schema that's provided in the `etc/schema/postgresql.sql` file.
+The module needs a PostgreSQL database with the schema that's provided in the `etc/schema/pgsql.schema.sql` file.
 
 Example command for creating the PostgreSQL database. Please change the password:
 
@@ -49,7 +49,7 @@ CREATE DATABASE reporting
 After, you can import the schema using the following command:
 
 ```
-psql -U reporting reporting -a -f schema/postgresql.sql
+psql -U reporting reporting -a -f schema/pgsql.schema.sql
 ```
 
 ## Module Installation
