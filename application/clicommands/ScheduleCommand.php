@@ -60,6 +60,9 @@ class ScheduleCommand extends Command
                     }
 
                     $frequency = new Cron($frequency);
+                    if (isset($config['start'])) {
+                        $frequency->startAt($config['start']);
+                    }
                 } else {
                     try {
                         /** @var Frequency $type */
