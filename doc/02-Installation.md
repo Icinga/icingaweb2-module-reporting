@@ -10,6 +10,7 @@
 * Icinga Web 2 modules:
   * [Icinga PDF Export](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.10)
 * MySQL / MariaDB or PostgreSQL
+* php-mbstring
 
 ## Database Setup
 
