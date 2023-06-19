@@ -1,0 +1,24 @@
+parameters:
+    level: 5
+
+    checkFunctionNameCase: true
+    checkMissingIterableValueType: true
+    checkInternalClassCaseSensitivity: true
+    checkDynamicProperties: true
+    treatPhpDocTypesAsCertain: false # ignore phpDoc failure for now, remove it later
+
+    paths:
+        - application
+        - library
+
+    scanDirectories:
+        - vendor
+
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)#'
+
+        - '#Call to an undefined method Icinga\\Module\\Reporting\\RetryConnection::lastInsertId\(\)#'
+
+    universalObjectCratesClasses: # to ignore magic property errors (db columns)
+        - Icinga\Web\View
+        - ipl\Orm\Model
