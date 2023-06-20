@@ -60,6 +60,41 @@ class ReportController extends Controller
         }
     }
 
+    public function cloneAction()
+    {
+        $this->assertPermission('reporting/reports');
+        $this->addTitleTab($this->translate('Clone Report'));
+
+        $values = ['timeframe' => (string) $this->report->getTimeframe()->getId()];
+
+        $reportlet = $this->report->getReportlets()[0];
+
+        $values['reportlet'] = $reportlet->getClass();
+
+        foreach ($reportlet->getConfig() as $name => $value) {
+            if ($name === 'name') {
+                if (preg_match('/(?:Clone )(\d+)$/', $value, $matches)) {
+                    $value = preg_replace('/\d+$/', ++$matches[1], $value);
+                } else {
+                    $value .= ' Clone 1';
+                }
+            }
+
+            $values[$name] = $value;
+        }
+
+        $form = (new ReportForm())
+            ->setSubmitButtonLabel($this->translate('Clone Report'))
+            ->setAction((string) Url::fromRequest())
+            ->populate($values)
+            ->on(ReportForm::ON_SUCCESS, function () {
+                $this->redirectNow('__CLOSE__');
+            })
+            ->handleRequest($this->getServerRequest());
+
+        $this->addContent($form);
+    }
+
     public function editAction()
     {
         $this->assertPermission('reporting/reports');
@@ -205,6 +240,18 @@ class ReportController extends Controller
                     $this->translate('Modify'),
                     Url::fromPath('reporting/report/edit', ['id' => $reportId]),
                     'edit',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                )
+            );
+
+            $actions->addHtml(
+                new ActionLink(
+                    $this->translate('Clone'),
+                    Url::fromPath('reporting/report/clone', ['id' => $reportId]),
+                    'clone',
                     [
                         'data-icinga-modal'   => true,
                         'data-no-icinga-ajax' => true

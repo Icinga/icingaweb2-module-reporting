@@ -20,6 +20,9 @@ class ReportForm extends CompatForm
 
     protected $id;
 
+    /** @var string Label to use for the submit button */
+    protected $submitButtonLabel;
+
     /**
      * Create a new form instance with the given report id
      *
@@ -33,6 +36,34 @@ class ReportForm extends CompatForm
         $form->id = $id;
 
         return $form;
+    }
+
+    /**
+     * Set the label of the submit button
+     *
+     * @param string $label
+     *
+     * @return $this
+     */
+    public function setSubmitButtonLabel(string $label): self
+    {
+        $this->submitButtonLabel = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get the label of the submit button
+     *
+     * @return string
+     */
+    public function getSubmitButtonLabel(): string
+    {
+        if ($this->submitButtonLabel !== null) {
+            return $this->submitButtonLabel;
+        }
+
+        return $this->id === null ? $this->translate('Create Report') : $this->translate('Update Report');
     }
 
     public function hasBeenSubmitted(): bool
@@ -109,7 +140,7 @@ class ReportForm extends CompatForm
         }
 
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? $this->translate('Create Report') : $this->translate('Update Report')
+            'label' => $this->getSubmitButtonLabel()
         ]);
 
         if ($this->id !== null) {
