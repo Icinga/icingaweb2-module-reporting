@@ -36,6 +36,18 @@ class TemplatesController extends Controller
 
         $templates = Model\Template::on($this->getDb());
 
+        $sortControl = $this->createSortControl(
+            $templates,
+            [
+                'name'   => $this->translate('Name'),
+                'author' => $this->translate('Author'),
+                'ctime'  => $this->translate('Created At'),
+                'mtime'  => $this->translate('Modified At')
+            ]
+        );
+
+        $this->addControl($sortControl);
+
         foreach ($templates as $template) {
             if ($canManage) {
                 // Edit URL
