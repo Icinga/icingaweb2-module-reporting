@@ -109,7 +109,7 @@ class ScheduleForm extends CompatForm
             }
         }
 
-        $this->addHtml(new HtmlElement('hr'));
+        $this->addHtml(HtmlElement::create('div', ['class' => 'schedule-element-separator']));
         $this->addElement($this->scheduleElement);
 
         $schedule = $this->report->getSchedule();
