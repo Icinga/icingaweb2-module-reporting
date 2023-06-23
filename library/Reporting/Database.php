@@ -7,24 +7,25 @@ namespace Icinga\Module\Reporting;
 use Icinga\Application\Config;
 use Icinga\Data\ResourceFactory;
 use ipl\Sql;
+use PDO;
 
 trait Database
 {
-    protected function getDb($resource = null)
+    protected function getDb(): RetryConnection
     {
-        $config = new Sql\Config(ResourceFactory::getResourceConfig(
-            $resource ?: Config::module('reporting')->get('backend', 'resource', 'reporting')
-        ));
+        $config = new Sql\Config(
+            ResourceFactory::getResourceConfig(
+                Config::module('reporting')->get('backend', 'resource', 'reporting')
+            )
+        );
 
-        $config->options = [\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ];
+        $config->options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ];
         if ($config->db === 'mysql') {
-            $config->options[\PDO::MYSQL_ATTR_INIT_COMMAND] = "SET SESSION SQL_MODE='STRICT_TRANS_TABLES"
+            $config->options[PDO::MYSQL_ATTR_INIT_COMMAND] = "SET SESSION SQL_MODE='STRICT_TRANS_TABLES"
                 . ",NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'";
         }
 
-        $conn = new RetryConnection($config);
-
-        return $conn;
+        return new RetryConnection($config);
     }
 
     protected function listTimeframes()
