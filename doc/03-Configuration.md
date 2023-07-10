@@ -31,3 +31,16 @@ reporting/reports    | Reports (create, edit, delete)
 reporting/schedules  | Schedules (create, edit, delete)
 reporting/templates  | Templates (create, edit, delete)
 reporting/timeframes | Timeframes (create, edit, delete)
+
+## Restrictions
+
+Icinga Reporting currently provides a single restriction that can be used to limit users to a specific set of reports,
+while having the `reporting/reports` permission.
+
+> **Note:**
+> 
+> Filters from multiple roles will expand the available access.
+
+| Name              | Description                                                   |
+|-------------------|---------------------------------------------------------------|
+| reporting/reports | Restrict access to the reports that match the provided filter |

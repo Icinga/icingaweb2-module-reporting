@@ -4,16 +4,20 @@
 
 namespace Icinga\Module\Reporting\Web\Forms;
 
-use Icinga\Authentication\Auth;
+use Icinga\Authentication\Auth as IcingaAuth;
+use Icinga\Module\Reporting\Common\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Stdlib\Filter;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
+use ipl\Web\Filter\QueryString;
 
 class ReportForm extends CompatForm
 {
+    use Auth;
     use Database;
     use ProvidedReports;
 
@@ -85,6 +89,42 @@ class ReportForm extends CompatForm
                         $validator->addMessage(
                             $this->translate('Double dots are not allowed in the report name')
                         );
+
+                        return false;
+                    }
+
+                    $report = (object) [
+                        'report.name'   => $value,
+                        'report.author' => IcingaAuth::getInstance()->getUser()->getUsername()
+                    ];
+
+                    $failedFilterRule = null;
+                    $canCreate = true;
+                    $restrictions = IcingaAuth::getInstance()->getRestrictions('reporting/reports');
+                    foreach ($restrictions as $restriction) {
+                        $this->parseRestriction(
+                            $restriction,
+                            'reporting/reports',
+                            function (Filter\Condition $condition) use (&$canCreate, $report, &$failedFilterRule) {
+                                if (! $canCreate || Filter::match($condition, $report)) {
+                                    return;
+                                }
+
+                                $canCreate = false;
+                                $failedFilterRule = QueryString::getRuleSymbol($condition) . $condition->getValue();
+                            }
+                        );
+
+                        if (! $canCreate) {
+                            break;
+                        }
+                    }
+
+                    if (! $canCreate) {
+                        $validator->addMessage(sprintf(
+                            $this->translate('Please use report names that conform to this restriction: %s'),
+                            'name' . $failedFilterRule
+                        ));
 
                         return false;
                     }
@@ -171,7 +211,7 @@ class ReportForm extends CompatForm
         if ($this->id === null) {
             $db->insert('report', [
                 'name'         => $values['name'],
-                'author'       => Auth::getInstance()->getUser()->getUsername(),
+                'author'       => IcingaAuth::getInstance()->getUser()->getUsername(),
                 'timeframe_id' => $values['timeframe'],
                 'template_id'  => $values['template'],
                 'ctime'        => $now,

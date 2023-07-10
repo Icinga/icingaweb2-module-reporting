@@ -4,8 +4,10 @@
 
 namespace Icinga\Module\Reporting\Web;
 
+use Icinga\Module\Reporting\Common\Auth;
 use ipl\Web\Compat\CompatController;
 
 class Controller extends CompatController
 {
+    use Auth;
 }

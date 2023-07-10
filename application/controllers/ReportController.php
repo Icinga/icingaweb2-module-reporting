@@ -35,9 +35,11 @@ class ReportController extends Controller
 
         $report = Model\Report::on($this->getDb())
             ->with(['timeframe'])
-            ->filter(Filter::equal('id', $reportId))
-            ->first();
+            ->filter(Filter::equal('id', $reportId));
 
+        $this->applyRestrictions($report);
+
+        $report = $report->first();
         if ($report === null) {
             $this->httpNotFound($this->translate('Report not found'));
         }

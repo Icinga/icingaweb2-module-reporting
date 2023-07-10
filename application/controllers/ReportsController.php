@@ -4,6 +4,7 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
+use Icinga\Authentication\Auth as IcingaAuth;
 use Icinga\Module\Icingadb\ProvidedHook\Reporting\HostSlaReport;
 use Icinga\Module\Icingadb\ProvidedHook\Reporting\ServiceSlaReport;
 use Icinga\Module\Reporting\Database;
@@ -12,6 +13,7 @@ use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
 use ipl\Html\Html;
+use ipl\Stdlib\Filter;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
 use ipl\Web\Widget\Icon;
@@ -27,21 +29,52 @@ class ReportsController extends Controller
         $this->createTabs()->activate('reports');
 
         if ($this->hasPermission('reporting/reports')) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Report'),
-                Url::fromPath('reporting/reports/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $canCreate = true;
+            $report = ['report.author' => $this->auth->getUser()->getUsername()];
+            $restrictions = IcingaAuth::getInstance()->getRestrictions('reporting/reports');
+            foreach ($restrictions as $restriction) {
+                $this->parseRestriction(
+                    $restriction,
+                    'reporting/reports',
+                    function (Filter\Condition $condition) use (&$canCreate, $report) {
+                        if ($condition->getColumn() != 'report.author') {
+                            // Only filters like `report.author!=$user.local_name$` can fully prevent the current user
+                            // from creating his own reports.
+                            return;
+                        }
+
+                        if (! $canCreate || Filter::match($condition, $report)) {
+                            return;
+                        }
+
+                        $canCreate = false;
+                    }
+                );
+
+                if (! $canCreate) {
+                    break;
+                }
+            }
+
+            if ($canCreate) {
+                $this->addControl(new ButtonLink(
+                    $this->translate('New Report'),
+                    Url::fromPath('reporting/reports/new'),
+                    'plus',
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                ));
+            }
         }
 
         $tableRows = [];
 
         $reports = Report::on($this->getDb())
             ->withColumns(['report.timeframe.name']);
+
+        $this->applyRestrictions($reports);
 
         $sortControl = $this->createSortControl(
             $reports,
@@ -64,16 +97,16 @@ class ReportsController extends Controller
                 Html::tag('td', null, $report->timeframe->name),
                 Html::tag('td', null, $report->ctime->format('Y-m-d H:i')),
                 Html::tag('td', null, $report->mtime->format('Y-m-d H:i')),
-                Html::tag('td', ['class' => 'icon-col'], [
-                    new Link(
+                ! $this->hasPermission('reporting/reports')
+                    ? null
+                    : Html::tag('td', ['class' => 'icon-col'], new Link(
                         new Icon('edit'),
                         Url::fromPath('reporting/report/edit', ['id' => $report->id]),
                         [
                             'data-icinga-modal'   => true,
                             'data-no-icinga-ajax' => true
                         ]
-                    )
-                ])
+                    ))
             ]);
         }
 
