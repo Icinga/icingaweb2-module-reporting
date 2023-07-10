@@ -6,10 +6,14 @@ namespace Icinga\Module\Reporting;
 
 use DateTime;
 use Exception;
+use Icinga\Module\Icingadb\ProvidedHook\Reporting\ServiceSlaReport;
+use Icinga\Module\Icingadb\ProvidedHook\Reporting\SlaReport;
 use Icinga\Module\Pdfexport\PrintableHtmlDocument;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Widget\Template;
 use ipl\Html\HtmlDocument;
+
+use function ipl\I18n\t;
 
 class Report
 {
@@ -182,6 +186,15 @@ class Report
             if ($implementation->providesData()) {
                 $data = $implementation->getData($timerange, $reportlet->getConfig());
                 $csv[] = array_merge($data->getDimensions(), $data->getValues());
+
+                $hosts = [];
+                $isServiceExport = false;
+                $config = $reportlet->getConfig();
+                $exportTotalEnabled = isset($config['export_total']) && $config['export_total'];
+                if ($exportTotalEnabled) {
+                    $isServiceExport = $reportlet->getClass() === ServiceSlaReport::class;
+                }
+
                 foreach ($data->getRows() as $row) {
                     $values = $row->getValues();
                     if ($convertFloats) {
@@ -192,7 +205,22 @@ class Report
                         }
                     }
 
+                    if ($isServiceExport) {
+                        $hosts[$row->getDimensions()[0]] = true;
+                    }
+
                     $csv[] = array_merge($row->getDimensions(), $values);
+                }
+
+                if ($exportTotalEnabled) {
+                    $precision = $config['sla_precision'] ?? SlaReport::DEFAULT_REPORT_PRECISION;
+                    $total = [$isServiceExport ? count($hosts) : $data->count()];
+                    if ($isServiceExport) {
+                        $total[] = $data->count();
+                    }
+                    $total[] = round($data->getAverages()[0], $precision);
+
+                    $csv[] = $total;
                 }
 
                 break;
@@ -218,9 +246,34 @@ class Report
                 $data = $implementation->getData($timerange, $reportlet->getConfig());
                 $dimensions = $data->getDimensions();
                 $values = $data->getValues();
+
+                $hosts = [];
+                $isServiceExport = false;
+                $config = $reportlet->getConfig();
+                $exportTotalEnabled = isset($config['export_total']) && $config['export_total'];
+                if ($exportTotalEnabled) {
+                    $isServiceExport = $reportlet->getClass() === ServiceSlaReport::class;
+                }
+
                 foreach ($data->getRows() as $row) {
-                    $json[] = \array_combine($dimensions, $row->getDimensions())
-                        + \array_combine($values, $row->getValues());
+                    $json[] = array_combine($dimensions, $row->getDimensions())
+                        + array_combine($values, $row->getValues());
+
+                    if ($isServiceExport) {
+                        $hosts[$row->getDimensions()[0]] = true;
+                    }
+                }
+
+                if ($exportTotalEnabled) {
+                    $total = [t('Total Hosts') => $isServiceExport ? count($hosts) : $data->count()];
+                    if ($isServiceExport) {
+                        $total[t('Total Services')] = $data->count();
+                    }
+
+                    $precision = $config['sla_precision'] ?? SlaReport::DEFAULT_REPORT_PRECISION;
+                    $total[t('Total SLA Averages')] = round($data->getAverages()[0], $precision);
+
+                    $json[] = $total;
                 }
 
                 break;
