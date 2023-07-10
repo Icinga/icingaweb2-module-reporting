@@ -1,8 +1,8 @@
+CREATE TYPE boolenum AS ENUM ('n', 'y');
+
 CREATE OR REPLACE FUNCTION unix_timestamp(timestamp with time zone DEFAULT NOW()) RETURNS bigint
   AS 'SELECT EXTRACT(EPOCH FROM $1)::bigint'
   LANGUAGE SQL;
-
-CREATE TYPE frequency AS ENUM ('minutely', 'hourly', 'daily', 'weekly', 'monthly');
 
 CREATE TABLE template (
   id serial PRIMARY KEY,
@@ -73,11 +73,23 @@ CREATE TABLE schedule (
   id serial PRIMARY KEY,
   report_id int NOT NULL,
   author varchar(255) NOT NULL,
-  start bigint NOT NULL,
-  frequency frequency,
   action varchar(255) NOT NULL,
   config text DEFAULT NULL,
   ctime bigint NOT NULL DEFAULT unix_timestamp() * 1000,
   mtime bigint NOT NULL DEFAULT unix_timestamp() * 1000,
   CONSTRAINT schedule_report FOREIGN KEY (report_id) REFERENCES report (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE reporting_schema (
+  id serial,
+  version varchar(64) NOT NULL,
+  timestamp bigint NOT NULL,
+  success boolenum DEFAULT NULL,
+  reason text DEFAULT NULL,
+
+  CONSTRAINT pk_reporting_schema PRIMARY KEY (id),
+  CONSTRAINT idx_reporting_schema_version UNIQUE (version)
+);
+
+INSERT INTO reporting_schema (version, timestamp, success)
+  VALUES ('1.0.0', UNIX_TIMESTAMP() * 1000, 'y');
