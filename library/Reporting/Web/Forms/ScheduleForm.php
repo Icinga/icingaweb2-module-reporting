@@ -5,30 +5,41 @@
 namespace Icinga\Module\Reporting\Web\Forms;
 
 use DateTime;
-use Icinga\Application\Version;
+use Icinga\Application\Icinga;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
-use Icinga\Module\Reporting\Web\Flatpickr;
-use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
-use Icinga\Web\Notification;
+use Icinga\Util\Json;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Html\HtmlElement;
+use ipl\Scheduler\Contract\Frequency;
+use ipl\Scheduler\Cron;
 use ipl\Web\Compat\CompatForm;
+use ipl\Web\FormElement\ScheduleElement;
+
+use function ipl\Stdlib\get_php_type;
 
 class ScheduleForm extends CompatForm
 {
     use Database;
-    use DecoratedElement;
     use ProvidedActions;
 
     /** @var Report */
     protected $report;
 
-    /** @var int */
-    protected $id;
+    public function __construct()
+    {
+        $this->scheduleElement = new ScheduleElement('schedule_element');
+        $this->scheduleElement->setIdProtector([Icinga::app()->getRequest(), 'protectId']);
+    }
+
+    public function getPartUpdates(): array
+    {
+        return $this->scheduleElement->prepareMultipartUpdate($this->getRequest());
+    }
 
     /**
      * Create a new form instance with the given report
@@ -43,32 +54,21 @@ class ScheduleForm extends CompatForm
         $form->report = $report;
 
         $schedule = $report->getSchedule();
-
         if ($schedule !== null) {
-            $form->setId($schedule->getId());
+            $config = $schedule->getConfig();
+            $config['action'] = $schedule->getAction();
 
-            $values = [
-                    'start'     => $schedule->getStart()->format('Y-m-d\\TH:i:s'),
-                    'frequency' => $schedule->getFrequency(),
-                    'action'    => $schedule->getAction()
-                ] + $schedule->getConfig();
+            /** @var Frequency $type */
+            $type = $config['frequencyType'];
+            $config['schedule_element'] = $type::fromJson($config['frequency']);
 
-            $form->populate($values);
+            unset($config['frequency']);
+            unset($config['frequencyType']);
+
+            $form->populate($config);
         }
 
         return $form;
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function setId(int $id): ScheduleForm
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function hasBeenSubmitted(): bool
@@ -82,41 +82,12 @@ class ScheduleForm extends CompatForm
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new CompatDecorator());
-
-        $frequency = [
-            'minutely' => 'Minutely',
-            'hourly'   => 'Hourly',
-            'daily'    => 'Daily',
-            'weekly'   => 'Weekly',
-            'monthly'  => 'Monthly'
-        ];
-
-        if (version_compare(Version::VERSION, '2.9.0', '>=')) {
-            $this->addElement('localDateTime', 'start', [
-                'required'    => true,
-                'label'       => t('Start'),
-                'placeholder' => t('Choose date and time')
-            ]);
-        } else {
-            $this->addDecoratedElement((new Flatpickr())->setAllowInput(false), 'text', 'start', [
-                'required'    => true,
-                'label'       => t('Start'),
-                'placeholder' => t('Choose date and time')
-            ]);
-        }
-
-        $this->addElement('select', 'frequency', [
-            'required' => true,
-            'label'    => $this->translate('Frequency'),
-            'options'  => [null => $this->translate('Please choose')] + $frequency,
-        ]);
-
         $this->addElement('select', 'action', [
-            'required' => true,
-            'label'    => $this->translate('Action'),
-            'options'  => [null => $this->translate('Please choose')] + $this->listActions(),
-            'class'    => 'autosubmit'
+            'required'    => true,
+            'class'       => 'autosubmit',
+            'options'     => array_merge([null => $this->translate('Please choose')], $this->listActions()),
+            'label'       => $this->translate('Action'),
+            'description' => $this->translate('Specifies an action to be triggered by the scheduler')
         ]);
 
         $values = $this->getValues();
@@ -135,11 +106,15 @@ class ScheduleForm extends CompatForm
             }
         }
 
+        $this->addHtml(HtmlElement::create('div', ['class' => 'schedule-element-separator']));
+        $this->addElement($this->scheduleElement);
+
+        $schedule = $this->report->getSchedule();
         $this->addElement('submit', 'submit', [
-            'label' => $this->id === null ? $this->translate('Create Schedule') : $this->translate('Update Schedule')
+            'label' => $schedule === null ? $this->translate('Create Schedule') : $this->translate('Update Schedule')
         ]);
 
-        if ($this->id !== null) {
+        if ($schedule !== null) {
             $sendButton = $this->createElement('submit', 'send', [
                 'label'          => $this->translate('Send Report Now'),
                 'formnovalidate' => true
@@ -161,9 +136,9 @@ class ScheduleForm extends CompatForm
     public function onSuccess()
     {
         $db = $this->getDb();
-
+        $schedule = $this->report->getSchedule();
         if ($this->getPopulatedValue('remove')) {
-            $db->delete('schedule', ['id = ?' => $this->id]);
+            $db->delete('schedule', ['id = ?' => $schedule->getId()]);
 
             return;
         }
@@ -173,40 +148,35 @@ class ScheduleForm extends CompatForm
             $action = new $values['action']();
             $action->execute($this->report, $values);
 
-            Notification::success($this->translate('Report sent successfully'));
-
             return;
         }
 
-        $now = time() * 1000;
-
-        if (! $values['start'] instanceof DateTime) {
-            $values['start'] = DateTime::createFromFormat('Y-m-d H:i:s', $values['start']);
-        }
-
-        $data = [
-            'start'     => $values['start']->getTimestamp() * 1000,
-            'frequency' => $values['frequency'],
-            'action'    => $values['action'],
-            'mtime'     => $now
-        ];
-
-        unset($values['start']);
-        unset($values['frequency']);
+        $action = $values['action'];
         unset($values['action']);
+        unset($values['schedule_element']);
 
-        $data['config'] = json_encode($values);
+        $frequency = $this->scheduleElement->getValue();
+        $values['frequency'] = Json::encode($frequency);
+        $values['frequencyType'] = get_php_type($frequency);
+        $config = Json::encode($values);
 
         $db->beginTransaction();
 
-        if ($this->id === null) {
-            $db->insert('schedule', $data + [
-                    'author'    => Auth::getInstance()->getUser()->getUsername(),
-                    'report_id' => $this->report->getId(),
-                    'ctime'     => $now
-                ]);
+        if ($schedule === null) {
+            $now = (new DateTime())->getTimestamp() * 1000;
+            $db->insert('schedule', [
+                'author'    => Auth::getInstance()->getUser()->getUsername(),
+                'report_id' => $this->report->getId(),
+                'ctime'     => $now,
+                'mtime'     => $now,
+                'action'    => $action,
+                'config'    => $config
+            ]);
         } else {
-            $db->update('schedule', $data, ['id = ?' => $this->id]);
+            $db->update('schedule', [
+                'action' => $action,
+                'config' => $config
+            ], ['id = ?' => $schedule->getId()]);
         }
 
         $db->commitTransaction();

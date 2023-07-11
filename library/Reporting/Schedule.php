@@ -4,28 +4,45 @@
 
 namespace Icinga\Module\Reporting;
 
-class Schedule
+use Exception;
+use Icinga\Module\Reporting\Hook\ActionHook;
+use Icinga\Util\Json;
+use ipl\Scheduler\Common\TaskProperties;
+use ipl\Scheduler\Contract\Task;
+use Ramsey\Uuid\Uuid;
+use React\EventLoop\Loop;
+use React\Promise;
+use React\Promise\ExtendedPromiseInterface;
+
+use function md5;
+
+class Schedule implements Task
 {
+    use TaskProperties;
+
     /** @var int */
     protected $id;
-
-    /** @var int */
-    protected $reportId;
-
-    /** @var \DateTime */
-    protected $start;
-
-    /** @var string */
-    protected $frequency;
 
     /** @var string */
     protected $action;
 
     /** @var array */
-    protected $config;
+    protected $config = [];
 
     /** @var Report */
     protected $report;
+
+    public function __construct(string $name, string $action, array $config, Report $report)
+    {
+        $this->action = $action;
+        $this->config = $config;
+        ksort($this->config);
+
+        $this
+            ->setName($name)
+            ->setReport($report)
+            ->setUuid(Uuid::fromBytes($this->getChecksum()));
+    }
 
     /**
      * Create schedule from the given model
@@ -35,67 +52,41 @@ class Schedule
      * @return static
      */
 
-    public static function fromModel(Model\Schedule $scheduleModel): self
+    public static function fromModel(Model\Schedule $scheduleModel, Report $report): self
     {
-        $schedule = new static();
-
+        $config = Json::decode($scheduleModel->config ?? [], true);
+        $schedule = new static("Schedule{$scheduleModel->id}", $scheduleModel->action, $config, $report);
         $schedule->id = $scheduleModel->id;
-        $schedule->reportId = $scheduleModel->report_id;
-        $schedule->start = $scheduleModel->start;
-        $schedule->frequency = $scheduleModel->frequency;
-        $schedule->action = $scheduleModel->action;
-
-        if ($scheduleModel->config) {
-            $schedule->config = json_decode($scheduleModel->config, true);
-        }
 
         return $schedule;
     }
 
     /**
+     * Get the id of this schedule
+     *
      * @return  int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return int
-     */
-    public function getReportId()
-    {
-        return $this->reportId;
-    }
-
-    /**
-     * @return  \DateTime
-     */
-    public function getStart()
-    {
-        return $this->start;
-    }
-
-    /**
+     * Get the action hook class of this schedule
+     *
      * @return  string
      */
-    public function getFrequency()
-    {
-        return $this->frequency;
-    }
-
-    /**
-     * @return  string
-     */
-    public function getAction()
+    public function getAction(): string
     {
         return $this->action;
     }
 
     /**
+     * Get the config of this schedule
+     *
      * @return array
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -125,17 +116,37 @@ class Schedule
     }
 
     /**
+     * Get the checksum of this schedule
+     *
      * @return  string
      */
-    public function getChecksum()
+    public function getChecksum(): string
     {
-        return \md5(
-            $this->getId()
-            . $this->getReportId()
-            . $this->getStart()->format('Y-m-d H:i:s')
-            . $this->getAction()
-            . $this->getFrequency()
-            . \json_encode($this->getConfig())
+        return md5(
+            $this->getName() . $this->getReport()->getName() . $this->getAction() . Json::encode($this->getConfig()),
+            true
         );
+    }
+
+    public function run(): ExtendedPromiseInterface
+    {
+        $deferred = new Promise\Deferred();
+        Loop::futureTick(function () use ($deferred) {
+            $action = $this->getAction();
+            /** @var ActionHook $actionHook */
+            $actionHook = new $action();
+
+            try {
+                $actionHook->execute($this->getReport(), $this->getConfig());
+            } catch (Exception $err) {
+                $deferred->reject($err);
+
+                return;
+            }
+
+            $deferred->resolve();
+        });
+
+        return $deferred->promise();
     }
 }
