@@ -10,6 +10,7 @@ use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
+use Icinga\Web\Notification;
 use ipl\Html\Html;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
@@ -30,7 +31,11 @@ class TemplatesController extends Controller
             $this->addControl(new ButtonLink(
                 $this->translate('New Template'),
                 Url::fromPath('reporting/templates/new'),
-                'plus'
+                'plus',
+                [
+                    'data-icinga-modal'   => true,
+                    'data-no-icinga-ajax' => true
+                ]
             ));
         }
 
@@ -50,21 +55,21 @@ class TemplatesController extends Controller
 
         foreach ($templates as $template) {
             if ($canManage) {
-                // Edit URL
-                $subjectUrl = Url::fromPath(
-                    'reporting/template/edit',
-                    ['id' => $template->id]
+                $subjectLink = new Link(
+                    $template->name,
+                    Url::fromPath('reporting/template/edit', ['id' => $template->id]),
+                    [
+                        'data-icinga-modal'   => true,
+                        'data-no-icinga-ajax' => true
+                    ]
                 );
             } else {
                 // Preview URL
-                $subjectUrl = Url::fromPath(
-                    'reporting/template',
-                    ['id' => $template->id]
-                );
+                $subjectLink = new Link($template->name, Url::fromPath('reporting/template', ['id' => $template->id]));
             }
 
             $tableRows[] = Html::tag('tr', null, [
-                Html::tag('td', null, new Link($template->name, $subjectUrl)),
+                Html::tag('td', null, $subjectLink),
                 Html::tag('td', null, $template->author),
                 Html::tag('td', null, $template->ctime->format('Y-m-d H:i')),
                 Html::tag('td', null, $template->mtime->format('Y-m-d H:i'))
@@ -106,10 +111,15 @@ class TemplatesController extends Controller
         $this->addTitleTab($this->translate('New Template'));
 
         $form = (new TemplateForm())
+            ->setAction((string) Url::fromRequest())
             ->on(TemplateForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/templates');
+                Notification::success($this->translate('Created template successfully'));
+
+                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+
+                $this->redirectNow('__CLOSE__');
             })
-            ->handleRequest(ServerRequest::fromGlobals());
+            ->handleRequest($this->getServerRequest());
 
         $this->addContent($form);
     }
