@@ -8,7 +8,6 @@ use Icinga\Module\Reporting\Actions\SendMail;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Report;
-use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Web\Compat\CompatForm;
 
 class SendForm extends CompatForm
@@ -28,8 +27,6 @@ class SendForm extends CompatForm
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new CompatDecorator());
-
         (new SendMail())->initConfigForm($this, $this->report);
 
         $this->addElement('submit', 'submit', [

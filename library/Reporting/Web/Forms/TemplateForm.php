@@ -7,7 +7,6 @@ namespace Icinga\Module\Reporting\Web\Forms;
 use Exception;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
-use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
 use ipl\Web\Compat\CompatForm;
@@ -54,8 +53,6 @@ class TemplateForm extends CompatForm
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new CompatDecorator());
-
         $this->setAttribute('enctype', 'multipart/form-data');
 
         $this->add(Html::tag('h2', 'Template Settings'));

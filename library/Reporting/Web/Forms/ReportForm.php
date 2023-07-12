@@ -7,7 +7,6 @@ namespace Icinga\Module\Reporting\Web\Forms;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
-use Icinga\Module\Reporting\Web\Forms\Decorator\CompatDecorator;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Validator\CallbackValidator;
@@ -73,8 +72,6 @@ class ReportForm extends CompatForm
 
     protected function assemble()
     {
-        $this->setDefaultElementDecorator(new CompatDecorator());
-
         $this->addElement('text', 'name', [
             'required'    => true,
             'label'       => $this->translate('Name'),
