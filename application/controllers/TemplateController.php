@@ -12,7 +12,9 @@ use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\Widget\Template;
+use Icinga\Web\Notification;
 use ipl\Stdlib\Filter;
+use ipl\Web\Url;
 
 class TemplateController extends Controller
 {
@@ -59,11 +61,15 @@ class TemplateController extends Controller
         $template->settings = json_decode($template->settings, true);
 
         $form = TemplateForm::fromTemplate($template)
+            ->setAction((string) Url::fromRequest())
             ->on(TemplateForm::ON_SUCCESS, function () {
-                $this->redirectNow('reporting/templates');
+                Notification::success($this->translate('Updated template successfully'));
+
+                $this->redirectNow('__CLOSE__');
             })
             ->handleRequest(ServerRequest::fromGlobals());
 
+        $this->setTitle($this->translate('Edit template'));
         $this->addContent($form);
     }
 
