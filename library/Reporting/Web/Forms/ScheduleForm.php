@@ -16,7 +16,6 @@ use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\HtmlElement;
 use ipl\Scheduler\Contract\Frequency;
-use ipl\Scheduler\Cron;
 use ipl\Web\Compat\CompatForm;
 use ipl\Web\FormElement\ScheduleElement;
 
@@ -29,6 +28,9 @@ class ScheduleForm extends CompatForm
 
     /** @var Report */
     protected $report;
+
+    /** @var ScheduleElement */
+    protected $scheduleElement;
 
     public function __construct()
     {
