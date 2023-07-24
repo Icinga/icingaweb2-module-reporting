@@ -4,6 +4,7 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
+use Exception;
 use Icinga\Application\Hook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
@@ -16,6 +17,7 @@ use Icinga\Module\Reporting\Web\Forms\SendForm;
 use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
 use Icinga\Web\Notification;
 use ipl\Html\Error;
+use ipl\Html\HtmlElement;
 use ipl\Stdlib\Filter;
 use ipl\Web\Url;
 use ipl\Web\Widget\ActionBar;
@@ -48,17 +50,34 @@ class ReportController extends Controller
 
     public function indexAction()
     {
+        $this->getTabs()->getAttributes()->set('data-base-target', '_main');
         $this->addTitleTab($this->report->getName());
 
+        $this->controls->getAttributes()->add('class', 'default-layout');
         $this->addControl($this->assembleActions());
 
+        /** @var string $contentId */
+        $contentId = $this->content->getAttributes()->get('id')->getValue();
+        $this->sendExtraUpdates([
+            $contentId => Url::fromPath('reporting/report/content', ['id' => $this->report->getId()])
+        ]);
+
+        // Will be replaced once the report content is rendered
+        $this->addContent(new HtmlElement('div'));
+    }
+
+    public function contentAction(): void
+    {
         Environment::raiseExecutionTime();
         Environment::raiseMemoryLimit();
 
+        $this->view->compact = true;
+        $this->_helper->layout()->disableLayout();
+
         try {
-            $this->addContent($this->report->toHtml());
-        } catch (\Exception $e) {
-            $this->addContent(Error::show($e));
+            $this->getDocument()->addHtml($this->report->toHtml());
+        } catch (Exception $e) {
+            $this->getDocument()->addHtml(Error::show($e));
         }
     }
 
@@ -89,8 +108,12 @@ class ReportController extends Controller
             ->setSubmitButtonLabel($this->translate('Clone Report'))
             ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('__CLOSE__');
+            ->on(ReportForm::ON_SUCCESS, function (ReportForm $form) {
+                Notification::success($this->translate('Cloned report successfully'));
+
+                $this->sendExtraUpdates(['#col1']);
+
+                $this->redirectNow(Url::fromPath('reporting/report', ['id' => $form->getId()]));
             })
             ->handleRequest($this->getServerRequest());
 
@@ -120,8 +143,19 @@ class ReportController extends Controller
         $form = ReportForm::fromId($this->report->getId())
             ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->on(ReportForm::ON_SUCCESS, function () {
-                $this->redirectNow('__CLOSE__');
+            ->on(ReportForm::ON_SUCCESS, function (ReportForm $form) {
+                $pressedButton = $form->getPressedSubmitElement();
+                if ($pressedButton && $pressedButton->getName() === 'remove') {
+                    Notification::success($this->translate('Removed report successfully'));
+
+                    $this->switchToSingleColumnLayout();
+                } else {
+                    Notification::success($this->translate('Updated report successfully'));
+
+                    $this->closeModalAndRefreshRemainingViews(
+                        Url::fromPath('reporting/report', ['id' => $this->report->getId()])
+                    );
+                }
             })
             ->handleRequest($this->getServerRequest());
 
@@ -139,7 +173,9 @@ class ReportController extends Controller
             ->setReport($this->report)
             ->setAction((string) Url::fromRequest())
             ->on(SendForm::ON_SUCCESS, function () {
-                $this->redirectNow("reporting/report?id={$this->report->getId()}");
+                $this->closeModalAndRefreshRelatedView(
+                    Url::fromPath('reporting/report', ['id' => $this->report->getId()])
+                );
             })
             ->handleRequest($this->getServerRequest());
 
@@ -169,7 +205,9 @@ class ReportController extends Controller
                     Notification::success($this->translate('Created schedule successfully'));
                 }
 
-                $this->redirectNow("reporting/report?id={$this->report->getId()}");
+                $this->closeModalAndRefreshRelatedView(
+                    Url::fromPath('reporting/report', ['id' => $this->report->getId()])
+                );
             })
             ->handleRequest($this->getServerRequest());
 

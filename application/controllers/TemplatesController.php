@@ -119,9 +119,7 @@ class TemplatesController extends Controller
             ->on(TemplateForm::ON_SUCCESS, function () {
                 Notification::success($this->translate('Created template successfully'));
 
-                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
-
-                $this->redirectNow('__CLOSE__');
+                $this->closeModalAndRefreshRelatedView(Url::fromPath('reporting/templates'));
             })
             ->handleRequest($this->getServerRequest());
 

@@ -7,12 +7,14 @@ namespace Icinga\Module\Reporting\Controllers;
 use DateTime;
 use Exception;
 use GuzzleHttp\Psr7\ServerRequest;
+use Icinga\Application\Version;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\Widget\Template;
 use Icinga\Web\Notification;
+use ipl\Html\Form;
 use ipl\Stdlib\Filter;
 use ipl\Web\Url;
 
@@ -64,10 +66,19 @@ class TemplateController extends Controller
 
         $form = TemplateForm::fromTemplate($template)
             ->setAction((string) Url::fromRequest())
-            ->on(TemplateForm::ON_SUCCESS, function () {
-                Notification::success($this->translate('Updated template successfully'));
+            ->on(TemplateForm::ON_SUCCESS, function (Form $form) {
+                $pressedButton = $form->getPressedSubmitElement();
+                if ($pressedButton && $pressedButton->getName() === 'remove') {
+                    Notification::success($this->translate('Removed template successfully'));
 
-                $this->redirectNow('__CLOSE__');
+                    $this->switchToSingleColumnLayout();
+                } else {
+                    Notification::success($this->translate('Updated template successfully'));
+
+                    $this->closeModalAndRefreshRemainingViews(
+                        Url::fromPath('reporting/template', ['id' => $this->template->id])
+                    );
+                }
             })
             ->handleRequest(ServerRequest::fromGlobals());
 

@@ -11,11 +11,10 @@ use Icinga\Module\Reporting\Model\Report;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\ReportForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
+use Icinga\Web\Notification;
 use ipl\Html\Html;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
-use ipl\Web\Widget\Icon;
-use ipl\Web\Widget\Link;
 
 class ReportsController extends Controller
 {
@@ -65,16 +64,7 @@ class ReportsController extends Controller
                 Html::tag('td', null, $report->timeframe->name),
                 Html::tag('td', null, $report->ctime->format('Y-m-d H:i')),
                 Html::tag('td', null, $report->mtime->format('Y-m-d H:i')),
-                Html::tag('td', ['class' => 'icon-col'], [
-                    new Link(
-                        new Icon('edit'),
-                        Url::fromPath('reporting/report/edit', ['id' => $report->id]),
-                        [
-                            'data-icinga-modal'   => true,
-                            'data-no-icinga-ajax' => true
-                        ]
-                    )
-                ])
+                Html::tag('td', null, $report->mtime->format('Y-m-d H:i'))
             ]);
         }
 
@@ -128,14 +118,27 @@ class ReportsController extends Controller
 
         $form = (new ReportForm())
             ->setAction((string) Url::fromRequest())
+            ->setRenderCreateAndShowButton($class !== null)
             ->populate([
                 'filter'    => $this->params->shift('filter'),
                 'reportlet' => $class
             ])
-            ->on(ReportForm::ON_SUCCESS, function () {
-                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+            ->on(ReportForm::ON_SUCCESS, function (ReportForm $form) {
+                Notification::success($this->translate('Created report successfully'));
 
-                $this->redirectNow('__CLOSE__');
+                $pressedButton = $form->getPressedSubmitElement();
+                if ($pressedButton && $pressedButton->getName() !== 'create_show') {
+                    $this->closeModalAndRefreshRelatedView(Url::fromPath('reporting/reports'));
+                } else {
+                    $this->redirectNow(
+                        Url::fromPath(
+                            sprintf(
+                                'reporting/reports#!%s',
+                                Url::fromPath('reporting/report', ['id' => $form->getId()])->getAbsoluteUrl()
+                            )
+                        )
+                    );
+                }
             })
             ->handleRequest($this->getServerRequest());
 
