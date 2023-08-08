@@ -1,3 +1,28 @@
+CREATE OR REPLACE PROCEDURE migrate_schedule_config()
+  LANGUAGE plpgsql
+  AS $$
+  DECLARE
+    row record;
+    frequency_json text;
+  BEGIN
+    FOR row IN (SELECT id, start, frequency, config FROM schedule)
+      LOOP
+        IF NOT CAST(POSITION('frequencyType' IN row.config) AS bool) THEN
+          frequency_json = CONCAT(
+              ',"frequencyType":"\\ipl\\Scheduler\\Cron","frequency":"{',
+              '\"expression\":\"@', row.frequency,
+              '\",\"start\":\"', TO_CHAR(TO_TIMESTAMP(row.start / 1000) AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US UTC'),
+              '\"}"'
+            );
+          UPDATE schedule SET config = OVERLAY(row.config PLACING frequency_json FROM LENGTH(row.config) FOR 0) WHERE id = row.id;
+        END IF;
+      END LOOP;
+  END;
+  $$;
+
+CALL migrate_schedule_config();
+DROP PROCEDURE migrate_schedule_config;
+
 ALTER TABLE schedule
   DROP COLUMN start,
   DROP COLUMN frequency;
