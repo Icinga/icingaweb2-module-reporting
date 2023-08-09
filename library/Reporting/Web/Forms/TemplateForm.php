@@ -5,12 +5,12 @@
 namespace Icinga\Module\Reporting\Web\Forms;
 
 use Exception;
+use GuzzleHttp\Psr7\UploadedFile;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
 use ipl\Web\Compat\CompatForm;
-use reportingipl\Html\FormElement\FileElement;
 
 class TemplateForm extends CompatForm
 {
@@ -65,10 +65,11 @@ class TemplateForm extends CompatForm
 
         $this->add(Html::tag('h2', $this->translate('Cover Page Settings')));
 
-        $this->addElement(new FileElement('cover_page_background_image', [
-            'label'  => $this->translate('Background Image'),
-            'accept' => 'image/png, image/jpeg'
-        ]));
+        $this->addElement('file', 'cover_page_background_image', [
+            'label'       => $this->translate('Background Image'),
+            'accept'      => ['image/png', 'image/jpeg', 'image/jpg'],
+            'destination' => sys_get_temp_dir()
+        ]);
 
         if (
             $this->template !== null
@@ -76,7 +77,7 @@ class TemplateForm extends CompatForm
         ) {
             $this->add(Html::tag(
                 'p',
-                ['style' => ['margin-left: 14em;']],
+                ['class' => 'override-uploaded-file-hint'],
                 $this->translate('Upload a new background image to override the existing one')
             ));
 
@@ -85,10 +86,11 @@ class TemplateForm extends CompatForm
             ]);
         }
 
-        $this->addElement(new FileElement('cover_page_logo', [
-            'label'  => $this->translate('Logo'),
-            'accept' => 'image/png, image/jpeg'
-        ]));
+        $this->addElement('file', 'cover_page_logo', [
+            'label'       => $this->translate('Logo'),
+            'accept'      => ['image/png', 'image/jpeg', 'image/jpg'],
+            'destination' => sys_get_temp_dir()
+        ]);
 
         if (
             $this->template !== null
@@ -96,7 +98,7 @@ class TemplateForm extends CompatForm
         ) {
             $this->add(Html::tag(
                 'p',
-                ['style' => ['margin-left: 14em;']],
+                ['class' => 'override-uploaded-file-hint'],
                 $this->translate('Upload a new logo to override the existing one')
             ));
 
@@ -158,17 +160,14 @@ class TemplateForm extends CompatForm
         $settings = $this->getValues();
 
         try {
-            /** @var $uploadedFile \GuzzleHttp\Psr7\UploadedFile */
-            foreach ($this->getRequest()->getUploadedFiles() as $name => $uploadedFile) {
-                if ($uploadedFile->getError() === UPLOAD_ERR_NO_FILE) {
-                    continue;
+            foreach ($settings as $name => $setting) {
+                if ($setting instanceof UploadedFile) {
+                    $settings[$name] = [
+                        'mime_type' => $setting->getClientMediaType(),
+                        'size'      => $setting->getSize(),
+                        'content'   => base64_encode((string) $setting->getStream())
+                    ];
                 }
-
-                $settings[$name] = [
-                    'mime_type' => $uploadedFile->getClientMediaType(),
-                    'size'      => $uploadedFile->getSize(),
-                    'content'   => base64_encode((string) $uploadedFile->getStream())
-                ];
             }
 
             $db = $this->getDb();
@@ -250,10 +249,11 @@ class TemplateForm extends CompatForm
 
         switch ($this->getValue($type, 'none')) {
             case 'image':
-                $this->addElement(new FileElement($value, [
-                    'label'  => 'Image',
-                    'accept' => 'image/png, image/jpeg'
-                ]));
+                $this->addElement('file', $value, [
+                    'label'       => 'Image',
+                    'accept'      => ['image/png', 'image/jpeg', 'image/jpg'],
+                    'destination' => sys_get_temp_dir()
+                ]);
 
                 if (
                     $this->template !== null
@@ -262,7 +262,7 @@ class TemplateForm extends CompatForm
                 ) {
                     $this->add(Html::tag(
                         'p',
-                        ['style' => ['margin-left: 14em;']],
+                        ['class' => 'override-uploaded-file-hint'],
                         'Upload a new image to override the existing one'
                     ));
                 }
