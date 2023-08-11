@@ -4,7 +4,6 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
@@ -58,20 +57,8 @@ class TemplatesController extends Controller
 
         /** @var Model\Template $template */
         foreach ($templates as $template) {
-            if ($canManage) {
-                $subjectLink = new Link(
-                    $template->name,
-                    Url::fromPath('reporting/template/edit', ['id' => $template->id]),
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                );
-            } else {
-                // Preview URL
-                $subjectLink = new Link($template->name, Url::fromPath('reporting/template', ['id' => $template->id]));
-            }
-
+            // Preview URL
+            $subjectLink = new Link($template->name, Url::fromPath('reporting/template', ['id' => $template->id]));
             $tableRows[] = Html::tag('tr', null, [
                 Html::tag('td', null, $subjectLink),
                 Html::tag('td', null, $template->author),

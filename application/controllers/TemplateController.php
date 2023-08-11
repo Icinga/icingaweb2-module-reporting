@@ -7,7 +7,6 @@ namespace Icinga\Module\Reporting\Controllers;
 use DateTime;
 use Exception;
 use GuzzleHttp\Psr7\ServerRequest;
-use Icinga\Application\Version;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
@@ -15,16 +14,22 @@ use Icinga\Module\Reporting\Web\Forms\TemplateForm;
 use Icinga\Module\Reporting\Web\Widget\Template;
 use Icinga\Web\Notification;
 use ipl\Html\Form;
+use ipl\Html\ValidHtml;
 use ipl\Stdlib\Filter;
 use ipl\Web\Url;
+use ipl\Web\Widget\ActionBar;
+use ipl\Web\Widget\ActionLink;
 
 class TemplateController extends Controller
 {
     use Database;
 
-    public function indexAction()
+    /** @var Model\Template */
+    protected $template;
+
+    public function init()
     {
-        $this->createTabs()->activate('preview');
+        parent::init();
 
         /** @var Model\Template $template */
         $template = Model\Template::on($this->getDb())
@@ -35,7 +40,17 @@ class TemplateController extends Controller
             throw new Exception('Template not found');
         }
 
-        $template = Template::fromModel($template)
+        $this->template = $template;
+    }
+
+    public function indexAction()
+    {
+        $this->addTitleTab($this->translate('Preview'));
+
+        $this->controls->getAttributes()->add('class', 'default-layout');
+        $this->addControl($this->createActionBars());
+
+        $template = Template::fromModel($this->template)
             ->setMacros([
                 'date'                => (new DateTime())->format('jS M, Y'),
                 'time_frame'          => 'Time Frame',
@@ -50,21 +65,9 @@ class TemplateController extends Controller
     public function editAction()
     {
         $this->assertPermission('reporting/templates');
+        $this->addTitleTab($this->translate('Edit Template'));
 
-        $this->createTabs()->activate('edit');
-
-        /** @var Model\Template $template */
-        $template = Model\Template::on($this->getDb())
-            ->filter(Filter::equal('id', $this->params->getRequired('id')))
-            ->first();
-
-        if ($template === false) {
-            throw new Exception('Template not found');
-        }
-
-        $template->settings = json_decode($template->settings, true);
-
-        $form = TemplateForm::fromTemplate($template)
+        $form = TemplateForm::fromTemplate($this->template)
             ->setAction((string) Url::fromRequest())
             ->on(TemplateForm::ON_SUCCESS, function (Form $form) {
                 $pressedButton = $form->getPressedSubmitElement();
@@ -82,28 +85,24 @@ class TemplateController extends Controller
             })
             ->handleRequest(ServerRequest::fromGlobals());
 
-        $this->setTitle($this->translate('Edit template'));
         $this->addContent($form);
     }
 
-    protected function createTabs()
+    protected function createActionBars(): ValidHtml
     {
-        $tabs = $this->getTabs();
+        $actions = new ActionBar();
+        $actions->addHtml(
+            new ActionLink(
+                $this->translate('Modify'),
+                Url::fromPath('reporting/template/edit', ['id' => $this->template->id]),
+                'edit',
+                [
+                    'data-icinga-modal'   => true,
+                    'data-no-icinga-ajax' => true
+                ]
+            )
+        );
 
-        if ($this->hasPermission('reporting/templates')) {
-            $tabs->add('edit', [
-                'title' => $this->translate('Edit template'),
-                'label' => $this->translate('Edit Template'),
-                'url'   => 'reporting/template/edit?id=' . $this->params->getRequired('id')
-            ]);
-        }
-
-        $tabs->add('preview', [
-            'title' => $this->translate('Preview template'),
-            'label' => $this->translate('Preview'),
-            'url'   => 'reporting/template?id=' . $this->params->getRequired('id')
-        ]);
-
-        return $tabs;
+        return $actions;
     }
 }

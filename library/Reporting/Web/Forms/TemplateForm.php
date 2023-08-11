@@ -8,6 +8,7 @@ use Exception;
 use GuzzleHttp\Psr7\UploadedFile;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
+use Icinga\Util\Json;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
 use ipl\Html\HtmlDocument;
@@ -35,10 +36,13 @@ class TemplateForm extends CompatForm
     {
         $form = new static();
 
+        $template->settings = Json::decode($template->settings, true);
         $form->template = $template;
 
         if ($template->settings) {
-            $form->populate(array_filter($template->settings, function ($value) {
+            /** @var array<string, mixed> $settings */
+            $settings = $template->settings;
+            $form->populate(array_filter($settings, function ($value) {
                 // Don't populate files
                 return ! is_array($value);
             }));
