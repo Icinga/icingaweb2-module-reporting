@@ -33,6 +33,7 @@ class ReportController extends Controller
     {
         $reportId = $this->params->getRequired('id');
 
+        /** @var Model\Report $report */
         $report = Model\Report::on($this->getDb())
             ->with(['timeframe'])
             ->filter(Filter::equal('id', $reportId))

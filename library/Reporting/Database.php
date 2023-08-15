@@ -8,6 +8,7 @@ use Icinga\Application\Config;
 use Icinga\Data\ResourceFactory;
 use ipl\Sql;
 use PDO;
+use stdClass;
 
 trait Database
 {
@@ -35,7 +36,7 @@ trait Database
             ->columns(['id', 'name']);
 
         $timeframes = [];
-
+        /** @var stdClass $row */
         foreach ($this->getDb()->select($select) as $row) {
             $timeframes[$row->id] = $row->name;
         }
@@ -50,7 +51,7 @@ trait Database
             ->columns(['id', 'name']);
 
         $templates = [];
-
+        /** @var stdClass $row */
         foreach ($this->getDb()->select($select) as $row) {
             $templates[$row->id] = $row->name;
         }
