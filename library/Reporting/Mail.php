@@ -14,13 +14,13 @@ class Mail
     /** @var string */
     public const DEFAULT_SUBJECT = 'Icinga Reporting';
 
-    /** @var string */
+    /** @var ?string */
     protected $from;
 
     /** @var string */
     protected $subject = self::DEFAULT_SUBJECT;
 
-    /** @var Zend_Mail_Transport_Sendmail */
+    /** @var ?Zend_Mail_Transport_Sendmail */
     protected $transport;
 
     /** @var array */
