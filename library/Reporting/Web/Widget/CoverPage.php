@@ -3,8 +3,10 @@
 namespace Icinga\Module\Reporting\Web\Widget;
 
 use Icinga\Module\Reporting\Common\Macros;
+use Icinga\Util\Csp;
 use ipl\Html\BaseHtmlElement;
 use ipl\Html\Html;
+use ipl\Web\Style;
 
 class CoverPage extends BaseHtmlElement
 {
@@ -138,15 +140,24 @@ class CoverPage extends BaseHtmlElement
     protected function assemble()
     {
         if ($this->hasBackgroundImage()) {
-            $this
-                ->getAttributes()
-                ->add('style', "background-image: url('" . Template::getDataUrl($this->getBackgroundImage()) . "');");
+            $coverPageBackground = (new Style())
+                ->setModule('reporting')
+                ->setNonce(Csp::getStyleNonce())
+                ->addFor($this, [
+                    'background-image' => sprintf("url('%s')", Template::getDataUrl($this->getBackgroundImage()))
+                ]);
+
+            $this->addHtml($coverPageBackground);
         }
 
         $content = Html::tag('div', ['class' => 'cover-page-content']);
-
         if ($this->hasColor()) {
-            $content->getAttributes()->add('style', "color: {$this->getColor()};");
+            $coverPageLogo = (new Style())
+                ->setModule('reporting')
+                ->setNonce(Csp::getStyleNonce())
+                ->addFor($content, ['color' => $this->getColor()]);
+
+            $content->addHtml($coverPageLogo);
         }
 
         if ($this->hasLogo()) {
