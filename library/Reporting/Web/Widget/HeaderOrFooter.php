@@ -64,9 +64,9 @@ class HeaderOrFooter extends HtmlDocument
 
     protected function createColumn(array $data, $key)
     {
-        $typeKey = "${key}_type";
-        $valueKey = "${key}_value";
-        $type = isset($data[$typeKey]) ? $data[$typeKey] : null;
+        $typeKey = "{$key}_type";
+        $valueKey = "{$key}_value";
+        $type = $data[$typeKey] ?? null;
 
         switch ($type) {
             case 'text':
