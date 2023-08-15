@@ -192,8 +192,9 @@ class ReportController extends Controller
 
         switch ($type) {
             case 'pdf':
-                /** @var Hook\PdfexportHook */
-                Pdfexport::first()->streamPdfFromHtml($this->report->toPdf(), $name);
+                /** @var Hook\PdfexportHook $exports */
+                $exports = Pdfexport::first();
+                $exports->streamPdfFromHtml($this->report->toPdf(), $name);
                 exit;
             case 'csv':
                 $response = $this->getResponse();
