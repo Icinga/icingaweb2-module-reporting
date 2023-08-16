@@ -70,7 +70,7 @@ class ListCommand extends Command
         }
 
         if ($reports->count() === 0) {
-            printf($this->translate("No reports found\n"));
+            print $this->translate("No reports found\n");
             exit;
         }
 
@@ -121,7 +121,7 @@ class ListCommand extends Command
         $beautifier .= "\n";
 
         printf($format, ...array_keys($columnsAndLengths));
-        printf($beautifier);
+        print $beautifier;
 
         foreach ($rows as $row) {
             printf($format, ...$row);
