@@ -75,8 +75,8 @@ class ReportController extends Controller
 
         foreach ($reportlet->getConfig() as $name => $value) {
             if ($name === 'name') {
-                if (preg_match('/(?:Clone )(\d+)$/', $value, $matches)) {
-                    $value = preg_replace('/\d+$/', ++$matches[1], $value);
+                if (preg_match('/(?:Clone )(\d+)$/', $value, $m)) {
+                    $value = preg_replace('/\d+$/', (string) ((int) $m[1] + 1), $value);
                 } else {
                     $value .= ' Clone 1';
                 }
@@ -154,7 +154,11 @@ class ReportController extends Controller
         $form = ScheduleForm::fromReport($this->report);
         $form->setAction((string) Url::fromRequest())
             ->on(ScheduleForm::ON_SUCCESS, function () use ($form) {
-                $pressedButton = $form->getPressedSubmitElement()->getName();
+                $pressedButton = $form->getPressedSubmitElement();
+                if ($pressedButton) {
+                    $pressedButton = $pressedButton->getName();
+                }
+
                 if ($pressedButton === 'remove') {
                     Notification::success($this->translate('Removed schedule successfully'));
                 } elseif ($pressedButton === 'send') {
