@@ -16,7 +16,11 @@ parameters:
         - vendor
 
     ignoreErrors:
-        - '#Unsafe usage of new static\(\)#'
+        -
+            messages:
+                - '#Unsafe usage of new static\(\)#'
+                - '#. but return statement is missing#'
+            reportUnmatched: false
 
         - '#Call to an undefined method Icinga\\Module\\Reporting\\RetryConnection::lastInsertId\(\)#'
 
