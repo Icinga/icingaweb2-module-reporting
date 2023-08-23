@@ -1,11 +1,12 @@
+includes:
+	- phpstan-baseline.neon
+
 parameters:
-    level: 5
+    level: max
 
     checkFunctionNameCase: true
-    checkMissingIterableValueType: true
     checkInternalClassCaseSensitivity: true
-    checkDynamicProperties: true
-    treatPhpDocTypesAsCertain: false # ignore phpDoc failure for now, remove it later
+    treatPhpDocTypesAsCertain: false
 
     paths:
         - application
@@ -19,6 +20,6 @@ parameters:
 
         - '#Call to an undefined method Icinga\\Module\\Reporting\\RetryConnection::lastInsertId\(\)#'
 
-    universalObjectCratesClasses: # to ignore magic property errors (db columns)
+    universalObjectCratesClasses:
         - Icinga\Web\View
         - ipl\Orm\Model
