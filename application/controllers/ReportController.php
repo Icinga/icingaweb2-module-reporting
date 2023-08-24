@@ -50,7 +50,6 @@ class ReportController extends Controller
 
     public function indexAction()
     {
-        $this->getTabs()->getAttributes()->set('data-base-target', '_main');
         $this->addTitleTab($this->report->getName());
 
         $this->controls->getAttributes()->add('class', 'default-layout');
