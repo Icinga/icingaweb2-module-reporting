@@ -247,6 +247,15 @@ class TemplateForm extends CompatForm
             ]
         ]);
 
+        $valueType = $this->getValue($type, 'none');
+        $populated = $this->getPopulatedValue($value);
+        if (
+            ($valueType === 'image' && ! $populated instanceof UploadedFile)
+            || ($valueType !== 'image' && $populated instanceof UploadedFile)
+        ) {
+            $this->clearPopulatedValue($value);
+        }
+
         switch ($this->getValue($type, 'none')) {
             case 'image':
                 $this->addElement('file', $value, [
