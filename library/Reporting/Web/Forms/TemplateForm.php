@@ -10,6 +10,7 @@ use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
+use ipl\Html\HtmlDocument;
 use ipl\Web\Compat\CompatForm;
 
 class TemplateForm extends CompatForm
@@ -143,7 +144,10 @@ class TemplateForm extends CompatForm
                 'formnovalidate' => true
             ]);
             $this->registerElement($removeButton);
-            $this->getElement('submit')->getWrapper()->prepend($removeButton);
+
+            /** @var HtmlDocument $wrapper */
+            $wrapper = $this->getElement('submit')->getWrapper();
+            $wrapper->prepend($removeButton);
         }
     }
 

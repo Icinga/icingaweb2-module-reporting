@@ -47,6 +47,7 @@ class DownloadCommand extends Command
             $this->fail($this->translate('Argument id is mandatory'));
         }
 
+        /** @var Model\Report $report */
         $report = Model\Report::on($this->getDb())
             ->with('timeframe')
             ->filter(Filter::equal('id', $id))

@@ -9,6 +9,7 @@ use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Html\HtmlDocument;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
@@ -148,7 +149,10 @@ class ReportForm extends CompatForm
                 'formnovalidate' => true
             ]);
             $this->registerElement($removeButton);
-            $this->getElement('submit')->getWrapper()->prepend($removeButton);
+
+            /** @var HtmlDocument $wrapper */
+            $wrapper = $this->getElement('submit')->getWrapper();
+            $wrapper->prepend($removeButton);
         }
     }
 

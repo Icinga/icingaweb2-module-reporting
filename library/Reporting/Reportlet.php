@@ -22,8 +22,6 @@ class Reportlet
     public static function fromModel(Model\Reportlet $reportletModel): self
     {
         $reportlet = new static();
-
-        $reportlet->id = $reportletModel->id;
         $reportlet->class = $reportletModel->class;
 
         $reportletConfig = [

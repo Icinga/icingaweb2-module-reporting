@@ -33,7 +33,7 @@ class SendMail extends ActionHook
         $mail = new Mail();
 
         $mail->setFrom(
-            Config::module('reporting', 'config', 'true')->get('mail', 'from', 'reporting@icinga')
+            Config::module('reporting', 'config', true)->get('mail', 'from', 'reporting@icinga')
         );
 
         if (isset($config['subject'])) {

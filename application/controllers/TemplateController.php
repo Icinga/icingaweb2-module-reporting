@@ -24,6 +24,7 @@ class TemplateController extends Controller
     {
         $this->createTabs()->activate('preview');
 
+        /** @var Model\Template $template */
         $template = Model\Template::on($this->getDb())
             ->filter(Filter::equal('id', $this->params->getRequired('id')))
             ->first();
@@ -50,6 +51,7 @@ class TemplateController extends Controller
 
         $this->createTabs()->activate('edit');
 
+        /** @var Model\Template $template */
         $template = Model\Template::on($this->getDb())
             ->filter(Filter::equal('id', $this->params->getRequired('id')))
             ->first();

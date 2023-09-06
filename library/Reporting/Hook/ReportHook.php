@@ -56,7 +56,7 @@ abstract class ReportHook
     /**
      * Get the description of the report
      *
-     * @return  string
+     * @return ?string
      */
     public function getDescription()
     {

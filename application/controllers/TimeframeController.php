@@ -22,6 +22,7 @@ class TimeframeController extends Controller
 
     public function init()
     {
+        /** @var Model\Timeframe $timeframe */
         $timeframe = Model\Timeframe::on($this->getDb())
             ->filter(Filter::equal('id', $this->params->getRequired('id')))
             ->first();

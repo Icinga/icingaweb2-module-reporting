@@ -1,0 +1,29 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+    level: max
+
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    treatPhpDocTypesAsCertain: false
+
+    paths:
+        - application
+        - library
+
+    scanDirectories:
+        - vendor
+
+    ignoreErrors:
+        -
+            messages:
+                - '#Unsafe usage of new static\(\)#'
+                - '#. but return statement is missing#'
+            reportUnmatched: false
+
+        - '#Call to an undefined method Icinga\\Module\\Reporting\\RetryConnection::lastInsertId\(\)#'
+
+    universalObjectCratesClasses:
+        - Icinga\Web\View
+        - ipl\Orm\Model

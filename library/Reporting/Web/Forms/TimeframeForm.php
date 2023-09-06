@@ -9,6 +9,7 @@ use Exception;
 use Icinga\Module\Reporting\Database;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\FormElement\LocalDateTimeElement;
+use ipl\Html\HtmlDocument;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
@@ -174,7 +175,10 @@ class TimeframeForm extends CompatForm
                 'formnovalidate' => true
             ]);
             $this->registerElement($removeButton);
-            $this->getElement('submit')->getWrapper()->prepend($removeButton);
+
+            /** @var HtmlDocument $wrapper */
+            $wrapper = $this->getElement('submit')->getWrapper();
+            $wrapper->prepend($removeButton);
         }
     }
 

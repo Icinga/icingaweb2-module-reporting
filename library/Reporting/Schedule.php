@@ -147,6 +147,9 @@ class Schedule implements Task
             $deferred->resolve();
         });
 
-        return $deferred->promise();
+        /** @var ExtendedPromiseInterface $promise */
+        $promise = $deferred->promise();
+
+        return $promise;
     }
 }

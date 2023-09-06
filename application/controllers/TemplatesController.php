@@ -53,6 +53,10 @@ class TemplatesController extends Controller
 
         $this->addControl($sortControl);
 
+
+        $tableRows = [];
+
+        /** @var Model\Template $template */
         foreach ($templates as $template) {
             if ($canManage) {
                 $subjectLink = new Link(

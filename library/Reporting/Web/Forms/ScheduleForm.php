@@ -6,6 +6,7 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use DateTime;
 use Icinga\Application\Icinga;
+use Icinga\Application\Web;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Hook\ActionHook;
@@ -14,6 +15,7 @@ use Icinga\Module\Reporting\Report;
 use Icinga\Util\Json;
 use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
+use ipl\Html\HtmlDocument;
 use ipl\Html\HtmlElement;
 use ipl\Scheduler\Contract\Frequency;
 use ipl\Web\Compat\CompatForm;
@@ -35,7 +37,9 @@ class ScheduleForm extends CompatForm
     public function __construct()
     {
         $this->scheduleElement = new ScheduleElement('schedule_element');
-        $this->scheduleElement->setIdProtector([Icinga::app()->getRequest(), 'protectId']);
+        /** @var Web $app */
+        $app = Icinga::app();
+        $this->scheduleElement->setIdProtector([$app->getRequest(), 'protectId']);
     }
 
     public function getPartUpdates(): array
@@ -122,7 +126,10 @@ class ScheduleForm extends CompatForm
                 'formnovalidate' => true
             ]);
             $this->registerElement($sendButton);
-            $this->getElement('submit')->getWrapper()->prepend($sendButton);
+
+            /** @var HtmlDocument $wrapper */
+            $wrapper = $this->getElement('submit')->getWrapper();
+            $wrapper->prepend($sendButton);
 
             /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
@@ -131,7 +138,7 @@ class ScheduleForm extends CompatForm
                 'formnovalidate' => true
             ]);
             $this->registerElement($removeButton);
-            $this->getElement('submit')->getWrapper()->prepend($removeButton);
+            $wrapper->prepend($removeButton);
         }
     }
 

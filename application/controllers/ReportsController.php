@@ -55,6 +55,7 @@ class ReportsController extends Controller
 
         $this->addControl($sortControl);
 
+        /** @var Report $report */
         foreach ($reports as $report) {
             $url = Url::fromPath('reporting/report', ['id' => $report->id])->getAbsoluteUrl('&');
 
