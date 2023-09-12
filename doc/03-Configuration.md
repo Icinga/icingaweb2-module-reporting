@@ -1,20 +1,17 @@
 # Configuration
 
-1. [Backend](#backend)
-2. [Mail](#mail)
-3. [Permissions](#permissions)
+Icinga Reporting is configured via the web interface. Below you will find an overview of the necessary settings.
 
 ## Backend
 
-If not already done during the installation of Icinga Reporting, setup the reporting database backend now.
+Icinga Reporting stores all its configuration in the database, therefore you need to create and configure a database
+resource for it.
 
-Create a new [Icinga Web 2 resource](https://icinga.com/docs/icingaweb2/latest/doc/04-Resources/#database)
-for [Icinga Reporting's database](https://icinga.com/docs/icinga-reporting/latest/doc/02-Installation/#database-setup)
-using the `Configuration -> Application -> Resources` menu.
+1. Create a new resource for Icinga Reporting via the `Configuration -> Application -> Resources` menu.
 
-Then tell Icinga Reporting which database resource to use. This can be done in
-`Configuration -> Modules -> reporting -> Backend`. If you've used `reporting`
-as name for the resource, this is optional.
+2. Configure the resource you just created as the database connection for Icinga Reporting using the
+   `Configuration → Modules → reporting → Backend` menu. If you've used `reporting`
+   as name for the resource, this is optional.
 
 ## Mail
 
@@ -25,9 +22,37 @@ that is used as the sender's address (From) in E-mails.
 
 There are four permissions that can be used to control what can be managed by whom.
 
-Permission           | Applies to
----------------------|----------------
-reporting/reports    | Reports (create, edit, delete)
-reporting/schedules  | Schedules (create, edit, delete)
-reporting/templates  | Templates (create, edit, delete)
-reporting/timeframes | Timeframes (create, edit, delete)
+| Permission           | Applies to                        |
+|----------------------|-----------------------------------|
+| reporting/reports    | Reports (create, edit, delete)    |
+| reporting/schedules  | Schedules (create, edit, delete)  |
+| reporting/templates  | Templates (create, edit, delete)  |
+| reporting/timeframes | Timeframes (create, edit, delete) |
+
+## Icinga Reporting Daemon
+
+There is a daemon for generating and distributing reports on a schedule if configured:
+
+```
+icingacli reporting schedule run
+```
+
+This command schedules the execution of all applicable reports.
+
+The default `systemd` service of this module, shipped with package installations, uses this command as well.
+
+<!-- {% if not icingaDocs %} -->
+
+> **Note**
+>
+> If you haven't installed this module from packages, you have to configure this as a `systemd` service yourself by just
+> copying the example service definition from `/usr/share/icingaweb2/modules/reporting/config/systemd/icinga-reporting.service`
+> to `/etc/systemd/system/icinga-reporting.service`.
+
+<!-- {% endif %} -->
+
+You can run the following command to enable and start the daemon.
+
+```
+systemctl enable --now icinga-reporting.service
+```
