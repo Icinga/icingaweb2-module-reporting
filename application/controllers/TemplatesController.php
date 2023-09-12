@@ -27,15 +27,13 @@ class TemplatesController extends Controller
         $canManage = $this->hasPermission('reporting/templates');
 
         if ($canManage) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Template'),
-                Url::fromPath('reporting/templates/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $this->addControl(
+                (new ButtonLink(
+                    $this->translate('New Template'),
+                    Url::fromPath('reporting/templates/new'),
+                    'plus'
+                ))->openInModal()
+            );
         }
 
         $templates = Model\Template::on($this->getDb());

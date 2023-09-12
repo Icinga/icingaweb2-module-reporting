@@ -296,56 +296,40 @@ class ReportController extends Controller
 
         if ($this->hasPermission('reporting/reports')) {
             $actions->addHtml(
-                new ActionLink(
+                (new ActionLink(
                     $this->translate('Modify'),
                     Url::fromPath('reporting/report/edit', ['id' => $reportId]),
-                    'edit',
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                )
+                    'edit'
+                ))->openInModal()
             );
 
             $actions->addHtml(
-                new ActionLink(
+                (new ActionLink(
                     $this->translate('Clone'),
                     Url::fromPath('reporting/report/clone', ['id' => $reportId]),
-                    'clone',
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                )
+                    'clone'
+                ))->openInModal()
             );
         }
 
         if ($this->hasPermission('reporting/schedules')) {
             $actions->addHtml(
-                new ActionLink(
+                (new ActionLink(
                     $this->translate('Schedule'),
                     Url::fromPath('reporting/report/schedule', ['id' => $reportId]),
-                    'calendar-empty',
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                )
+                    'calendar-empty'
+                ))->openInModal()
             );
         }
 
         $actions
             ->add($download)
             ->addHtml(
-                new ActionLink(
+                (new ActionLink(
                     $this->translate('Send'),
                     Url::fromPath('reporting/report/send', ['id' => $reportId]),
-                    'forward',
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                )
+                    'forward'
+                ))->openInModal()
             );
 
         return $actions;

@@ -27,15 +27,13 @@ class ReportsController extends Controller
         $this->getTabs()->getAttributes()->set('data-base-target', '_main');
 
         if ($this->hasPermission('reporting/reports')) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Report'),
-                Url::fromPath('reporting/reports/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $this->addControl(
+                (new ButtonLink(
+                    $this->translate('New Report'),
+                    Url::fromPath('reporting/reports/new'),
+                    'plus'
+                ))->openInModal()
+            );
         }
 
         $tableRows = [];

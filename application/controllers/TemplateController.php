@@ -92,15 +92,11 @@ class TemplateController extends Controller
     {
         $actions = new ActionBar();
         $actions->addHtml(
-            new ActionLink(
+            (new ActionLink(
                 $this->translate('Modify'),
                 Url::fromPath('reporting/template/edit', ['id' => $this->template->id]),
-                'edit',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            )
+                'edit'
+            ))->openInModal()
         );
 
         return $actions;

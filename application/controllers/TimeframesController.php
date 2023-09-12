@@ -27,15 +27,13 @@ class TimeframesController extends Controller
         $canManage = $this->hasPermission('reporting/timeframes');
 
         if ($canManage) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Timeframe'),
-                Url::fromPath('reporting/timeframes/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $this->addControl(
+                (new ButtonLink(
+                    $this->translate('New Timeframe'),
+                    Url::fromPath('reporting/timeframes/new'),
+                    'plus'
+                ))->openInModal()
+            );
         }
 
         $tableRows = [];
