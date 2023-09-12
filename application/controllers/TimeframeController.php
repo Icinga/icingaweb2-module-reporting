@@ -10,6 +10,8 @@ use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Timeframe;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
+use Icinga\Web\Notification;
+use ipl\Html\Form;
 use ipl\Web\Url;
 use ipl\Stdlib\Filter;
 
@@ -48,10 +50,15 @@ class TimeframeController extends Controller
         $form = TimeframeForm::fromId($this->timeframe->getId())
             ->setAction((string) Url::fromRequest())
             ->populate($values)
-            ->on(TimeframeForm::ON_SUCCESS, function () {
-                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+            ->on(TimeframeForm::ON_SUCCESS, function (Form $form) {
+                $pressedButton = $form->getPressedSubmitElement();
+                if ($pressedButton && $pressedButton->getName() === 'remove') {
+                    Notification::success($this->translate('Removed timeframe successfully'));
+                } else {
+                    Notification::success($this->translate('Update timeframe successfully'));
+                }
 
-                $this->redirectNow('__CLOSE__');
+                $this->switchToSingleColumnLayout();
             })->handleRequest($this->getServerRequest());
 
         $this->addContent($form);

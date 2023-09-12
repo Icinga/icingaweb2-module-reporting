@@ -9,6 +9,7 @@ use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
 use Icinga\Module\Reporting\Web\Forms\TimeframeForm;
 use Icinga\Module\Reporting\Web\ReportsTimeframesAndTemplatesTabs;
+use Icinga\Web\Notification;
 use ipl\Html\Html;
 use ipl\Web\Url;
 use ipl\Web\Widget\ButtonLink;
@@ -26,15 +27,13 @@ class TimeframesController extends Controller
         $canManage = $this->hasPermission('reporting/timeframes');
 
         if ($canManage) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Timeframe'),
-                Url::fromPath('reporting/timeframes/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $this->addControl(
+                (new ButtonLink(
+                    $this->translate('New Timeframe'),
+                    Url::fromPath('reporting/timeframes/new'),
+                    'plus'
+                ))->openInModal()
+            );
         }
 
         $tableRows = [];
@@ -58,18 +57,11 @@ class TimeframesController extends Controller
             if ($canManage) {
                 $subject = new Link(
                     $timeframe->name,
-                    Url::fromPath('reporting/timeframe/edit', ['id' => $timeframe->id]),
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
+                    Url::fromPath('reporting/timeframe/edit', ['id' => $timeframe->id])
                 );
             }
 
-            $tableRows[] = Html::tag('tr', [
-                'data-icinga-modal'   => true,
-                'data-no-icinga-ajax' => true
-            ], [
+            $tableRows[] = Html::tag('tr', null, [
                 Html::tag('td', null, $subject),
                 Html::tag('td', null, $timeframe->start),
                 Html::tag('td', null, $timeframe->end),
@@ -81,7 +73,10 @@ class TimeframesController extends Controller
         if (! empty($tableRows)) {
             $table = Html::tag(
                 'table',
-                ['class' => 'common-table table-row-selectable'],
+                [
+                    'class'            => 'common-table table-row-selectable',
+                    'data-base-target' => '_next'
+                ],
                 [
                     Html::tag(
                         'thead',
@@ -116,9 +111,9 @@ class TimeframesController extends Controller
         $form = (new TimeframeForm())
             ->setAction((string) Url::fromRequest())
             ->on(TimeframeForm::ON_SUCCESS, function () {
-                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
+                Notification::success($this->translate('Created timeframe successfully'));
 
-                $this->redirectNow('__CLOSE__');
+                $this->closeModalAndRefreshRelatedView(Url::fromPath('reporting/timeframes'));
             })->handleRequest($this->getServerRequest());
 
         $this->addContent($form);

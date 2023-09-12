@@ -1,5 +1,9 @@
 // Icinga Reporting | (c) 2018 Icinga GmbH | GPLv2
 
+.content:focus {
+  outline: none;
+}
+
 .sla-column {
   border-radius: 0.5em;
   color: @text-color-on-icinga-blue;
@@ -84,16 +88,20 @@
   }
 }
 
-.action-bar .dropdown:first-child:hover .dropdown-menu {
-  left: .25em;
-}
+.action-bar {
+  line-height: 2em;
 
-.action-bar .dropdown:last-child:hover .dropdown-menu {
-  right: .25em;
-}
+  .dropdown:first-child:hover .dropdown-menu {
+    left: .25em;
+  }
 
-.action-bar > *:not(:last-child) {
-  margin-right: .5em;
+  .dropdown:last-child:hover .dropdown-menu {
+    right: .25em;
+  }
+
+  > *:not(:last-child) {
+    margin-right: .5em;
+  }
 }
 
 /* Stuff that's missing in ipl <= 0.8 END */

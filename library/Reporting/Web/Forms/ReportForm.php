@@ -23,6 +23,9 @@ class ReportForm extends CompatForm
     /** @var string Label to use for the submit button */
     protected $submitButtonLabel;
 
+    /** @var bool Whether to render the create and show submit button (is only used from DB Web's object detail) */
+    protected $renderCreateAndShowButton = false;
+
     /**
      * Create a new form instance with the given report id
      *
@@ -36,6 +39,11 @@ class ReportForm extends CompatForm
         $form->id = $id;
 
         return $form;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**
@@ -66,9 +74,27 @@ class ReportForm extends CompatForm
         return $this->id === null ? $this->translate('Create Report') : $this->translate('Update Report');
     }
 
+    /**
+     * Set whether the create and show submit button should be rendered
+     *
+     * @param bool $renderCreateAndShowButton
+     *
+     * @return $this
+     */
+    public function setRenderCreateAndShowButton(bool $renderCreateAndShowButton): self
+    {
+        $this->renderCreateAndShowButton = $renderCreateAndShowButton;
+
+        return $this;
+    }
+
     public function hasBeenSubmitted(): bool
     {
-        return $this->hasBeenSent() && ($this->getPopulatedValue('submit') || $this->getPopulatedValue('remove'));
+        return $this->hasBeenSent() && (
+                $this->getPopulatedValue('submit')
+                || $this->getPopulatedValue('create_show')
+                || $this->getPopulatedValue('remove')
+            );
     }
 
     protected function assemble()
@@ -153,6 +179,15 @@ class ReportForm extends CompatForm
             /** @var HtmlDocument $wrapper */
             $wrapper = $this->getElement('submit')->getWrapper();
             $wrapper->prepend($removeButton);
+        } elseif ($this->renderCreateAndShowButton) {
+            $createAndShow = $this->createElement('submit', 'create_show', [
+                'label' => $this->translate('Create and Show'),
+            ]);
+            $this->registerElement($createAndShow);
+
+            /** @var HtmlDocument $wrapper */
+            $wrapper = $this->getElement('submit')->getWrapper();
+            $wrapper->prepend($createAndShow);
         }
     }
 
@@ -223,5 +258,7 @@ class ReportForm extends CompatForm
         }
 
         $db->commitTransaction();
+
+        $this->id = $reportId;
     }
 }

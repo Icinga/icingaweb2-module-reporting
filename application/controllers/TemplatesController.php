@@ -4,7 +4,6 @@
 
 namespace Icinga\Module\Reporting\Controllers;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Controller;
@@ -28,15 +27,13 @@ class TemplatesController extends Controller
         $canManage = $this->hasPermission('reporting/templates');
 
         if ($canManage) {
-            $this->addControl(new ButtonLink(
-                $this->translate('New Template'),
-                Url::fromPath('reporting/templates/new'),
-                'plus',
-                [
-                    'data-icinga-modal'   => true,
-                    'data-no-icinga-ajax' => true
-                ]
-            ));
+            $this->addControl(
+                (new ButtonLink(
+                    $this->translate('New Template'),
+                    Url::fromPath('reporting/templates/new'),
+                    'plus'
+                ))->openInModal()
+            );
         }
 
         $templates = Model\Template::on($this->getDb());
@@ -58,20 +55,8 @@ class TemplatesController extends Controller
 
         /** @var Model\Template $template */
         foreach ($templates as $template) {
-            if ($canManage) {
-                $subjectLink = new Link(
-                    $template->name,
-                    Url::fromPath('reporting/template/edit', ['id' => $template->id]),
-                    [
-                        'data-icinga-modal'   => true,
-                        'data-no-icinga-ajax' => true
-                    ]
-                );
-            } else {
-                // Preview URL
-                $subjectLink = new Link($template->name, Url::fromPath('reporting/template', ['id' => $template->id]));
-            }
-
+            // Preview URL
+            $subjectLink = new Link($template->name, Url::fromPath('reporting/template', ['id' => $template->id]));
             $tableRows[] = Html::tag('tr', null, [
                 Html::tag('td', null, $subjectLink),
                 Html::tag('td', null, $template->author),
@@ -119,9 +104,7 @@ class TemplatesController extends Controller
             ->on(TemplateForm::ON_SUCCESS, function () {
                 Notification::success($this->translate('Created template successfully'));
 
-                $this->getResponse()->setHeader('X-Icinga-Container', 'modal-content', true);
-
-                $this->redirectNow('__CLOSE__');
+                $this->closeModalAndRefreshRelatedView(Url::fromPath('reporting/templates'));
             })
             ->handleRequest($this->getServerRequest());
 

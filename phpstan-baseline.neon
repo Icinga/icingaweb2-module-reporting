@@ -166,11 +166,6 @@ parameters:
 			path: application/controllers/ReportsController.php
 
 		-
-			message: "#^Cannot call method format\\(\\) on mixed\\.$#"
-			count: 2
-			path: application/controllers/ReportsController.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/ReportsController.php
@@ -189,11 +184,6 @@ parameters:
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:newAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/ReportsController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:createTabs\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:editAction\\(\\) has no return type specified\\.$#"
@@ -216,13 +206,8 @@ parameters:
 			path: application/controllers/TemplateController.php
 
 		-
-			message: "#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
 			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 2
+			count: 1
 			path: application/controllers/TemplateController.php
 
 		-
@@ -682,21 +667,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$timeframeModel of static method Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:fromModel\\(\\) expects Icinga\\\\Module\\\\Reporting\\\\Model\\\\Timeframe, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Report.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:\\$author \\(string\\) does not accept mixed\\.$#"
-			count: 1
-			path: library/Reporting/Report.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:\\$id \\(int\\) does not accept mixed\\.$#"
-			count: 1
-			path: library/Reporting/Report.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:\\$name \\(string\\) does not accept mixed\\.$#"
 			count: 1
 			path: library/Reporting/Report.php
 

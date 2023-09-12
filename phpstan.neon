@@ -24,6 +24,8 @@ parameters:
 
         - '#Call to an undefined method Icinga\\Module\\Reporting\\RetryConnection::lastInsertId\(\)#'
 
+        - '#Call to an undefined method Zend_Controller_Action_HelperBroker::layout\(\)#'
+
     universalObjectCratesClasses:
         - Icinga\Web\View
         - ipl\Orm\Model
