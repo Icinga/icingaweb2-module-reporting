@@ -29,33 +29,54 @@ trait Database
         return new RetryConnection($config);
     }
 
-    protected function listTimeframes()
+    /**
+     * List all reporting timeframes
+     *
+     * @return array<int, string>
+     */
+    protected function listTimeframes(): array
     {
-        $select = (new Sql\Select())
-            ->from('timeframe')
-            ->columns(['id', 'name']);
-
-        $timeframes = [];
-        /** @var stdClass $row */
-        foreach ($this->getDb()->select($select) as $row) {
-            $timeframes[$row->id] = $row->name;
-        }
-
-        return $timeframes;
+        return $this->list(
+            (new Sql\Select())
+                ->from('timeframe')
+                ->columns(['id', 'name'])
+        );
     }
 
-    protected function listTemplates()
+    /**
+     * List all reporting templates
+     *
+     * @return array<int, string>
+     */
+    protected function listTemplates(): array
     {
-        $select = (new Sql\Select())
-            ->from('template')
-            ->columns(['id', 'name']);
+        return $this->list(
+            (new Sql\Select())
+                ->from('template')
+                ->columns(['id', 'name'])
+        );
+    }
 
-        $templates = [];
+    /**
+     * Helper method for list templates and timeframes
+     *
+     * @param Sql\Select $select
+     *
+     * @return array<int, string>
+     */
+    private function list(Sql\Select $select): array
+    {
+        $result = [];
         /** @var stdClass $row */
         foreach ($this->getDb()->select($select) as $row) {
-            $templates[$row->id] = $row->name;
+            /** @var int $id */
+            $id = $row->id;
+            /** @var string $name */
+            $name = $row->name;
+
+            $result[$id] = $name;
         }
 
-        return $templates;
+        return $result;
     }
 }

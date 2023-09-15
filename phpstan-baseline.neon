@@ -136,16 +136,6 @@ parameters:
 			path: application/controllers/ReportController.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:scheduleAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/ReportController.php
@@ -171,16 +161,6 @@ parameters:
 			path: application/controllers/ReportsController.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportsController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportsController.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:newAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/ReportsController.php
@@ -192,16 +172,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/TemplateController.php
 
@@ -221,32 +191,12 @@ parameters:
 			path: application/controllers/TemplatesController.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplatesController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplatesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplatesController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplatesController.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplatesController\\:\\:newAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/TemplatesController.php
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframeController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframeController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframeController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframeController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframeController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/TimeframeController.php
 
@@ -287,16 +237,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframesController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframesController\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframesController\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/TimeframesController.php
 
@@ -352,16 +292,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Cli\\\\Command\\:\\:init\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Cli/Command.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Cli\\\\Command\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Cli/Command.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Cli\\\\Command\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Cli/Command.php
 
@@ -578,16 +508,6 @@ parameters:
 		-
 			message: "#^Cannot call method getValues\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
 			count: 2
-			path: library/Reporting/Report.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Report.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
 			path: library/Reporting/Report.php
 
 		-
@@ -891,16 +811,6 @@ parameters:
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Timeframe.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Timeframe.php
-
-		-
 			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$end \\(string\\) does not accept mixed\\.$#"
 			count: 1
 			path: library/Reporting/Timeframe.php
@@ -946,16 +856,6 @@ parameters:
 			path: library/Reporting/Web/Forms/ReportForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/ReportForm.php
@@ -991,16 +891,6 @@ parameters:
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ScheduleForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ScheduleForm.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
@@ -1017,16 +907,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:listReports\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/SendForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/SendForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/SendForm.php
 
@@ -1076,16 +956,6 @@ parameters:
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/TemplateForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/TemplateForm.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
@@ -1097,16 +967,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TimeframeForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/TimeframeForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TimeframeForm\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/TimeframeForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TimeframeForm\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/TimeframeForm.php
 
@@ -1282,16 +1142,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:getDataUrl\\(\\) has parameter \\$image with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:listTemplates\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:listTimeframes\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
