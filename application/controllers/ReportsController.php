@@ -63,7 +63,6 @@ class ReportsController extends Controller
                 Html::tag('td', null, $report->timeframe->name),
                 Html::tag('td', null, $report->ctime->format('Y-m-d H:i')),
                 Html::tag('td', null, $report->mtime->format('Y-m-d H:i')),
-                Html::tag('td', null, $report->mtime->format('Y-m-d H:i'))
             ]);
         }
 
