@@ -3,6 +3,25 @@
 Upgrading Icinga Reporting is straightforward.
 Usually the only manual steps involved are schema updates for the database.
 
+## Upgrading to Version 1.0.0
+
+Icinga Reporting version 1.0.0 requires a schema update for the database.
+If you're already using Icinga Web version `>= 2.12`, then you don't need to perform any of these steps manually.
+Icinga Web provides you the ability to perform such migrations in a simple way. You may be familiar with such an
+automation if you're an Icinga Director user. For those who are not using the latest version of Icinga Web, please
+follow the instructions below.
+
+You may use the following command to apply the database schema upgrade file:
+<!-- {% if not icingaDocs %} -->
+
+**Note:** If you haven't installed this module from packages, then please adapt the schema path to the correct installation path.
+
+<!-- {% endif %} -->
+
+```
+# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.0.sql
+```
+
 ## Upgrading to Version 0.10.0
 
 Icinga Reporting version 0.10.0 requires a schema update for the database.

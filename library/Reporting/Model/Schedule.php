@@ -26,8 +26,6 @@ class Schedule extends Model
         return [
             'report_id',
             'author',
-            'start',
-            'frequency',
             'action',
             'config',
             'ctime',
@@ -38,7 +36,6 @@ class Schedule extends Model
     public function createBehaviors(Behaviors $behaviors)
     {
         $behaviors->add(new MillisecondTimestamp([
-            'start',
             'ctime',
             'mtime'
         ]));
