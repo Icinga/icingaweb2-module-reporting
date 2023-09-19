@@ -32,7 +32,7 @@ You can use the following sample command for creating the MySQL/MariaDB database
 
 ```
 CREATE DATABASE reporting;
-GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
+GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, ALTER, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
 ```
 
 After, you can import the schema using the following command:
