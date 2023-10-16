@@ -3,3 +3,4 @@
 
 # Except those related to Git
 !.git*
+!.mailmap
