@@ -24,7 +24,6 @@ class ReportsController extends Controller
     public function indexAction()
     {
         $this->createTabs()->activate('reports');
-        $this->getTabs()->getAttributes()->set('data-base-target', '_main');
 
         if ($this->hasPermission('reporting/reports')) {
             $this->addControl(
