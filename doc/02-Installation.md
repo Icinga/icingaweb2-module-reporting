@@ -1,41 +1,56 @@
-# Installation
+<!-- {% if index %} -->
+# Installing Icinga Reporting
 
-## Requirements
+The recommended way to install Icinga Reporting and its dependencies is to use prebuilt packages for all supported
+platforms from our official release repository. Please note that [Icinga Web](https://icinga.com/docs/icinga-web) is
+required and if it is not already set up, it is best to do this first.
 
-* PHP (>= 7.0)
-* Icinga Web 2 (>= 2.9)
-* Icinga Web 2 libraries:
-  * [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (>= 0.12)
-  * [Icinga PHP Thirdparty](https://github.com/Icinga/icinga-php-thirdparty) (>= 0.10)
-* Icinga Web 2 modules:
-  * [Icinga PDF Export](https://github.com/Icinga/icingaweb2-module-pdfexport) (>= 0.10)
-* MySQL / MariaDB or PostgreSQL
-* php-mbstring
+To upgrade an existing Icinga Reporting installation to a newer version, see the [Upgrading](80-Upgrading.md) documentation
+for the necessary steps.
+<!-- {% else %} -->
+<!-- {% if not icingaDocs %} -->
 
-## Database Setup
+## Installing the Package
 
-### MySQL / MariaDB
+If the [repository](https://packages.icinga.com) is not configured yet, please add it first.
+Then use your distribution's package manager to install the `icinga-reporting` package
+or install [from source](02-Installation.md.d/From-Source.md).
+<!-- {% endif %} -->
 
-The module needs a MySQL/MariaDB database with the schema that's provided in the `etc/schema/mysql.schema.sql` file.
+## Setting up the Database
 
-Example command for creating the MySQL/MariaDB database. Please change the password:
+### Setting up a MySQL or MariaDB Database
+
+The module needs a MySQL/MariaDB database with the schema that's provided in the `/usr/share/icingaweb2/modules/reporting/schema/mysql.schema.sql` file.
+<!-- {% if not icingaDocs %} -->
+
+**Note:** If you haven't installed this module from packages, then please adapt the schema path to the correct installation path.
+
+<!-- {% endif %} -->
+
+You can use the following sample command for creating the MySQL/MariaDB database. Please change the password:
 
 ```
 CREATE DATABASE reporting;
-GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
+GRANT SELECT, INSERT, UPDATE, DELETE, DROP, CREATE, ALTER, CREATE VIEW, INDEX, EXECUTE ON reporting.* TO reporting@localhost IDENTIFIED BY 'secret';
 ```
 
 After, you can import the schema using the following command:
 
 ```
-mysql -p -u root reporting < schema/mysql.schema.sql
+mysql -p -u root reporting < /usr/share/icingaweb2/modules/reporting/schema/mysql.schema.sql
 ```
 
-## PostgreSQL
+## Setting up a PostgreSQL Database
 
-The module needs a PostgreSQL database with the schema that's provided in the `etc/schema/pgsql.schema.sql` file.
+The module needs a PostgreSQL database with the schema that's provided in the `/usr/share/icingaweb2/modules/reporting/schema/pgsql.schema.sql` file.
+<!-- {% if not icingaDocs %} -->
 
-Example command for creating the PostgreSQL database. Please change the password:
+**Note:** If you haven't installed this module from packages, then please adapt the schema path to the correct installation path.
+
+<!-- {% endif %} -->
+
+You can use the following sample command for creating the PostgreSQL database. Please change the password:
 
 ```sql
 CREATE USER reporting WITH PASSWORD 'secret';
@@ -49,36 +64,8 @@ CREATE DATABASE reporting
 After, you can import the schema using the following command:
 
 ```
-psql -U reporting reporting -a -f schema/pgsql.schema.sql
+psql -U reporting reporting -a -f /usr/share/icingaweb2/modules/reporting/pgsql.schema.sql
 ```
-
-## Module Installation
-
-1. Install it [like any other module](https://icinga.com/docs/icinga-web-2/latest/doc/08-Modules/#installation).
-Use `reporting` as name.
-
-2. Once you've set up the database, create a new Icinga Web 2 resource for it using the
-`Configuration -> Application -> Resources` menu. Make sure that you set the character set to `utf8mb4`.
-
-3. The next step involves telling the Reporting module which database resource to use. This can be done in
-`Configuration -> Modules -> reporting -> Backend`. If you've used `reporting` as name for the resource,
-you can skip this step.
 
 This concludes the installation. Now continue with the [configuration](03-Configuration.md).
-
-## Scheduler Daemon
-
-There is a daemon for generating and distributing reports on a schedule if configured:
-
-```
-icingacli reporting schedule run
-```
-
-This command schedules the execution of all applicable reports.
-
-You may configure this command as `systemd` service. Just copy the example service definition from
-`config/systemd/icinga-reporting.service` to `/etc/systemd/system/icinga-reporting.service` and enable it afterwards:
-
-```
-systemctl enable icinga-reporting.service
-```
+<!-- {% endif %} --><!-- {# end else if index #} -->
