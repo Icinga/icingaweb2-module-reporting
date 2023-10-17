@@ -33,6 +33,11 @@ class Timeframe extends Model
         ];
     }
 
+    public function getDefaultSort(): string
+    {
+        return 'name';
+    }
+
     public function createBehaviors(Behaviors $behaviors)
     {
         $behaviors->add(new MillisecondTimestamp([

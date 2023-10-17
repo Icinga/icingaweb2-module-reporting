@@ -50,7 +50,6 @@ class TemplatesController extends Controller
 
         $this->addControl($sortControl);
 
-
         $tableRows = [];
 
         /** @var Model\Template $template */

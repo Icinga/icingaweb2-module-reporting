@@ -14,6 +14,7 @@ trait ReportsTimeframesAndTemplatesTabs
     protected function createTabs()
     {
         $tabs = $this->getTabs();
+        $tabs->getAttributes()->set('data-base-target', '_main');
 
         $tabs->add('reports', [
             'title' => $this->translate('Show reports'),
