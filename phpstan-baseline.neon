@@ -1117,12 +1117,12 @@ parameters:
 
 		-
 			message: "#^Cannot access offset 'cover_page_logo' on mixed\\.$#"
-			count: 2
+			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
 			message: "#^Cannot access offset 'cover_page…' on mixed\\.$#"
-			count: 2
+			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
