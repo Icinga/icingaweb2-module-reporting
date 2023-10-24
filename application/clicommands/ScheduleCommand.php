@@ -6,7 +6,9 @@ namespace Icinga\Module\Reporting\Clicommands;
 
 use DateTime;
 use Exception;
+use Icinga\Application\Config;
 use Icinga\Application\Logger;
+use Icinga\Data\ResourceFactory;
 use Icinga\Module\Reporting\Cli\Command;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
@@ -37,7 +39,20 @@ class ScheduleCommand extends Command
         // Check for configuration changes every 5 minutes to make sure new jobs are scheduled, updated and deleted
         // jobs are cancelled.
         $watchdog = function () use (&$watchdog, $scheduler, &$runningSchedules) {
-            $schedules = $this->fetchSchedules();
+            $schedules = [];
+            try {
+                // Since this is a long-running daemon, the resources or module config may change meanwhile.
+                // Therefore, reload the resources and module config from disk each time (at 5m intervals)
+                // before reconnecting to the database.
+                ResourceFactory::setConfig(Config::app('resources', true));
+                Config::module('reporting', 'config', true);
+
+                $schedules = $this->fetchSchedules();
+            } catch (Throwable $err) {
+                Logger::error('Failed to fetch report schedules from the database: %s', $err);
+                Logger::debug($err->getTraceAsString());
+            }
+
             $outdated = array_diff_key($runningSchedules, $schedules);
             foreach ($outdated as $schedule) {
                 Logger::info(
