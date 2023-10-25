@@ -64,7 +64,7 @@ CREATE DATABASE reporting
 After, you can import the schema using the following command:
 
 ```
-psql -U reporting reporting -a -f /usr/share/icingaweb2/modules/reporting/pgsql.schema.sql
+psql -U reporting reporting -a -f /usr/share/icingaweb2/modules/reporting/schema/pgsql.schema.sql
 ```
 
 This concludes the installation. Now continue with the [configuration](03-Configuration.md).
