@@ -39,17 +39,11 @@ icingacli reporting schedule run
 
 This command schedules the execution of all applicable reports.
 
-The default `systemd` service of this module, shipped with package installations, uses this command as well.
+The `systemd` service of this module uses this command as well.
 
-<!-- {% if not icingaDocs %} -->
-
-> **Note**
->
-> If you haven't installed this module from packages, you have to configure this as a `systemd` service yourself by just
-> copying the example service definition from `/usr/share/icingaweb2/modules/reporting/config/systemd/icinga-reporting.service`
-> to `/etc/systemd/system/icinga-reporting.service`.
-
-<!-- {% endif %} -->
+To configure this as a `systemd` service, copy the example service definition from
+`/usr/share/icingaweb2/modules/reporting/config/systemd/icinga-reporting.service`
+to `/etc/systemd/system/icinga-reporting.service`.
 
 You can run the following command to enable and start the daemon.
 
