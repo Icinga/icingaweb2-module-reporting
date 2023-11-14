@@ -61,10 +61,12 @@ class ScheduleCommand extends Command
                 );
 
                 $scheduler->remove($schedule);
+
+                unset($runningSchedules[$schedule->getUuid()->toString()]);
             }
 
             $newSchedules = array_diff_key($schedules, $runningSchedules);
-            foreach ($newSchedules as $schedule) {
+            foreach ($newSchedules as $key => $schedule) {
                 $config = $schedule->getConfig();
                 $frequency = $config['frequency'];
 
@@ -84,9 +86,9 @@ class ScheduleCommand extends Command
                 }
 
                 $scheduler->schedule($schedule, $frequency);
-            }
 
-            $runningSchedules = $schedules;
+                $runningSchedules[$key] = $schedule;
+            }
 
             Loop::addTimer(5 * 60, $watchdog);
         };
@@ -105,7 +107,7 @@ class ScheduleCommand extends Command
 
         foreach ($query as $schedule) {
             $schedule = Schedule::fromModel($schedule, Report::fromModel($schedule->report));
-            $schedules[$schedule->getChecksum()] = $schedule;
+            $schedules[$schedule->getUuid()->toString()] = $schedule;
         }
 
         return $schedules;
