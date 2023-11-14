@@ -23,7 +23,7 @@ BEGIN
       SET frequency_json = CONCAT(
         ',"frequencyType":"\\\\ipl\\\\Scheduler\\\\Cron","frequency":"{',
         '\\"expression\\":\\"@', schedule_frequency,
-        '\\",\\"start\\":\\"', DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(schedule_start / 1000), @@session.TIME_ZONE, 'UTC'), '%Y-%m-%dT%H:%i:%s.%u UTC'),
+        '\\",\\"start\\":\\"', DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(schedule_start / 1000), @@session.TIME_ZONE, 'UTC'), '%Y-%m-%dT%H:%i:%s.%f UTC'),
         '\\"}"'
       );
       UPDATE schedule SET config = INSERT(schedule_config, LENGTH(schedule_config), 0, frequency_json) WHERE id = schedule_id;
