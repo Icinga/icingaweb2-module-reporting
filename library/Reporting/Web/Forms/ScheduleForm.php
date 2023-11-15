@@ -25,7 +25,6 @@ use function ipl\Stdlib\get_php_type;
 
 class ScheduleForm extends CompatForm
 {
-    use Database;
     use ProvidedActions;
 
     /** @var Report */
@@ -144,7 +143,7 @@ class ScheduleForm extends CompatForm
 
     public function onSuccess()
     {
-        $db = $this->getDb();
+        $db = Database::get();
         $schedule = $this->report->getSchedule();
         if ($this->getPopulatedValue('remove')) {
             $db->delete('schedule', ['id = ?' => $schedule->getId()]);

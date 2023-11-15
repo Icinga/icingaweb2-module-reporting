@@ -6,12 +6,9 @@ namespace Icinga\Module\Reporting\Cli;
 
 use Icinga\Application\Icinga;
 use Icinga\Application\Version;
-use Icinga\Module\Reporting\Database;
 
 class Command extends \Icinga\Cli\Command
 {
-    use Database;
-
     // Fix Web 2 issue where $configs is not properly initialized
     protected $configs = [];
 

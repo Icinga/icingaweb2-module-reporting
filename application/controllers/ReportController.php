@@ -26,8 +26,6 @@ use ipl\Web\Widget\ActionLink;
 
 class ReportController extends Controller
 {
-    use Database;
-
     /** @var Report */
     protected $report;
 
@@ -36,7 +34,7 @@ class ReportController extends Controller
         $reportId = $this->params->getRequired('id');
 
         /** @var Model\Report $report */
-        $report = Model\Report::on($this->getDb())
+        $report = Model\Report::on(Database::get())
             ->with(['timeframe'])
             ->filter(Filter::equal('id', $reportId))
             ->first();

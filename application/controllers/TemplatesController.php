@@ -17,7 +17,6 @@ use ipl\Web\Widget\Link;
 
 class TemplatesController extends Controller
 {
-    use Database;
     use ReportsTimeframesAndTemplatesTabs;
 
     public function indexAction()
@@ -36,7 +35,7 @@ class TemplatesController extends Controller
             );
         }
 
-        $templates = Model\Template::on($this->getDb());
+        $templates = Model\Template::on(Database::get());
 
         $sortControl = $this->createSortControl(
             $templates,

@@ -17,8 +17,6 @@ use function ipl\I18n\t;
 
 class Report
 {
-    use Database;
-
     /** @var int */
     protected $id;
 

@@ -12,10 +12,6 @@ use ipl\Sql\Connection;
 
 class DbMigration extends DbMigrationHook
 {
-    use Database {
-        getDb as private getReportingDb;
-    }
-
     public function getName(): string
     {
         return $this->translate('Icinga Reporting');
@@ -40,7 +36,7 @@ class DbMigration extends DbMigrationHook
 
     public function getDb(): Connection
     {
-        return $this->getReportingDb();
+        return Database::get();
     }
 
     public function getVersion(): string

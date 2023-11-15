@@ -10,6 +10,7 @@ use Icinga\Application\Config;
 use Icinga\Application\Logger;
 use Icinga\Data\ResourceFactory;
 use Icinga\Module\Reporting\Cli\Command;
+use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Schedule;
@@ -103,7 +104,7 @@ class ScheduleCommand extends Command
     protected function fetchSchedules(): array
     {
         $schedules = [];
-        $query = Model\Schedule::on($this->getDb())->with(['report.timeframe', 'report']);
+        $query = Model\Schedule::on(Database::get())->with(['report.timeframe', 'report']);
 
         foreach ($query as $schedule) {
             $schedule = Schedule::fromModel($schedule, Report::fromModel($schedule->report));
