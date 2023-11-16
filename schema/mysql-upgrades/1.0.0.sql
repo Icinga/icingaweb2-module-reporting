@@ -2,6 +2,8 @@ DROP PROCEDURE IF EXISTS migrate_schedule_config;
 DELIMITER //
 CREATE PROCEDURE migrate_schedule_config()
 BEGIN
+  DECLARE session_time_zone text;
+
   DECLARE schedule_id int;
   DECLARE schedule_start bigint;
   DECLARE schedule_frequency enum('minutely', 'hourly', 'daily', 'weekly', 'monthly');
@@ -13,6 +15,13 @@ BEGIN
   DECLARE schedule CURSOR FOR SELECT id, start, frequency, config FROM schedule;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
+  -- Determine the current session time zone name
+  SELECT IF(@@session.TIME_ZONE = 'SYSTEM', @@system_time_zone, @@session.TIME_ZONE) INTO session_time_zone;
+
+  IF session_time_zone NOT LIKE '+%:%' AND session_time_zone NOT LIKE '-%:%' AND CONVERT_TZ(FROM_UNIXTIME(1699903042), session_time_zone, '+00:00') IS NULL THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'required named time zone information are not populated into mysql/mariadb';
+  END IF;
+
   OPEN schedule;
   read_loop: LOOP
     FETCH schedule INTO schedule_id, schedule_start, schedule_frequency, schedule_config;
@@ -23,7 +32,7 @@ BEGIN
       SET frequency_json = CONCAT(
         ',"frequencyType":"\\\\ipl\\\\Scheduler\\\\Cron","frequency":"{',
         '\\"expression\\":\\"@', schedule_frequency,
-        '\\",\\"start\\":\\"', DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(schedule_start / 1000), @@session.TIME_ZONE, 'UTC'), '%Y-%m-%dT%H:%i:%s.%u UTC'),
+        '\\",\\"start\\":\\"', DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(schedule_start / 1000), session_time_zone, '+00:00'), '%Y-%m-%dT%H:%i:%s.%f UTC'),
         '\\"}"'
       );
       UPDATE schedule SET config = INSERT(schedule_config, LENGTH(schedule_config), 0, frequency_json) WHERE id = schedule_id;

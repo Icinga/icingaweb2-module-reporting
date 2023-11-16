@@ -11,6 +11,11 @@ Icinga Web provides you the ability to perform such migrations in a simple way. 
 automation if you're an Icinga Director user. For those who are not using the latest version of Icinga Web, please
 follow the instructions below.
 
+> **Note**
+>
+> If you're not using Icinga Web migration automation, you may need to [populate](https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html#time-zone-installation)
+> all the system named time zone information into your MSQL/MariaDB server. Otherwise, the migration may not succeed.
+
 You may use the following command to apply the database schema upgrade file:
 <!-- {% if not icingaDocs %} -->
 
