@@ -8,8 +8,6 @@ use Icinga\Module\Reporting\Model;
 
 class Timeframe
 {
-    use Database;
-
     /** @var int */
     protected $id;
 

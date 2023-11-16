@@ -10,9 +10,30 @@ use ipl\Sql;
 use PDO;
 use stdClass;
 
-trait Database
+final class Database
 {
-    protected function getDb(): RetryConnection
+    /** @var RetryConnection Database connection */
+    private static $instance;
+
+    private function __construct()
+    {
+    }
+
+    /**
+     * Get the database connection
+     *
+     * @return RetryConnection
+     */
+    public static function get(): RetryConnection
+    {
+        if (self::$instance === null) {
+            self::$instance = self::getDb();
+        }
+
+        return self::$instance;
+    }
+
+    private static function getDb(): RetryConnection
     {
         $config = new Sql\Config(
             ResourceFactory::getResourceConfig(
@@ -34,9 +55,9 @@ trait Database
      *
      * @return array<int, string>
      */
-    protected function listTimeframes(): array
+    public static function listTimeframes(): array
     {
-        return $this->list(
+        return self::list(
             (new Sql\Select())
                 ->from('timeframe')
                 ->columns(['id', 'name'])
@@ -48,9 +69,9 @@ trait Database
      *
      * @return array<int, string>
      */
-    protected function listTemplates(): array
+    public static function listTemplates(): array
     {
-        return $this->list(
+        return self::list(
             (new Sql\Select())
                 ->from('template')
                 ->columns(['id', 'name'])
@@ -64,11 +85,11 @@ trait Database
      *
      * @return array<int, string>
      */
-    private function list(Sql\Select $select): array
+    private static function list(Sql\Select $select): array
     {
         $result = [];
         /** @var stdClass $row */
-        foreach ($this->getDb()->select($select) as $row) {
+        foreach (self::get()->select($select) as $row) {
             /** @var int $id */
             $id = $row->id;
             /** @var string $name */

@@ -22,8 +22,6 @@ use ipl\Web\Widget\ActionLink;
 
 class TemplateController extends Controller
 {
-    use Database;
-
     /** @var Model\Template */
     protected $template;
 
@@ -32,7 +30,7 @@ class TemplateController extends Controller
         parent::init();
 
         /** @var Model\Template $template */
-        $template = Model\Template::on($this->getDb())
+        $template = Model\Template::on(Database::get())
             ->filter(Filter::equal('id', $this->params->getRequired('id')))
             ->first();
 

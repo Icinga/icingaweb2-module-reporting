@@ -15,8 +15,6 @@ use ipl\Web\Compat\CompatForm;
 
 class TimeframeForm extends CompatForm
 {
-    use Database;
-
     /** @var int */
     protected $id;
 
@@ -184,7 +182,7 @@ class TimeframeForm extends CompatForm
 
     public function onSuccess()
     {
-        $db = $this->getDb();
+        $db = Database::get();
 
         if ($this->getPopulatedValue('remove')) {
             $db->delete('timeframe', ['id = ?' => $this->id]);

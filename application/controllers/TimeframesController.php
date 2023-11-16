@@ -17,7 +17,6 @@ use ipl\Web\Widget\Link;
 
 class TimeframesController extends Controller
 {
-    use Database;
     use ReportsTimeframesAndTemplatesTabs;
 
     public function indexAction()
@@ -38,7 +37,7 @@ class TimeframesController extends Controller
 
         $tableRows = [];
 
-        $timeframes = Model\Timeframe::on($this->getDb());
+        $timeframes = Model\Timeframe::on(Database::get());
 
         $sortControl = $this->createSortControl(
             $timeframes,

@@ -18,7 +18,6 @@ use ipl\Web\Widget\ButtonLink;
 
 class ReportsController extends Controller
 {
-    use Database;
     use ReportsTimeframesAndTemplatesTabs;
 
     public function indexAction()
@@ -37,7 +36,7 @@ class ReportsController extends Controller
 
         $tableRows = [];
 
-        $reports = Report::on($this->getDb())
+        $reports = Report::on(Database::get())
             ->withColumns(['report.timeframe.name']);
 
         $sortControl = $this->createSortControl(

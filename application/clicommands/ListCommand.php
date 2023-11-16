@@ -5,6 +5,7 @@
 namespace Icinga\Module\Reporting\Clicommands;
 
 use Icinga\Module\Reporting\Cli\Command;
+use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use InvalidArgumentException;
 use ipl\Stdlib\Filter;
@@ -56,7 +57,7 @@ class ListCommand extends Command
 
         $direction = $this->params->get('direction', 'ASC');
 
-        $reports = Model\Report::on($this->getDb());
+        $reports = Model\Report::on(Database::get());
         $reports
             ->with(['reportlets'])
             ->orderBy($sort, $direction);

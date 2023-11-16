@@ -7,6 +7,7 @@ namespace Icinga\Module\Reporting\Clicommands;
 use Icinga\Exception\NotFoundError;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Cli\Command;
+use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
 use InvalidArgumentException;
@@ -48,7 +49,7 @@ class DownloadCommand extends Command
         }
 
         /** @var Model\Report $report */
-        $report = Model\Report::on($this->getDb())
+        $report = Model\Report::on(Database::get())
             ->with('timeframe')
             ->filter(Filter::equal('id', $id))
             ->first();

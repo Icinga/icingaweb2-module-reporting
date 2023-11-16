@@ -5,14 +5,12 @@
 namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Module\Reporting\Actions\SendMail;
-use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\Report;
 use ipl\Web\Compat\CompatForm;
 
 class SendForm extends CompatForm
 {
-    use Database;
     use ProvidedReports;
 
     /** @var Report */

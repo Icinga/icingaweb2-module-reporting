@@ -16,8 +16,6 @@ use ipl\Web\Compat\CompatForm;
 
 class TemplateForm extends CompatForm
 {
-    use Database;
-
     protected $template;
 
     public function getTemplate()
@@ -158,7 +156,7 @@ class TemplateForm extends CompatForm
     public function onSuccess()
     {
         if ($this->getPopulatedValue('remove')) {
-            $this->getDb()->delete('template', ['id = ?' => $this->template->id]);
+            Database::get()->delete('template', ['id = ?' => $this->template->id]);
 
             return;
         }
@@ -178,7 +176,7 @@ class TemplateForm extends CompatForm
                 }
             }
 
-            $db = $this->getDb();
+            $db = Database::get();
 
             $now = time() * 1000;
 

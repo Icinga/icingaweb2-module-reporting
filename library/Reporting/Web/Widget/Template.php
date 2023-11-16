@@ -5,13 +5,11 @@
 namespace Icinga\Module\Reporting\Web\Widget;
 
 use Icinga\Module\Reporting\Common\Macros;
-use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use ipl\Html\BaseHtmlElement;
 
 class Template extends BaseHtmlElement
 {
-    use Database;
     use Macros;
 
     protected $tag = 'div';

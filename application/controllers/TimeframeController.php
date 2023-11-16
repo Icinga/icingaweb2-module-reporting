@@ -17,15 +17,13 @@ use ipl\Stdlib\Filter;
 
 class TimeframeController extends Controller
 {
-    use Database;
-
     /** @var Timeframe */
     protected $timeframe;
 
     public function init()
     {
         /** @var Model\Timeframe $timeframe */
-        $timeframe = Model\Timeframe::on($this->getDb())
+        $timeframe = Model\Timeframe::on(Database::get())
             ->filter(Filter::equal('id', $this->params->getRequired('id')))
             ->first();
 
