@@ -53,14 +53,25 @@ class ReportController extends Controller
         $this->controls->getAttributes()->add('class', 'default-layout');
         $this->addControl($this->assembleActions());
 
-        /** @var string $contentId */
-        $contentId = $this->content->getAttributes()->get('id')->getValue();
-        $this->sendExtraUpdates([
-            $contentId => Url::fromPath('reporting/report/content', ['id' => $this->report->getId()])
-        ]);
+        if ($this->isXhr()) {
+            /** @var string $contentId */
+            $contentId = $this->content->getAttributes()->get('id')->getValue();
+            $this->sendExtraUpdates([
+                $contentId => Url::fromPath('reporting/report/content', ['id' => $this->report->getId()])
+            ]);
 
-        // Will be replaced once the report content is rendered
-        $this->addContent(new HtmlElement('div'));
+            // Will be replaced once the report content is rendered
+            $this->addContent(new HtmlElement('div'));
+        } else {
+            Environment::raiseExecutionTime();
+            Environment::raiseMemoryLimit();
+
+            try {
+                $this->addContent($this->report->toHtml());
+            } catch (Exception $e) {
+                $this->addContent(Error::show($e));
+            }
+        }
     }
 
     public function contentAction(): void
