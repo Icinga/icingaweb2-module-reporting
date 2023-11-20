@@ -57,9 +57,10 @@ class SendMail extends ActionHook
                 throw new \InvalidArgumentException();
         }
 
-        $recipients = array_filter(preg_split('/[\s,]+/', $config['recipients']));
+        /** @var array<int, string> $recipients */
+        $recipients = preg_split('/[\s,]+/', $config['recipients']);
 
-        $mail->send(null, $recipients);
+        $mail->send(null, array_filter($recipients));
     }
 
     public function initConfigForm(Form $form, Report $report)

@@ -6,32 +6,7 @@ parameters:
 			path: application/clicommands/DownloadCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$filename of function file_put_contents expects string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function is_dir expects string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
 			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
-			message: "#^Part \\$output \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
 			count: 1
 			path: application/clicommands/DownloadCommand.php
 
@@ -62,11 +37,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/ListCommand.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
 			count: 1
 			path: application/clicommands/ListCommand.php
 
@@ -277,11 +247,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Actions\\\\SendMail\\:\\:initConfigForm\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Actions/SendMail.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_filter expects array, array\\<int, string\\>\\|false given\\.$#"
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
 
@@ -696,16 +661,6 @@ parameters:
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadHTML\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Reports/SystemReport.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function nl2br expects string, string\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Reports/SystemReport.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\RetryConnection\\:\\:prepexec\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: library/Reporting/RetryConnection.php
@@ -777,31 +732,6 @@ parameters:
 
 		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has parameter \\$escape with no type specified\\.$#"
-			count: 1
-			path: library/Reporting/Str.php
-
-		-
-			message: "#^Parameter \\#1 \\$stream of function fclose expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Str.php
-
-		-
-			message: "#^Parameter \\#1 \\$stream of function fputcsv expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Str.php
-
-		-
-			message: "#^Parameter \\#1 \\$stream of function rewind expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Str.php
-
-		-
-			message: "#^Parameter \\#1 \\$stream of function stream_get_contents expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: library/Reporting/Str.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function rtrim expects string, string\\|false given\\.$#"
 			count: 1
 			path: library/Reporting/Str.php
 

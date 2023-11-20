@@ -8,6 +8,7 @@ class Str
 {
     public static function putcsv(array $data, $delimiter = ',', $enclosure = '"', $escape = '\\')
     {
+        /** @var resource $fp */
         $fp = fopen('php://temp', 'r+b');
 
         foreach ($data as $row) {
@@ -16,6 +17,7 @@ class Str
 
         rewind($fp);
 
+        /** @var string $csv */
         $csv = stream_get_contents($fp);
 
         fclose($fp);

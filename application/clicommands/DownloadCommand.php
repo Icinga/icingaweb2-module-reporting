@@ -60,7 +60,9 @@ class DownloadCommand extends Command
 
         $report = Report::fromModel($report);
 
-        $format = strtolower($this->params->get('format', 'pdf'));
+        /** @var string $format */
+        $format = $this->params->get('format', 'pdf');
+        $format = strtolower($format);
         switch ($format) {
             case 'pdf':
                 $content = Pdfexport::first()->htmlToPdf($report->toPdf());
@@ -75,6 +77,7 @@ class DownloadCommand extends Command
                 throw new InvalidArgumentException(sprintf('Format %s is not supported', $format));
         }
 
+        /** @var string $output */
         $output = $this->params->get('output');
         if ($output === null) {
             $name = sprintf(
