@@ -49,7 +49,9 @@ class ListCommand extends Command
      */
     public function indexAction()
     {
-        $sort = strtolower($this->params->get('sort', 'id'));
+        /** @var string $sort */
+        $sort = $this->params->get('sort', 'id');
+        $sort = strtolower($sort);
 
         if ($sort !== 'id' && $sort !== 'name' && $sort !== 'author') {
             throw new InvalidArgumentException(sprintf('Sorting by %s is not supported', $sort));

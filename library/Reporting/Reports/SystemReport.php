@@ -20,6 +20,7 @@ class SystemReport extends ReportHook
     {
         ob_start();
         phpinfo();
+        /** @var string $html */
         $html = ob_get_clean();
 
         if (! Icinga::app()->isCli()) {
