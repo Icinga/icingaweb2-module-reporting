@@ -13,7 +13,11 @@ parameters:
         - library
 
     scanDirectories:
-        - vendor
+        - /icingaweb2
+        - /usr/share/icinga-php/ipl
+        - /usr/share/icinga-php/vendor
+        - /usr/share/icingaweb2-modules/icingadb
+        - /usr/share/icingaweb2-modules/pdfexport
 
     ignoreErrors:
         -
