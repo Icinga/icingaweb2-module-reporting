@@ -5,6 +5,7 @@
 namespace Icinga\Module\Reporting\Actions;
 
 use Icinga\Application\Config;
+use Icinga\Application\Logger;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
@@ -13,6 +14,7 @@ use ipl\Html\Form;
 use ipl\Stdlib\Str;
 use ipl\Validator\CallbackValidator;
 use ipl\Validator\EmailAddressValidator;
+use Throwable;
 
 class SendMail extends ActionHook
 {
@@ -40,11 +42,25 @@ class SendMail extends ActionHook
             $mail->setSubject($config['subject']);
         }
 
+        /** @var array<int, string> $recipients */
+        $recipients = preg_split('/[\s,]+/', $config['recipients']);
+        $recipients = array_filter($recipients);
+
         switch ($config['type']) {
             case 'pdf':
-                $mail->attachPdf(Pdfexport::first()->htmlToPdf($report->toPdf()), $name);
+                /** @var Pdfexport $exporter */
+                $exporter = Pdfexport::first();
+                $exporter->asyncHtmlToPdf($report->toPdf())->then(
+                    function ($pdf) use ($mail, $name, $recipients) {
+                        $mail->attachPdf($pdf, $name);
+                        $mail->send(null, $recipients);
+                    }
+                )->otherwise(function (Throwable $e) {
+                    Logger::error($e);
+                    Logger::debug($e->getTraceAsString());
+                });
 
-                break;
+                return;
             case 'csv':
                 $mail->attachCsv($report->toCsv(), $name);
 
@@ -57,10 +73,7 @@ class SendMail extends ActionHook
                 throw new \InvalidArgumentException();
         }
 
-        /** @var array<int, string> $recipients */
-        $recipients = preg_split('/[\s,]+/', $config['recipients']);
-
-        $mail->send(null, array_filter($recipients));
+        $mail->send(null, $recipients);
     }
 
     public function initConfigForm(Form $form, Report $report)
