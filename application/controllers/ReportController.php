@@ -29,7 +29,7 @@ class ReportController extends Controller
     /** @var Report */
     protected $report;
 
-    public function init()
+    public function init(): void
     {
         $reportId = $this->params->getRequired('id');
 
@@ -46,7 +46,7 @@ class ReportController extends Controller
         $this->report = Report::fromModel($report);
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->addTitleTab($this->report->getName());
 
@@ -89,7 +89,7 @@ class ReportController extends Controller
         }
     }
 
-    public function cloneAction()
+    public function cloneAction(): void
     {
         $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('Clone Report'));
@@ -128,7 +128,7 @@ class ReportController extends Controller
         $this->addContent($form);
     }
 
-    public function editAction()
+    public function editAction(): void
     {
         $this->assertPermission('reporting/reports');
         $this->addTitleTab($this->translate('Edit Report'));
@@ -170,7 +170,7 @@ class ReportController extends Controller
         $this->addContent($form);
     }
 
-    public function sendAction()
+    public function sendAction(): void
     {
         $this->addTitleTab($this->translate('Send Report'));
 
@@ -190,7 +190,7 @@ class ReportController extends Controller
         $this->addContent($form);
     }
 
-    public function scheduleAction()
+    public function scheduleAction(): void
     {
         $this->assertPermission('reporting/schedules');
         $this->addTitleTab($this->translate('Schedule'));
@@ -227,7 +227,7 @@ class ReportController extends Controller
         }
     }
 
-    public function downloadAction()
+    public function downloadAction(): void
     {
         $type = $this->params->getRequired('type');
 
@@ -274,7 +274,7 @@ class ReportController extends Controller
         }
     }
 
-    protected function assembleActions()
+    protected function assembleActions(): ActionBar
     {
         $reportId = $this->report->getId();
 

@@ -71,51 +71,6 @@ parameters:
 			path: application/clicommands/ScheduleCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ConfigController\\:\\:backendAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ConfigController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ConfigController\\:\\:mailAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ConfigController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:assembleActions\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:cloneAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:downloadAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:scheduleAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportController\\:\\:sendAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
 			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
 			count: 1
 			path: application/controllers/ReportController.php
@@ -126,26 +81,6 @@ parameters:
 			path: application/controllers/ReportsController.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportsController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\ReportsController\\:\\:newAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/ReportsController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplateController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
 			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
 			count: 1
 			path: application/controllers/TemplateController.php
@@ -154,21 +89,6 @@ parameters:
 			message: "#^Cannot call method format\\(\\) on mixed\\.$#"
 			count: 2
 			path: application/controllers/TemplatesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplatesController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplatesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TemplatesController\\:\\:newAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TemplatesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframeController\\:\\:editAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframeController.php
 
 		-
 			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
@@ -202,16 +122,6 @@ parameters:
 
 		-
 			message: "#^Cannot access property \\$start on mixed\\.$#"
-			count: 1
-			path: application/controllers/TimeframesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframesController\\:\\:indexAction\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: application/controllers/TimeframesController.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Controllers\\\\TimeframesController\\:\\:newAction\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: application/controllers/TimeframesController.php
 

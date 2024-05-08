@@ -9,7 +9,6 @@ use GuzzleHttp\Psr7\UploadedFile;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Util\Json;
-use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Html;
 use ipl\Html\HtmlDocument;
 use ipl\Web\Compat\CompatForm;
@@ -139,7 +138,6 @@ class TemplateForm extends CompatForm
         ]);
 
         if ($this->template !== null) {
-            /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => $this->translate('Remove Template'),
                 'class'          => 'btn-remove',
