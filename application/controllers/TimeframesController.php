@@ -19,7 +19,7 @@ class TimeframesController extends Controller
 {
     use ReportsTimeframesAndTemplatesTabs;
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->createTabs()->activate('timeframes');
 
@@ -102,7 +102,7 @@ class TimeframesController extends Controller
         }
     }
 
-    public function newAction()
+    public function newAction(): void
     {
         $this->assertPermission('reporting/timeframes');
         $this->addTitleTab($this->translate('New Timeframe'));

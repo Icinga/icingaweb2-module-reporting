@@ -25,7 +25,7 @@ class TemplateController extends Controller
     /** @var Model\Template */
     protected $template;
 
-    public function init()
+    public function init(): void
     {
         parent::init();
 
@@ -41,7 +41,7 @@ class TemplateController extends Controller
         $this->template = $template;
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->addTitleTab($this->translate('Preview'));
 
@@ -60,7 +60,7 @@ class TemplateController extends Controller
         $this->addContent($template);
     }
 
-    public function editAction()
+    public function editAction(): void
     {
         $this->assertPermission('reporting/templates');
         $this->addTitleTab($this->translate('Edit Template'));

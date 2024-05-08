@@ -19,7 +19,7 @@ class TemplatesController extends Controller
 {
     use ReportsTimeframesAndTemplatesTabs;
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->createTabs()->activate('templates');
 
@@ -92,7 +92,7 @@ class TemplatesController extends Controller
         }
     }
 
-    public function newAction()
+    public function newAction(): void
     {
         $this->assertPermission('reporting/templates');
         $this->addTitleTab($this->translate('New Template'));

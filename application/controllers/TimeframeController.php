@@ -20,7 +20,7 @@ class TimeframeController extends Controller
     /** @var Timeframe */
     protected $timeframe;
 
-    public function init()
+    public function init(): void
     {
         /** @var Model\Timeframe $timeframe */
         $timeframe = Model\Timeframe::on(Database::get())
@@ -34,7 +34,7 @@ class TimeframeController extends Controller
         $this->timeframe = Timeframe::fromModel($timeframe);
     }
 
-    public function editAction()
+    public function editAction(): void
     {
         $this->assertPermission('reporting/timeframes');
         $this->addTitleTab($this->translate('Edit Time Frame'));

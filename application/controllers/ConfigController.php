@@ -11,14 +11,14 @@ use Icinga\Web\Controller;
 
 class ConfigController extends Controller
 {
-    public function init()
+    public function init(): void
     {
         $this->assertPermission('config/modules');
 
         parent::init();
     }
 
-    public function backendAction()
+    public function backendAction(): void
     {
         $form = (new SelectBackendForm())
             ->setIniConfig(Config::module('reporting'));
@@ -29,7 +29,7 @@ class ConfigController extends Controller
         $this->view->form = $form;
     }
 
-    public function mailAction()
+    public function mailAction(): void
     {
         $form = (new ConfigureMailForm())
             ->setIniConfig(Config::module('reporting'));
