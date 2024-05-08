@@ -7,7 +7,6 @@ namespace Icinga\Module\Reporting\Web\Forms;
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\ProvidedReports;
-use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\HtmlDocument;
 use ipl\Validator\CallbackValidator;
@@ -167,7 +166,6 @@ class ReportForm extends CompatForm
         ]);
 
         if ($this->id !== null) {
-            /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => $this->translate('Remove Report'),
                 'class'          => 'btn-remove',

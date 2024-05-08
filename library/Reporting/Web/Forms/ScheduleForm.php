@@ -13,7 +13,6 @@ use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\ProvidedActions;
 use Icinga\Module\Reporting\Report;
 use Icinga\Util\Json;
-use ipl\Html\Contract\FormSubmitElement;
 use ipl\Html\Form;
 use ipl\Html\HtmlDocument;
 use ipl\Html\HtmlElement;
@@ -130,7 +129,6 @@ class ScheduleForm extends CompatForm
             $wrapper = $this->getElement('submit')->getWrapper();
             $wrapper->prepend($sendButton);
 
-            /** @var FormSubmitElement $removeButton */
             $removeButton = $this->createElement('submit', 'remove', [
                 'label'          => $this->translate('Remove Schedule'),
                 'class'          => 'btn-remove',
