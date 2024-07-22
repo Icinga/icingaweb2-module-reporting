@@ -19,6 +19,7 @@ class ReportForm extends CompatForm
 {
     use ProvidedReports;
 
+    /** @var ?int */
     protected $id;
 
     /** @var string Label to use for the submit button */
@@ -107,7 +108,7 @@ class ReportForm extends CompatForm
             );
     }
 
-    protected function assemble()
+    protected function assemble(): void
     {
         $this->addElement('text', 'name', [
             'required'    => true,
@@ -179,7 +180,6 @@ class ReportForm extends CompatForm
 
         if (isset($values['reportlet'])) {
             $config = new Form();
-//            $config->populate($this->getValues());
 
             /** @var \Icinga\Module\Reporting\Hook\ReportHook $reportlet */
             $reportlet = new $values['reportlet']();
@@ -218,7 +218,7 @@ class ReportForm extends CompatForm
         }
     }
 
-    public function onSuccess()
+    public function onSuccess(): void
     {
         $db = Database::get();
 

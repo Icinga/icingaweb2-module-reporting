@@ -146,6 +146,11 @@ parameters:
 			path: application/forms/SelectBackendForm.php
 
 		-
+			message: "#^Call to an undefined method React\\\\Promise\\\\PromiseInterface\\:\\:otherwise\\(\\)\\.$#"
+			count: 1
+			path: library/Reporting/Actions/SendMail.php
+
+		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Actions\\\\SendMail\\:\\:execute\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
@@ -681,27 +686,7 @@ parameters:
 			path: library/Reporting/Web/Forms/ReportForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:fromId\\(\\) has parameter \\$id with no type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
 			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:listReports\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Forms/ReportForm.php
-
-		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:\\$id has no type specified\\.$#"
 			count: 1
 			path: library/Reporting/Web/Forms/ReportForm.php
 
