@@ -112,7 +112,7 @@ class ReportsController extends Controller
                 break;
         }
 
-        $form = (new ReportForm())
+        $form = (new ReportForm(Database::get()))
             ->setAction((string) Url::fromRequest())
             ->setRenderCreateAndShowButton($class !== null)
             ->populate([
