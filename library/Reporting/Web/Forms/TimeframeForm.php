@@ -120,6 +120,31 @@ class TimeframeForm extends CompatForm
             ]);
         }
 
+        $endDateValidator = new CallbackValidator(function ($value, CallbackValidator $validator) {
+            if (! $value instanceof DateTime) {
+                try {
+                    $value = new DateTime($value);
+                } catch (Exception $_) {
+                    $validator->addMessage($this->translate('Invalid textual date time'));
+
+                    return false;
+                }
+            }
+
+            $start = $this->getValue('start');
+            if (! $start instanceof DateTime) {
+                $start = new DateTime($start);
+            }
+
+            if ($value <= $start) {
+                $validator->addMessage($this->translate('End time must be greater than start time'));
+
+                return false;
+            }
+
+            return true;
+        });
+
         if ($relativeEnd === 'n' || $relativeStart === 'n') {
             if (! $end instanceof DateTime) {
                 $end = $default;
@@ -131,7 +156,8 @@ class TimeframeForm extends CompatForm
                     'required'    => true,
                     'value'       => $end,
                     'label'       => $this->translate('End'),
-                    'description' => $this->translate('Specifies the end time of this timeframe')
+                    'description' => $this->translate('Specifies the end time of this timeframe'),
+                    'validators'  => [$endDateValidator]
                 ])
             );
         } else {
@@ -140,21 +166,7 @@ class TimeframeForm extends CompatForm
                 'label'       => $this->translate('End'),
                 'placeholder' => $this->translate('Last day of this month'),
                 'description' => $this->translate('Specifies the end time of this timeframe'),
-                'validators' => [
-                    new CallbackValidator(function ($value, CallbackValidator $validator) {
-                        if ($value !== null) {
-                            try {
-                                new DateTime($value);
-                            } catch (Exception $_) {
-                                $validator->addMessage($this->translate('Invalid textual date time'));
-
-                                return false;
-                            }
-                        }
-
-                        return true;
-                    })
-                ]
+                'validators' => [$endDateValidator]
             ]);
         }
 
