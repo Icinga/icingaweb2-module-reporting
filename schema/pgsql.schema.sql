@@ -31,7 +31,7 @@ INSERT INTO timeframe (name, title, start, "end") VALUES
   ('One Year', null, '-1 year', 'now'),
   ('Current Day', null, 'midnight', 'now'),
   ('Last Day', null, 'yesterday midnight', 'yesterday 23:59:59'),
-  ('Current Week', null, 'monday this week midnight', 'sunday this week 23:59:59'),
+  ('Current Week', null, 'monday this week midnight', 'now'),
   ('Last Week', null, 'monday last week midnight', 'sunday last week 23:59:59'),
   ('Current Month', null, 'first day of this month midnight', 'now'),
   ('Last Month', null, 'first day of last month midnight', 'last day of last month 23:59:59'),

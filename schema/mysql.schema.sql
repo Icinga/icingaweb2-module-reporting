@@ -28,7 +28,7 @@ INSERT INTO timeframe (name, title, start, end, ctime, mtime) VALUES
   ('One Year', null, '-1 year', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
   ('Current Day', null, 'midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
   ('Last Day', null, 'yesterday midnight', 'yesterday 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
-  ('Current Week', null, 'monday this week midnight', 'sunday this week 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
+  ('Current Week', null, 'monday this week midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
   ('Last Week', null, 'monday last week midnight', 'sunday last week 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
   ('Current Month', null, 'first day of this month midnight', 'now', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
   ('Last Month', null, 'first day of last month midnight', 'last day of last month 23:59:59', UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000),
