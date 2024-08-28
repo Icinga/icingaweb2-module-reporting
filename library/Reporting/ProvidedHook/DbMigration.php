@@ -25,7 +25,8 @@ class DbMigration extends DbMigrationHook
                 . ' engine of some tables.'
             ),
             '0.10.0' => $this->translate('Creates the template table and adjusts some column types'),
-            '1.0.0'  => $this->translate('Migrates all your configured report schedules to the new config.')
+            '1.0.0'  => $this->translate('Migrates all your configured report schedules to the new config.'),
+            '1.0.3'  => $this->translate('Fix the `end` time of preconfigured `Current Week` timeframe.'),
         ];
     }
 
