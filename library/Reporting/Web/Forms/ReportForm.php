@@ -6,9 +6,11 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model\Timeframe;
 use Icinga\Module\Reporting\ProvidedReports;
 use ipl\Html\Form;
 use ipl\Html\HtmlDocument;
+use ipl\Stdlib\Filter;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
@@ -148,8 +150,13 @@ class ReportForm extends CompatForm
         $values = $this->getValues();
 
         if (isset($values['reportlet'])) {
-            $config = new Form();
-//            $config->populate($this->getValues());
+            $config = (new Form())
+                ->populate([
+                    'timeframe_instance' => Timeframe::on(Database::get())
+                        ->columns(['start', 'end'])
+                        ->filter(Filter::equal('id', $values['timeframe']))
+                        ->first()
+                ]);
 
             /** @var \Icinga\Module\Reporting\Hook\ReportHook $reportlet */
             $reportlet = new $values['reportlet']();
