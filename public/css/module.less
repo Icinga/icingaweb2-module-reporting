@@ -221,3 +221,29 @@ form.icinga-form {
 }
 
 /* Form fallback styles end */
+
+.sla-chart-table {
+  width: 100%;
+
+  thead .legend {
+    display: flex;
+    justify-content: center;
+    gap: 5em;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+  }
+
+  tbody > tr > td {
+    display: flex;
+    flex-wrap: wrap;
+
+    .sla-chart-wrapper {
+      display: block;
+       width: 100%;
+    }
+  }
+}
