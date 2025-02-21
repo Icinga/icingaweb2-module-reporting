@@ -11,6 +11,7 @@ use Icinga\Module\Reporting\Database;
 use Icinga\Util\Json;
 use ipl\Html\Html;
 use ipl\Html\HtmlDocument;
+use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
 class TemplateForm extends CompatForm
@@ -116,7 +117,16 @@ class TemplateForm extends CompatForm
 
         $this->addElement('text', 'color', [
             'label'       => $this->translate('Color'),
-            'placeholder' => $this->translate('CSS color code')
+            'placeholder' => $this->translate('CSS color code'),
+            'validators'  => [new CallbackValidator(function ($value, $validator) {
+                if (strpos($value, ':') !== false) {
+                    $validator->addMessage($this->translate('Please enter a valid CSS color code'));
+
+                    return false;
+                }
+
+                return true;
+            })]
         ]);
 
         $this->add(Html::tag('h2', $this->translate('Header Settings')));

@@ -3,6 +3,7 @@
 namespace Icinga\Module\Reporting\Web\Widget;
 
 use Icinga\Module\Reporting\Common\Macros;
+use InvalidArgumentException;
 use ipl\Html\BaseHtmlElement;
 use ipl\Html\Html;
 use ipl\Web\Compat\StyleWithNonce;
@@ -78,6 +79,10 @@ class CoverPage extends BaseHtmlElement
      */
     public function setColor($color)
     {
+        if (strpos($color, ':') !== false) {
+            throw new InvalidArgumentException('Invalid color code');
+        }
+
         $this->color = $color;
 
         return $this;
