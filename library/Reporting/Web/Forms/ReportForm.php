@@ -6,9 +6,12 @@ namespace Icinga\Module\Reporting\Web\Forms;
 
 use Icinga\Authentication\Auth;
 use Icinga\Module\Reporting\Database;
+use Icinga\Module\Reporting\Model\Report;
 use Icinga\Module\Reporting\ProvidedReports;
+use Icinga\Module\Reporting\RetryConnection;
 use ipl\Html\Form;
 use ipl\Html\HtmlDocument;
+use ipl\Stdlib\Filter;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
 
@@ -16,6 +19,7 @@ class ReportForm extends CompatForm
 {
     use ProvidedReports;
 
+    /** @var ?int */
     protected $id;
 
     /** @var string Label to use for the submit button */
@@ -24,16 +28,25 @@ class ReportForm extends CompatForm
     /** @var bool Whether to render the create and show submit button (is only used from DB Web's object detail) */
     protected $renderCreateAndShowButton = false;
 
+    /** @var RetryConnection */
+    protected $db;
+
+    public function __construct(RetryConnection $db)
+    {
+        $this->db = $db;
+    }
+
     /**
      * Create a new form instance with the given report id
      *
-     * @param $id
+     * @param int $id
+     * @param RetryConnection $db
      *
      * @return static
      */
-    public static function fromId($id): self
+    public static function fromId(int $id, RetryConnection $db): self
     {
-        $form = new static();
+        $form = new static($db);
         $form->id = $id;
 
         return $form;
@@ -95,7 +108,7 @@ class ReportForm extends CompatForm
             );
     }
 
-    protected function assemble()
+    protected function assemble(): void
     {
         $this->addElement('text', 'name', [
             'required'    => true,
@@ -106,9 +119,27 @@ class ReportForm extends CompatForm
             ),
             'validators' => [
                 'Callback' => function ($value, CallbackValidator $validator) {
-                    if ($value !== null && strpos($value, '..') !== false) {
+                    if (strpos($value, '..') !== false) {
                         $validator->addMessage(
                             $this->translate('Double dots are not allowed in the report name')
+                        );
+
+                        return false;
+                    }
+
+                    $filter = Filter::all(Filter::equal('name', $value));
+                    if ($this->id) {
+                        $filter->add(Filter::unequal('id', $this->id));
+                    }
+
+                    $report = Report::on($this->db)
+                        ->columns('1')
+                        ->filter($filter)
+                        ->first();
+
+                    if ($report !== null) {
+                        $validator->addMessage(
+                            $this->translate('A report with this name already exists')
                         );
 
                         return false;
@@ -149,7 +180,6 @@ class ReportForm extends CompatForm
 
         if (isset($values['reportlet'])) {
             $config = new Form();
-//            $config->populate($this->getValues());
 
             /** @var \Icinga\Module\Reporting\Hook\ReportHook $reportlet */
             $reportlet = new $values['reportlet']();
@@ -188,7 +218,7 @@ class ReportForm extends CompatForm
         }
     }
 
-    public function onSuccess()
+    public function onSuccess(): void
     {
         $db = Database::get();
 

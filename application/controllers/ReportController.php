@@ -112,7 +112,7 @@ class ReportController extends Controller
             $values[$name] = $value;
         }
 
-        $form = (new ReportForm())
+        $form = (new ReportForm(Database::get()))
             ->setSubmitButtonLabel($this->translate('Clone Report'))
             ->setAction((string) Url::fromRequest())
             ->populate($values)
@@ -148,7 +148,7 @@ class ReportController extends Controller
             $values[$name] = $value;
         }
 
-        $form = ReportForm::fromId($this->report->getId())
+        $form = ReportForm::fromId($this->report->getId(), Database::get())
             ->setAction((string) Url::fromRequest())
             ->populate($values)
             ->on(ReportForm::ON_SUCCESS, function (ReportForm $form) {
