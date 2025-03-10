@@ -157,7 +157,7 @@ class CoverPage extends BaseHtmlElement
         if ($this->hasColor()) {
             $coverPageLogo = (new StyleWithNonce())
                 ->setModule('reporting')
-                ->addFor($content, ['color' => $this->getColor()]);
+                ->addFor($content, ['color' => Html::escape($this->getColor())]);
 
             $content->addHtml($coverPageLogo);
         }
