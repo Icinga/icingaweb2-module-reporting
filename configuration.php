@@ -8,9 +8,8 @@ namespace Icinga\Module\Reporting {
 
     $this->provideCssFile('system-report.css');
 
-    $this->menuSection(N_('Reporting'))->add(N_('Reports'), array(
-        'url' => 'reporting/reports',
-    ));
+    $this->menuSection(N_('Reporting'), ['icon' => 'fa-chart-simple', 'priority' => 100])
+        ->add(N_('Reports'), ['url' => 'reporting/reports', 'priority' => 10]);
 
     $this->provideConfigTab('backend', array(
         'title' => $this->translate('Configure the database backend'),
