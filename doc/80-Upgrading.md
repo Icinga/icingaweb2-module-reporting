@@ -1,15 +1,38 @@
 # Upgrading Icinga Reporting <a id="upgrading"></a>
 
-Upgrading Icinga Reporting is straightforward.
-Usually the only manual steps involved are schema updates for the database.
+!!! info
+
+    If you have Icinga Web v2.12 or newer installed, you can perform database migrations in the UI.
+
+<!-- {% if not icingaDocs %} -->
+
+**Note:** If you haven't installed this module from packages, then please adapt the database schema
+path to the correct installation path.
+
+<!-- {% endif %} -->
+
+## Upgrading to Version 1.0.3
+
+Icinga Reporting version 1.0.3 requires a schema update for the database.
+It fixes the `end` time of the preconfigured `Current Week` timeframe.
+
+You may use the following command to apply the database schema upgrade file:
+
+**MySQL:**
+
+```
+# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.3.sql
+```
+
+**PostgreSQL:**
+
+```
+# psql -U postgres -d reporting -f /usr/share/icingaweb2/modules/reporting/schema/pgsql-upgrades/1.0.3.sql
+```
 
 ## Upgrading to Version 1.0.0
 
 Icinga Reporting version 1.0.0 requires a schema update for the database.
-If you're already using Icinga Web version `>= 2.12`, then you don't need to perform any of these steps manually.
-Icinga Web provides you the ability to perform such migrations in a simple way. You may be familiar with such an
-automation if you're an Icinga Director user. For those who are not using the latest version of Icinga Web, please
-follow the instructions below.
 
 > **Note**
 >
@@ -17,11 +40,6 @@ follow the instructions below.
 > all the system named time zone information into your MSQL/MariaDB server. Otherwise, the migration may not succeed.
 
 You may use the following command to apply the database schema upgrade file:
-<!-- {% if not icingaDocs %} -->
-
-**Note:** If you haven't installed this module from packages, then please adapt the schema path to the correct installation path.
-
-<!-- {% endif %} -->
 
 ```
 # mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.0.sql
@@ -36,7 +54,7 @@ Please find the upgrade script in **schema/mysql-upgrades**.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting <schema/mysql-upgrades/0.10.0.sql
+# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.10.0.sql
 ```
 
 ## Upgrading to Version 0.9.1
@@ -50,5 +68,5 @@ Please find the upgrade script in **schema/mysql-migrations**.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting <schema/mysql-upgrades/0.9.1.sql
+# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.9.1.sql
 ```
