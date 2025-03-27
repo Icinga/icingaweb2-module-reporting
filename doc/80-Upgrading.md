@@ -21,7 +21,7 @@ You may use the following command to apply the database schema upgrade file:
 **MySQL:**
 
 ```
-# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.3.sql
+# mysql -u root -p reporting < /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.3.sql
 ```
 
 **PostgreSQL:**
@@ -42,7 +42,7 @@ Icinga Reporting version 1.0.0 requires a schema update for the database.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.0.sql
+# mysql -u root -p reporting < /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/1.0.0.sql
 ```
 
 ## Upgrading to Version 0.10.0
@@ -54,7 +54,7 @@ Please find the upgrade script in **schema/mysql-upgrades**.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.10.0.sql
+# mysql -u root -p reporting < /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.10.0.sql
 ```
 
 ## Upgrading to Version 0.9.1
@@ -68,5 +68,5 @@ Please find the upgrade script in **schema/mysql-migrations**.
 You may use the following command to apply the database schema upgrade file:
 
 ```
-# mysql -u root -p reporting /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.9.1.sql
+# mysql -u root -p reporting < /usr/share/icingaweb2/modules/reporting/schema/mysql-upgrades/0.9.1.sql
 ```
