@@ -92,4 +92,4 @@ CREATE TABLE reporting_schema (
 );
 
 INSERT INTO reporting_schema (version, timestamp, success)
-  VALUES ('1.0.0', UNIX_TIMESTAMP() * 1000, 'y');
+  VALUES ('1.0.3', UNIX_TIMESTAMP() * 1000, 'y');
