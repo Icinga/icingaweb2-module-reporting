@@ -94,7 +94,7 @@ CREATE TABLE reporting_schema (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 INSERT INTO reporting_schema (version, timestamp, success)
-  VALUES ('1.0.0', UNIX_TIMESTAMP() * 1000, 'y');
+  VALUES ('1.0.3', UNIX_TIMESTAMP() * 1000, 'y');
 
 -- CREATE TABLE share (
 --   id int(10) unsigned NOT NULL AUTO_INCREMENT,
