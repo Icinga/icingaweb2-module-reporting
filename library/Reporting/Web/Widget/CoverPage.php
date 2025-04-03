@@ -79,7 +79,7 @@ class CoverPage extends BaseHtmlElement
      */
     public function setColor($color)
     {
-        if (strpos($color, ':') !== false) {
+        if ($color !== null && strpos($color, ':') !== false) {
             throw new InvalidArgumentException('Invalid color code');
         }
 
