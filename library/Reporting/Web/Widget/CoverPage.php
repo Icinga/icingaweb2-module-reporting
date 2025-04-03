@@ -12,16 +12,16 @@ class CoverPage extends BaseHtmlElement
 {
     use Macros;
 
-    /** @var array */
+    /** @var ?array */
     protected $backgroundImage;
 
-    /** @var string */
+    /** @var ?string */
     protected $color;
 
-    /** @var array */
+    /** @var ?array */
     protected $logo;
 
-    /** @var string */
+    /** @var ?string */
     protected $title;
 
     protected $tag = 'div';
@@ -37,7 +37,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @return array
+     * @return ?array
      */
     public function getBackgroundImage()
     {
@@ -45,7 +45,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @param array $backgroundImage
+     * @param ?array $backgroundImage
      *
      * @return $this
      */
@@ -65,7 +65,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @return string
+     * @return ?string
      */
     public function getColor()
     {
@@ -73,13 +73,13 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @param string $color
+     * @param ?string $color
      *
      * @return $this
      */
     public function setColor($color)
     {
-        if (strpos($color, ':') !== false) {
+        if ($color !== null && strpos($color, ':') !== false) {
             throw new InvalidArgumentException('Invalid color code');
         }
 
@@ -97,7 +97,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @return array
+     * @return ?array
      */
     public function getLogo()
     {
@@ -105,7 +105,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @param array $logo
+     * @param ?array $logo
      *
      * @return $this
      */
@@ -116,13 +116,16 @@ class CoverPage extends BaseHtmlElement
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function hasTitle()
     {
         return $this->title !== null;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
     public function getTitle()
     {
@@ -130,7 +133,7 @@ class CoverPage extends BaseHtmlElement
     }
 
     /**
-     * @param string $title
+     * @param ?string $title
      *
      * @return $this
      */
