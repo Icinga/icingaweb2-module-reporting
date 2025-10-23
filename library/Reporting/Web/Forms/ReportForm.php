@@ -11,6 +11,7 @@ use Icinga\Module\Reporting\ProvidedReports;
 use Icinga\Module\Reporting\RetryConnection;
 use ipl\Html\Form;
 use ipl\Html\HtmlDocument;
+use ipl\Sql\Expression;
 use ipl\Stdlib\Filter;
 use ipl\Validator\CallbackValidator;
 use ipl\Web\Compat\CompatForm;
@@ -133,7 +134,7 @@ class ReportForm extends CompatForm
                     }
 
                     $report = Report::on($this->db)
-                        ->columns('1')
+                        ->columns([new Expression('1')])
                         ->filter($filter)
                         ->first();
 
