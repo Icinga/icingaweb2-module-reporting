@@ -12,7 +12,7 @@ use ipl\Scheduler\Contract\Task;
 use Ramsey\Uuid\Uuid;
 use React\EventLoop\Loop;
 use React\Promise;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 use function md5;
 
@@ -128,7 +128,7 @@ class Schedule implements Task
         );
     }
 
-    public function run(): ExtendedPromiseInterface
+    public function run(): PromiseInterface
     {
         $deferred = new Promise\Deferred();
         Loop::futureTick(function () use ($deferred) {
@@ -144,12 +144,9 @@ class Schedule implements Task
                 return;
             }
 
-            $deferred->resolve();
+            $deferred->resolve(null);
         });
 
-        /** @var ExtendedPromiseInterface $promise */
-        $promise = $deferred->promise();
-
-        return $promise;
+        return $deferred->promise();
     }
 }
