@@ -55,7 +55,7 @@ class SendMail extends ActionHook
                         $mail->attachPdf($pdf, $name);
                         $mail->send(null, $recipients);
                     }
-                )->otherwise(function (Throwable $e) {
+                )->catch(function (Throwable $e) {
                     Logger::error($e);
                     Logger::debug($e->getTraceAsString());
                 });
