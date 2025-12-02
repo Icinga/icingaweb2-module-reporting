@@ -27,7 +27,7 @@ class Template extends BaseHtmlElement
 
     protected $preview;
 
-    public static function getDataUrl(array $image = null)
+    public static function getDataUrl(?array $image = null)
     {
         if (empty($image)) {
             return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';

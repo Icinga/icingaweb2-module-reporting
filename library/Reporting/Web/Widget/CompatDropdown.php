@@ -9,7 +9,7 @@ use ipl\Web\Widget\Dropdown;
 
 class CompatDropdown extends Dropdown
 {
-    public function addLink($content, $url, $icon = null, array $attributes = null)
+    public function addLink($content, $url, $icon = null, ?array $attributes = null)
     {
         $link = new ActionLink($content, $url, $icon, ['class' => 'dropdown-item']);
         if (! empty($attributes)) {
