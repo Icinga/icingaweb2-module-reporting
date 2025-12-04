@@ -89,7 +89,7 @@ class ScheduleForm extends CompatForm
         $this->addElement('select', 'action', [
             'required'    => true,
             'class'       => 'autosubmit',
-            'options'     => array_merge([null => $this->translate('Please choose')], $this->listActions()),
+            'options'     => array_merge(['' => $this->translate('Please choose')], $this->listActions()),
             'label'       => $this->translate('Action'),
             'description' => $this->translate('Specifies an action to be triggered by the scheduler')
         ]);

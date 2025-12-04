@@ -155,7 +155,7 @@ class ReportForm extends CompatForm
             'required'    => true,
             'class'       => 'autosubmit',
             'label'       => $this->translate('Timeframe'),
-            'options'     => [null => $this->translate('Please choose')] + Database::listTimeframes(),
+            'options'     => ['' => $this->translate('Please choose')] + Database::listTimeframes(),
             'description' => $this->translate(
                 'Specifies the time frame in which this report is to be generated'
             )
@@ -163,7 +163,7 @@ class ReportForm extends CompatForm
 
         $this->addElement('select', 'template', [
             'label'       => $this->translate('Template'),
-            'options'     => [null => $this->translate('Please choose')] + Database::listTemplates(),
+            'options'     => ['' => $this->translate('Please choose')] + Database::listTemplates(),
             'description' => $this->translate(
                 'Specifies the template to use when exporting this report to pdf. (Default Icinga template)'
             )
@@ -173,7 +173,7 @@ class ReportForm extends CompatForm
             'required'    => true,
             'class'       => 'autosubmit',
             'label'       => $this->translate('Report'),
-            'options'     => [null => $this->translate('Please choose')] + $this->listReports(),
+            'options'     => ['' => $this->translate('Please choose')] + $this->listReports(),
             'description' => $this->translate('Specifies the type of the reportlet to be generated')
         ]);
 
