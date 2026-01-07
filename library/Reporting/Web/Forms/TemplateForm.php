@@ -254,7 +254,7 @@ class TemplateForm extends CompatForm
             'class'   => 'autosubmit',
             'label'   => $label,
             'options' => [
-                null       => 'None',
+                ''         => 'None',
                 'text'     => 'Text',
                 'image'    => 'Image',
                 'variable' => 'Variable'

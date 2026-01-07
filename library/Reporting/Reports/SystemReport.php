@@ -16,7 +16,7 @@ class SystemReport extends ReportHook
         return 'System';
     }
 
-    public function getHtml(Timerange $timerange, array $config = null)
+    public function getHtml(Timerange $timerange, ?array $config = null)
     {
         ob_start();
         phpinfo();

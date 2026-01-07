@@ -26,7 +26,7 @@ abstract class ReportHook
      *
      * @return  ReportData|null
      */
-    public function getData(Timerange $timerange, array $config = null)
+    public function getData(Timerange $timerange, ?array $config = null)
     {
         return null;
     }
@@ -39,7 +39,7 @@ abstract class ReportHook
      *
      * @return  ValidHtml|null
      */
-    public function getHtml(Timerange $timerange, array $config = null)
+    public function getHtml(Timerange $timerange, ?array $config = null)
     {
         return null;
     }
