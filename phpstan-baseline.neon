@@ -1,1021 +1,1159 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\DownloadCommand\\:\\:defaultAction\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\DownloadCommand\:\:defaultAction\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/clicommands/DownloadCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 1
-			path: application/clicommands/DownloadCommand.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			message: '#^Call to an undefined method object\:\:getName\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ListCommand\\:\\:indexAction\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ListCommand\:\:indexAction\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ListCommand\\:\\:outputTable\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ListCommand\:\:outputTable\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ListCommand\\:\\:outputTable\\(\\) has parameter \\$dataCallbacks with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ListCommand\:\:outputTable\(\) has parameter \$dataCallbacks with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ListCommand\\:\\:outputTable\\(\\) has parameter \\$reports with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ListCommand\:\:outputTable\(\) has parameter \$reports with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, mixed given\\.$#"
+			message: '#^Parameter \#1 \$haystack of function strpos expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$direction of method ipl\\\\Orm\\\\Query\\:\\:orderBy\\(\\) expects int\\|string\\|null, mixed given\\.$#"
+			message: '#^Parameter \#2 \$direction of method ipl\\Orm\\Query\:\:orderBy\(\) expects int\|string\|null, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:like\\(\\) expects array\\<string\\>\\|string, mixed given\\.$#"
+			message: '#^Parameter \#2 \$value of static method ipl\\Stdlib\\Filter\:\:like\(\) expects array\<string\>\|string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: application/clicommands/ListCommand.php
 
 		-
-			message: "#^Cannot access property \\$report on mixed\\.$#"
+			message: '#^Cannot access property \$report on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/clicommands/ScheduleCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ScheduleCommand\\:\\:attachJobsLogging\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ScheduleCommand\:\:attachJobsLogging\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/clicommands/ScheduleCommand.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Clicommands\\\\ScheduleCommand\\:\\:runAction\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Clicommands\\ScheduleCommand\:\:runAction\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/clicommands/ScheduleCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$scheduleModel of static method Icinga\\\\Module\\\\Reporting\\\\Schedule\\:\\:fromModel\\(\\) expects Icinga\\\\Module\\\\Reporting\\\\Model\\\\Schedule, mixed given\\.$#"
+			message: '#^Parameter \#1 \$scheduleModel of static method Icinga\\Module\\Reporting\\Schedule\:\:fromModel\(\) expects Icinga\\Module\\Reporting\\Model\\Schedule, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: application/clicommands/ScheduleCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 1
-			path: application/controllers/ReportController.php
-
-		-
-			message: "#^Cannot access property \\$name on mixed\\.$#"
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/ReportsController.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 1
-			path: application/controllers/TemplateController.php
-
-		-
-			message: "#^Cannot call method format\\(\\) on mixed\\.$#"
+			message: '#^Cannot call method format\(\) on mixed\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: application/controllers/TemplatesController.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of static method ipl\\\\Stdlib\\\\Filter\\:\\:equal\\(\\) expects array\\|bool\\|float\\|int\\|string, mixed given\\.$#"
-			count: 1
-			path: application/controllers/TimeframeController.php
-
-		-
-			message: "#^Cannot access property \\$ctime on mixed\\.$#"
+			message: '#^Cannot access property \$ctime on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Cannot access property \\$end on mixed\\.$#"
+			message: '#^Cannot access property \$end on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Cannot access property \\$id on mixed\\.$#"
+			message: '#^Cannot access property \$id on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Cannot access property \\$mtime on mixed\\.$#"
+			message: '#^Cannot access property \$mtime on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Cannot access property \\$name on mixed\\.$#"
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
 			count: 2
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Cannot access property \\$start on mixed\\.$#"
+			message: '#^Cannot access property \$start on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: application/controllers/TimeframesController.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Forms\\\\ConfigureMailForm\\:\\:createElements\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Forms\\ConfigureMailForm\:\:createElements\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/forms/ConfigureMailForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Forms\\\\ConfigureMailForm\\:\\:createElements\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Forms\\ConfigureMailForm\:\:createElements\(\) has parameter \$formData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: application/forms/ConfigureMailForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Forms\\\\SelectBackendForm\\:\\:createElements\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Forms\\SelectBackendForm\:\:createElements\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: application/forms/SelectBackendForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Forms\\\\SelectBackendForm\\:\\:createElements\\(\\) has parameter \\$formData with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Forms\\SelectBackendForm\:\:createElements\(\) has parameter \$formData with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: application/forms/SelectBackendForm.php
 
 		-
-			message: "#^Call to an undefined method React\\\\Promise\\\\PromiseInterface\\:\\:otherwise\\(\\)\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Actions\\SendMail\:\:execute\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Actions\\\\SendMail\\:\\:execute\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Actions\\SendMail\:\:execute\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Actions\\\\SendMail\\:\\:execute\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Actions\\SendMail\:\:initConfigForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Actions\\\\SendMail\\:\\:initConfigForm\\(\\) has no return type specified\\.$#"
+			message: '#^Parameter \#1 \$from of method Icinga\\Module\\Reporting\\Mail\:\:setFrom\(\) expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Actions/SendMail.php
 
 		-
-			message: "#^Parameter \\#1 \\$from of method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:setFrom\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Actions/SendMail.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Cli\\\\Command\\:\\:init\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Cli\\Command\:\:init\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Cli/Command.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Cli\\\\Command\\:\\:\\$configs has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Cli\\Command\:\:\$configs has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Cli/Command.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ActionHook\\:\\:execute\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ActionHook\:\:execute\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Hook/ActionHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ActionHook\\:\\:execute\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ActionHook\:\:execute\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Hook/ActionHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ActionHook\\:\\:initConfigForm\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ActionHook\:\:initConfigForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Hook/ActionHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ReportHook\\:\\:getData\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ReportHook\:\:getData\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Hook/ReportHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ReportHook\\:\\:getHtml\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ReportHook\:\:getHtml\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Hook/ReportHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ReportHook\\:\\:initConfigForm\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Hook\\ReportHook\:\:initConfigForm\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Hook/ReportHook.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachCsv\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachCsv\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachCsv\\(\\) has parameter \\$csv with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachCsv\(\) has parameter \$csv with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachCsv\\(\\) has parameter \\$filename with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachCsv\(\) has parameter \$filename with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachJson\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachJson\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachJson\\(\\) has parameter \\$filename with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachJson\(\) has parameter \$filename with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachJson\\(\\) has parameter \\$json with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachJson\(\) has parameter \$json with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachPdf\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachPdf\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachPdf\\(\\) has parameter \\$filename with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachPdf\(\) has parameter \$filename with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:attachPdf\\(\\) has parameter \\$pdf with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:attachPdf\(\) has parameter \$pdf with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:send\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:send\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:send\\(\\) has parameter \\$body with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:send\(\) has parameter \$body with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:send\\(\\) has parameter \\$recipient with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Mail\:\:send\(\) has parameter \$recipient with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Mail\\:\\:\\$attachments type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Mail\:\:\$attachments type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Mail.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Config\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Config\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Config.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Config\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Config\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Config.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Report\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Report\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Report\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Report\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Report\\:\\:getDefaultSort\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Report\:\:getDefaultSort\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Model/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Reportlet\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Reportlet\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Reportlet.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Reportlet\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Reportlet\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Reportlet.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Schedule\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Schedule\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Schedule.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Schedule\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Schedule\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Schedule.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Template\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Template\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Template\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Template\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Template\\:\\:getDefaultSort\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Template\:\:getDefaultSort\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Model/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Timeframe\\:\\:createBehaviors\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Timeframe\:\:createBehaviors\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Timeframe.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Model\\\\Timeframe\\:\\:createRelations\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Model\\Timeframe\:\:createRelations\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Model/Timeframe.php
 
 		-
-			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot access property \\$report_id on mixed\\.$#"
+			message: '#^Cannot access property \$report_id on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot access property \\$report_name on mixed\\.$#"
+			message: '#^Cannot access property \$report_name on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method count\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
+			message: '#^Cannot call method count\(\) on Icinga\\Module\\Reporting\\ReportData\|null\.$#'
+			identifier: method.nonObject
 			count: 4
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method first\\(\\) on mixed\\.$#"
+			message: '#^Cannot call method first\(\) on mixed\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method getAverages\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
+			message: '#^Cannot call method getAverages\(\) on Icinga\\Module\\Reporting\\ReportData\|null\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method getDimensions\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
+			message: '#^Cannot call method getDimensions\(\) on Icinga\\Module\\Reporting\\ReportData\|null\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method getRows\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
+			message: '#^Cannot call method getRows\(\) on Icinga\\Module\\Reporting\\ReportData\|null\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Cannot call method getValues\\(\\) on Icinga\\\\Module\\\\Reporting\\\\ReportData\\|null\\.$#"
+			message: '#^Cannot call method getValues\(\) on Icinga\\Module\\Reporting\\ReportData\|null\.$#'
+			identifier: method.nonObject
 			count: 2
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:providesData\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Report\:\:providesData\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Report\\:\\:toJson\\(\\) should return string but returns string\\|false\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Report\:\:toJson\(\) should return string but returns string\|false\.$#'
+			identifier: return.type
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Parameter \\#1 \\$reportletModel of static method Icinga\\\\Module\\\\Reporting\\\\Reportlet\\:\\:fromModel\\(\\) expects Icinga\\\\Module\\\\Reporting\\\\Model\\\\Reportlet, mixed given\\.$#"
+			message: '#^Parameter \#1 \$reportletModel of static method Icinga\\Module\\Reporting\\Reportlet\:\:fromModel\(\) expects Icinga\\Module\\Reporting\\Model\\Reportlet, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Parameter \\#1 \\$timeframeModel of static method Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:fromModel\\(\\) expects Icinga\\\\Module\\\\Reporting\\\\Model\\\\Timeframe, mixed given\\.$#"
+			message: '#^Parameter \#1 \$timeframeModel of static method Icinga\\Module\\Reporting\\Timeframe\:\:fromModel\(\) expects Icinga\\Module\\Reporting\\Model\\Timeframe, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Report.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:getAverages\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:getAverages\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:getDimensions\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:getDimensions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:getRows\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:getRows\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:getTotals\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:getTotals\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:getValues\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:getValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setDimensions\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setDimensions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setDimensions\\(\\) has parameter \\$dimensions with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setDimensions\(\) has parameter \$dimensions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setRows\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setRows\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setRows\\(\\) has parameter \\$rows with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setRows\(\) has parameter \$rows with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setValues\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:setValues\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportData\:\:setValues\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:\\$dimensions has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\ReportData\:\:\$dimensions has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\ReportData\\:\\:\\$values has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\ReportData\:\:\$values has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/ReportData.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:getDimensions\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:getDimensions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:getValues\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:getValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:setDimensions\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:setDimensions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:setDimensions\\(\\) has parameter \\$dimensions with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:setDimensions\(\) has parameter \$dimensions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:setValues\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:setValues\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:setValues\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\ReportRow\:\:setValues\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:\\$dimensions has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\ReportRow\:\:\$dimensions has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\ReportRow\\:\\:\\$values has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\ReportRow\:\:\$values has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/ReportRow.php
 
 		-
-			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Cannot access property \\$name on mixed\\.$#"
+			message: '#^Cannot access property \$name on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Cannot access property \\$value on mixed\\.$#"
+			message: '#^Cannot access property \$value on mixed\.$#'
+			identifier: property.nonObject
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Reportlet\\:\\:getConfig\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Reportlet\:\:getConfig\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Reportlet\\:\\:getImplementation\\(\\) should return Icinga\\\\Module\\\\Reporting\\\\Hook\\\\ReportHook but returns object\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Reportlet\:\:getImplementation\(\) should return Icinga\\Module\\Reporting\\Hook\\ReportHook but returns object\.$#'
+			identifier: return.type
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Reportlet\\:\\:\\$class \\(string\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Reportlet\:\:\$class \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Reportlet\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Reportlet\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Reportlet.php
 
 		-
-			message: "#^Cannot access property \\$parentNode on DOMElement\\|null\\.$#"
+			message: '#^Cannot access property \$parentNode on DOMElement\|null\.$#'
+			identifier: property.nonObject
 			count: 3
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Cannot call method removeChild\\(\\) on DOMNode\\|null\\.$#"
+			message: '#^Cannot call method removeChild\(\) on DOMNode\|null\.$#'
+			identifier: method.nonObject
 			count: 3
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Cannot call method setAttribute\\(\\) on DOMElement\\|null\\.$#"
+			message: '#^Cannot call method setAttribute\(\) on DOMElement\|null\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Reports\\\\SystemReport\\:\\:getHtml\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Reports\\SystemReport\:\:getHtml\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Parameter \\#1 \\$content of class ipl\\\\Html\\\\HtmlString constructor expects string, string\\|false given\\.$#"
+			message: '#^Parameter \#1 \$content of class ipl\\Html\\HtmlString constructor expects string, string\|false given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Reports/SystemReport.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\RetryConnection\\:\\:prepexec\\(\\) has parameter \\$values with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\RetryConnection\:\:prepexec\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/RetryConnection.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Schedule\\:\\:__construct\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Schedule\:\:__construct\(\) has parameter \$config with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Schedule\\:\\:getConfig\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Schedule\:\:getConfig\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Parameter \\#1 \\$json of static method Icinga\\\\Util\\\\Json\\:\\:decode\\(\\) expects string, mixed given\\.$#"
+			message: '#^Parameter \#1 \$json of static method Icinga\\Util\\Json\:\:decode\(\) expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Part \\$scheduleModel\\-\\>id \\(mixed\\) of encapsed string cannot be cast to string\\.$#"
+			message: '#^Part \$scheduleModel\-\>id \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Schedule\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Schedule\:\:\$config type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Schedule\\:\\:\\$id \\(int\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Schedule\:\:\$id \(int\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Schedule.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:contains\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:contains\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:contains\\(\\) has parameter \\$haystack with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:contains\(\) has parameter \$haystack with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:contains\\(\\) has parameter \\$needle with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:contains\(\) has parameter \$needle with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:putcsv\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:putcsv\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has parameter \\$delimiter with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:putcsv\(\) has parameter \$delimiter with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has parameter \\$enclosure with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:putcsv\(\) has parameter \$enclosure with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Str\\:\\:putcsv\\(\\) has parameter \\$escape with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Str\:\:putcsv\(\) has parameter \$escape with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Str.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:getTimerange\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Timeframe\:\:getTimerange\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$end \\(string\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Timeframe\:\:\$end \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$id \\(int\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Timeframe\:\:\$id \(int\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$name \\(string\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Timeframe\:\:\$name \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$start \\(string\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Timeframe\:\:\$start \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Timeframe\\:\\:\\$title \\(string\\) does not accept mixed\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Timeframe\:\:\$title \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
 			count: 1
 			path: library/Reporting/Timeframe.php
 
 		-
-			message: "#^Cannot call method getUsername\\(\\) on Icinga\\\\User\\|null\\.$#"
+			message: '#^Cannot call method getUsername\(\) on Icinga\\User\|null\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: library/Reporting/Web/Forms/ReportForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ReportForm\\:\\:listReports\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\ReportForm\:\:listReports\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/ReportForm.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:execute\\(\\)\\.$#"
+			message: '#^Call to an undefined method object\:\:execute\(\)\.$#'
+			identifier: method.notFound
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Cannot call method getUsername\\(\\) on Icinga\\\\User\\|null\\.$#"
+			message: '#^Cannot call method getUsername\(\) on Icinga\\User\|null\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\ScheduleForm\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:getPartUpdates\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\ScheduleForm\:\:getPartUpdates\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:listActions\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\ScheduleForm\:\:listActions\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\ScheduleForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\ScheduleForm\:\:onSuccess\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Parameter \\#1 \\$request of method ipl\\\\Web\\\\FormElement\\\\ScheduleElement\\:\\:prepareMultipartUpdate\\(\\) expects Psr\\\\Http\\\\Message\\\\RequestInterface, Psr\\\\Http\\\\Message\\\\ServerRequestInterface\\|null given\\.$#"
+			message: '#^Parameter \#1 \$request of method ipl\\Web\\FormElement\\ScheduleElement\:\:prepareMultipartUpdate\(\) expects Psr\\Http\\Message\\RequestInterface, Psr\\Http\\Message\\ServerRequestInterface\|null given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Web/Forms/ScheduleForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\SendForm\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/SendForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:listReports\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\SendForm\:\:listReports\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/SendForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\SendForm\:\:onSuccess\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/SendForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\SendForm\\:\\:setReport\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\SendForm\:\:setReport\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/SendForm.php
 
 		-
-			message: "#^Cannot call method getUsername\\(\\) on Icinga\\\\User\\|null\\.$#"
+			message: '#^Cannot call method getUsername\(\) on Icinga\\User\|null\.$#'
+			identifier: method.nonObject
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:addColumnSettings\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:addColumnSettings\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:addColumnSettings\\(\\) has parameter \\$label with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:addColumnSettings\(\) has parameter \$label with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:addColumnSettings\\(\\) has parameter \\$name with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:addColumnSettings\(\) has parameter \$name with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:fromTemplate\\(\\) has parameter \\$template with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:fromTemplate\(\) has parameter \$template with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:getTemplate\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:getTemplate\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:onSuccess\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TemplateForm\\:\\:\\$template has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Forms\\TemplateForm\:\:\$template has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Forms/TemplateForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TimeframeForm\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TimeframeForm\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TimeframeForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Forms\\\\TimeframeForm\\:\\:onSuccess\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Forms\\TimeframeForm\:\:onSuccess\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Forms/TimeframeForm.php
 
 		-
-			message: "#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#"
+			message: '#^Parameter \#2 \$datetime of static method DateTime\:\:createFromFormat\(\) expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 2
 			path: library/Reporting/Web/Forms/TimeframeForm.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CompatDropdown\\:\\:addLink\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CompatDropdown\:\:addLink\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CompatDropdown.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:getBackgroundImage\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:getBackgroundImage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:getLogo\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:getLogo\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:hasTitle\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:resolveMacros\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:resolveMacros\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:resolveMacros\(\) has parameter \$subject with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:resolveMacros\\(\\) has parameter \\$subject with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:setBackgroundImage\(\) has parameter \$backgroundImage with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setBackgroundImage\\(\\) has parameter \\$backgroundImage with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:setLogo\(\) has parameter \$logo with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setLogo\\(\\) has parameter \\$logo with no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:\$backgroundImage type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:\\$backgroundImage type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:\$logo type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:\\$logo type has no value type specified in iterable type array\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\CoverPage\:\:\$macros has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/CoverPage.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:\\$macros has no type specified\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/CoverPage.php
-
-		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:__construct\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:__construct\\(\\) has parameter \\$type with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:__construct\(\) has parameter \$type with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:createColumn\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:createColumn\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:createColumn\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:createColumn\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:createColumn\\(\\) has parameter \\$key with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:createColumn\(\) has parameter \$key with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:resolveMacros\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:resolveMacros\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:resolveMacros\\(\\) has parameter \\$subject with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:resolveMacros\(\) has parameter \$subject with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:resolveVariable\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:resolveVariable\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:resolveVariable\\(\\) has parameter \\$variable with no type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:resolveVariable\(\) has parameter \$variable with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:\\$data has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:\$data has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:\\$macros has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:\$macros has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:\\$tag has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:\$tag has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter\\:\\:\\$type has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter\:\:\$type has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/HeaderOrFooter.php
 
 		-
-			message: "#^Cannot access offset 'color' on mixed\\.$#"
+			message: '#^Cannot access offset ''color'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Cannot access offset 'cover_page_logo' on mixed\\.$#"
+			message: '#^Cannot access offset ''cover_page_logo'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Cannot access offset 'cover_page…' on mixed\\.$#"
+			message: '#^Cannot access offset ''title'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Cannot access offset 'title' on mixed\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:assemble\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:assemble\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:getDataUrl\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:getDataUrl\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:getDataUrl\(\) has parameter \$image with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:getDataUrl\\(\\) has parameter \\$image with no value type specified in iterable type array\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:resolveMacros\(\) has no return type specified\.$#'
+			identifier: missingType.return
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:resolveMacros\\(\\) has no return type specified\\.$#"
+			message: '#^Method Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:resolveMacros\(\) has parameter \$subject with no type specified\.$#'
+			identifier: missingType.parameter
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:resolveMacros\\(\\) has parameter \\$subject with no type specified\\.$#"
+			message: '#^Parameter \#1 \$json of function json_decode expects string, mixed given\.$#'
+			identifier: argument.type
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Parameter \\#1 \\$backgroundImage of method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setBackgroundImage\\(\\) expects array, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Parameter \\#1 \\$color of method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setColor\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Parameter \\#1 \\$logo of method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setLogo\\(\\) expects array, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Parameter \\#1 \\$title of method Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\CoverPage\\:\\:setTitle\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: library/Reporting/Web/Widget/Template.php
-
-		-
-			message: "#^Parameter \\#2 \\$data of class Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\HeaderOrFooter constructor expects array, mixed given\\.$#"
+			message: '#^Parameter \#2 \$data of class Icinga\\Module\\Reporting\\Web\\Widget\\HeaderOrFooter constructor expects array, mixed given\.$#'
+			identifier: argument.type
 			count: 2
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:\\$macros has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:\$macros has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
 
 		-
-			message: "#^Property Icinga\\\\Module\\\\Reporting\\\\Web\\\\Widget\\\\Template\\:\\:\\$preview has no type specified\\.$#"
+			message: '#^Property Icinga\\Module\\Reporting\\Web\\Widget\\Template\:\:\$preview has no type specified\.$#'
+			identifier: missingType.property
 			count: 1
 			path: library/Reporting/Web/Widget/Template.php
