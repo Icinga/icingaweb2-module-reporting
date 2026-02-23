@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: 2023 Icinga GmbH <https://icinga.com>
+-- SPDX-License-Identifier: GPL-3.0-or-later
+
 DROP PROCEDURE IF EXISTS migrate_schedule_config;
 DELIMITER //
 CREATE PROCEDURE migrate_schedule_config()

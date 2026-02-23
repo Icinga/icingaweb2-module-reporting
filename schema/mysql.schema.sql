@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: 2019 Icinga GmbH <https://icinga.com>
+-- SPDX-License-Identifier: GPL-3.0-or-later
+
 CREATE TABLE template (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
   author varchar(255) NOT NULL COLLATE utf8mb4_unicode_ci,

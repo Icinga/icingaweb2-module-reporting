@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: 2019 Icinga GmbH <https://icinga.com>
+-- SPDX-License-Identifier: GPL-3.0-or-later
+
 UPDATE timeframe SET start = 'first day of January this year midnight' WHERE name = 'Current Year';
 UPDATE timeframe SET start = 'first day of January last year midnight' WHERE name = 'Last Year';
 UPDATE timeframe SET ctime = UNIX_TIMESTAMP() * 1000, mtime = UNIX_TIMESTAMP() * 1000;
