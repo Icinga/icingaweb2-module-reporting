@@ -14,6 +14,7 @@ use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
 use Icinga\Module\Reporting\Schedule;
+use Icinga\Util\Environment;
 use ipl\Scheduler\Contract\Frequency;
 use ipl\Scheduler\Contract\Task;
 use ipl\Scheduler\Scheduler;
@@ -34,6 +35,10 @@ class ScheduleCommand extends Command
     {
         $scheduler = new Scheduler();
         $this->attachJobsLogging($scheduler);
+
+        // Reports may require more time and memory
+        Environment::raiseExecutionTime();
+        Environment::raiseMemoryLimit();
 
         /** @var Schedule[] $runningSchedules */
         $runningSchedules = [];

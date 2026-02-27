@@ -10,6 +10,7 @@ use Icinga\Module\Reporting\Cli\Command;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Report;
+use Icinga\Util\Environment;
 use InvalidArgumentException;
 use ipl\Stdlib\Filter;
 
@@ -57,6 +58,9 @@ class DownloadCommand extends Command
         if ($report === null) {
             throw new NotFoundError('Report not found');
         }
+
+        Environment::raiseExecutionTime();
+        Environment::raiseMemoryLimit();
 
         $report = Report::fromModel($report);
 
