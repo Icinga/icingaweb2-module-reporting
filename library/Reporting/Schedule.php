@@ -123,7 +123,10 @@ class Schedule implements Task
     public function getChecksum(): string
     {
         return md5(
-            $this->getName() . $this->getReport()->getName() . $this->getAction() . Json::encode($this->getConfig()),
+            $this->getName()
+            . $this->getAction()
+            . Json::encode($this->getConfig())
+            . $this->getReport()->getChecksum(),
             true
         );
     }

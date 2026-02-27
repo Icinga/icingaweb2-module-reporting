@@ -9,8 +9,8 @@ use Exception;
 use Icinga\Module\Icingadb\ProvidedHook\Reporting\ServiceSlaReport;
 use Icinga\Module\Icingadb\ProvidedHook\Reporting\SlaReport;
 use Icinga\Module\Pdfexport\PrintableHtmlDocument;
-use Icinga\Module\Reporting\Model;
 use Icinga\Module\Reporting\Web\Widget\Template;
+use Icinga\Util\Json;
 use ipl\Html\HtmlDocument;
 
 use function ipl\I18n\t;
@@ -38,6 +38,9 @@ class Report
     /** @var Template */
     protected $template;
 
+    /** @var ?string */
+    protected ?string $templateName = null;
+
     /**
      * Create report from the given model
      *
@@ -57,6 +60,7 @@ class Report
 
         $template = $reportModel->template->first();
         if ($template !== null) {
+            $report->templateName = $template->name;
             $report->template = Template::fromModel($template);
         }
 
@@ -119,6 +123,27 @@ class Report
     public function getReportlets()
     {
         return $this->reportlets;
+    }
+
+    /**
+     * Get a checksum for this report
+     *
+     * @return string
+     */
+    public function getChecksum(): string
+    {
+        return md5(
+            $this->getName()
+            . $this->getTimeframe()->getName()
+            . $this->templateName
+            . Json::encode(array_map(
+                function (Reportlet $reportlet) {
+                    return $reportlet->getConfig();
+                },
+                $this->getReportlets()
+            )),
+            true
+        );
     }
 
     /**
