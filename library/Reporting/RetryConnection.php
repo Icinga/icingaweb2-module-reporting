@@ -5,10 +5,11 @@
 namespace Icinga\Module\Reporting;
 
 use ipl\Sql\Connection;
+use PDOStatement;
 
 class RetryConnection extends Connection
 {
-    public function prepexec($stmt, $values = null)
+    public function prepexec($stmt, $values = null): false|PDOStatement
     {
         try {
             $sth = parent::prepexec($stmt, $values);
