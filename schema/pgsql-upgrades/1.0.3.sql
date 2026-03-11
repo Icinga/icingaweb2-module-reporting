@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: 2024 Icinga GmbH <https://icinga.com>
+-- SPDX-License-Identifier: GPL-3.0-or-later
+
 UPDATE timeframe SET "end" = 'now' WHERE name = 'Current Week';
 
 INSERT INTO reporting_schema (version, timestamp, success, reason)
