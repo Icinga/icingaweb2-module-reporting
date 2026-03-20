@@ -5,6 +5,7 @@
 
 namespace Icinga\Module\Reporting;
 
+use Exception;
 use ipl\Sql\Connection;
 use PDOStatement;
 
@@ -14,7 +15,7 @@ class RetryConnection extends Connection
     {
         try {
             $sth = parent::prepexec($stmt, $values);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $lostConnection = Str::contains($e->getMessage(), [
                 'server has gone away',
                 'no connection to the server',
@@ -46,7 +47,7 @@ class RetryConnection extends Connection
 
             try {
                 $this->connect();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $noConnection = Str::contains($e->getMessage(), [
                     'No such file or directory',
                     'Connection refused'
@@ -56,7 +57,7 @@ class RetryConnection extends Connection
                     throw $e;
                 }
 
-                \sleep(10);
+                sleep(10);
 
                 $this->connect();
             }
