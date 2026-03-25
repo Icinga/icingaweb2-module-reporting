@@ -13,11 +13,9 @@ path to the correct installation path.
 
 ## Upgrading to Version 1.1.0
 
-Icinga Reporting version 1.1.0 raises the minimum required versions of
-`icinga-php-library` to `>=1.0.0` and `icinga-php-thirdparty` to `>=1.0.0`.
-This is due to the removal of `clue/block-react` from `icinga-php-thirdparty`.
-
-Please make sure to upgrade these libraries before upgrading this module.
+Icinga Reporting 1.1.0 now requires `icinga-php-library` version 1.0.0 or later
+and `icinga-php-thirdparty` version 1.0.0 or later to support PHP 8.5. Make
+sure to upgrade these libraries along with the module upgrade.
 
 ## Upgrading to Version 1.0.3
 
