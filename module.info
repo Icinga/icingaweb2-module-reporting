@@ -2,5 +2,5 @@ Module: Reporting
 Version: 1.1.0
 Requires:
   Libraries: icinga-php-library (>=1.0.0), icinga-php-thirdparty (>=1.0.0)
-  Modules: pdfexport (>=0.11.0)
+  Modules: pdfexport (>=0.13.0)
 Description: Reporting
