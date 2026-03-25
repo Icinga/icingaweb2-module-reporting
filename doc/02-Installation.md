@@ -10,7 +10,7 @@ Make sure you use `reporting` as the module name. The following requirements mus
 * MySQL or PostgreSQL PDO PHP libraries
 * The following PHP modules must be installed: `mbstring`
 * [Icinga Web](https://github.com/Icinga/icingaweb2) (≥2.9)
-* [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (≥0.13.0)
+* [Icinga PHP Library (ipl)](https://github.com/Icinga/icinga-php-library) (≥0.19.0)
 * [Icinga PHP Thirdparty](https://github.com/Icinga/icinga-php-thirdparty) (≥0.12.0)
 
 ## Setting up the Database
