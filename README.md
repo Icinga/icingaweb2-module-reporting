@@ -1,9 +1,5 @@
 # Icinga Reporting
 
-[![PHP Support](https://img.shields.io/badge/php-%3E%3D%207.2-777BB4?logo=PHP)](https://php.net/)
-[![PHP Tests](https://github.com/Icinga/icingaweb2-module-reporting/actions/workflows/php.yml/badge.svg)](https://github.com/Icinga/icingaweb2-module-reporting/actions/workflows/php.yml)
-[![Github Tag](https://img.shields.io/github/tag/Icinga/icingaweb2-module-reporting.svg)](https://github.com/Icinga/icingaweb2-module-reporting/releases/latest)
-
 ![Icinga Logo](https://icinga.com/wp-content/uploads/2014/06/icinga_logo.png)
 
 Icinga Reporting is the central component for reporting related functionality in the monitoring web frontend and
