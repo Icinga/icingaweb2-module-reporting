@@ -11,6 +11,12 @@ path to the correct installation path.
 
 <!-- {% endif %} -->
 
+## Upgrading to Version 1.1.0
+
+Icinga Reporting 1.1.0 now requires `icinga-php-library ≥ 1.0.0` and
+`icinga-php-thirdparty ≥ 1.0.0`. This update also adds support for PHP 8.5.
+Make sure to upgrade these libraries along with the module upgrade.
+
 ## Upgrading to Version 1.0.3
 
 Icinga Reporting version 1.0.3 requires a schema update for the database.
