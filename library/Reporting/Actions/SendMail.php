@@ -49,17 +49,9 @@ class SendMail extends ActionHook
 
         switch ($config['type']) {
             case 'pdf':
-                $exporter = Pdfexport::first();
-                try {
-                    $pdf = $exporter->htmlToPdf($report->toPdf());
-                    $mail->attachPdf($pdf, $name);
-                    $mail->send(null, $recipients);
-                } catch (Throwable $e) {
-                    Logger::error($e);
-                    Logger::debug($e->getTraceAsString());
-                }
+                $mail->attachPdf(Pdfexport::first()->htmlToPdf($report->toPdf()), $name);
 
-                return;
+                break;
             case 'csv':
                 $mail->attachCsv($report->toCsv(), $name);
 
