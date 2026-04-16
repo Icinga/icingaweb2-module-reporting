@@ -335,15 +335,17 @@ class ReportController extends Controller
             );
         }
 
-        $actions
-            ->add($download)
-            ->addHtml(
-                (new ActionLink(
-                    $this->translate('Send'),
-                    Url::fromPath('reporting/report/send', ['id' => $reportId]),
-                    'forward'
-                ))->openInModal()
-            );
+        if ($download->hasLinks()) {
+            $actions
+                ->add($download)
+                ->addHtml(
+                    (new ActionLink(
+                        $this->translate('Send'),
+                        Url::fromPath('reporting/report/send', ['id' => $reportId]),
+                        'forward'
+                    ))->openInModal()
+                );
+        }
 
         return $actions;
     }
