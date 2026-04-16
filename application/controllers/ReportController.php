@@ -7,6 +7,7 @@ namespace Icinga\Module\Reporting\Controllers;
 
 use Exception;
 use Icinga\Application\Hook;
+use Icinga\Application\Modules\Module;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
@@ -279,13 +280,17 @@ class ReportController extends Controller
     {
         $reportId = $this->report->getId();
 
-        $download = (new CompatDropdown('Download'))
-            ->addLink(
+        $download = new CompatDropdown('Download');
+
+        // TODO: Check against Hook::has once we have removed the dependency on the pdfexport module
+        if (Module::exists('pdfexport')) {
+            $download->addLink(
                 'PDF',
                 Url::fromPath('reporting/report/download?type=pdf', ['id' => $reportId]),
                 null,
                 ['target' => '_blank']
             );
+        }
 
         if ($this->report->providesData()) {
             $download->addLink(
