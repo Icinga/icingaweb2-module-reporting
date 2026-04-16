@@ -7,6 +7,7 @@ namespace Icinga\Module\Reporting\Controllers;
 
 use Exception;
 use Icinga\Application\Hook;
+use Icinga\Application\Hook\PdfexportHook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Database;
 use Icinga\Module\Reporting\Model;
@@ -244,9 +245,11 @@ class ReportController extends Controller
 
         switch ($type) {
             case 'pdf':
-                /** @var Hook\PdfexportHook $exports */
-                $exports = Pdfexport::first();
-                $exports->streamPdfFromHtml($this->report->toPdf(), $name);
+                // TODO: Remove this once the dependency on the Pdfexport module is removed
+                $exporter = method_exists(PdfexportHook::class, 'first')
+                    ? PdfexportHook::first()
+                    : Pdfexport::first();
+                $exporter->streamPdfFromHtml($this->report->toPdf(), $name);
                 exit;
             case 'csv':
                 $response = $this->getResponse();
