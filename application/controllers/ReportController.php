@@ -279,13 +279,16 @@ class ReportController extends Controller
     {
         $reportId = $this->report->getId();
 
-        $download = (new CompatDropdown('Download'))
-            ->addLink(
+        $download = new CompatDropdown('Download');
+
+        if (Hook::has('Pdfexport')) {
+            $download->addLink(
                 'PDF',
                 Url::fromPath('reporting/report/download?type=pdf', ['id' => $reportId]),
                 null,
                 ['target' => '_blank']
             );
+        }
 
         if ($this->report->providesData()) {
             $download->addLink(
