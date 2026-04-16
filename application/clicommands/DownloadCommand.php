@@ -5,6 +5,7 @@
 
 namespace Icinga\Module\Reporting\Clicommands;
 
+use Icinga\Application\Hook\PdfexportHook;
 use Icinga\Exception\NotFoundError;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Cli\Command;
@@ -70,7 +71,11 @@ class DownloadCommand extends Command
         $format = strtolower($format);
         switch ($format) {
             case 'pdf':
-                $content = Pdfexport::first()->htmlToPdf($report->toPdf());
+                // TODO: Remove this once the dependency on the Pdfexport module is removed
+                $exporter = method_exists(PdfexportHook::class, 'first')
+                    ? PdfexportHook::first()
+                    : Pdfexport::first();
+                $content = $exporter->htmlToPdf($report->toPdf());
                 break;
             case 'csv':
                 $content = $report->toCsv();

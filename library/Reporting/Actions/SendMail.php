@@ -6,7 +6,7 @@
 namespace Icinga\Module\Reporting\Actions;
 
 use Icinga\Application\Config;
-use Icinga\Application\Logger;
+use Icinga\Application\Hook\PdfexportHook;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
@@ -15,7 +15,6 @@ use ipl\Html\Form;
 use ipl\Stdlib\Str;
 use ipl\Validator\CallbackValidator;
 use ipl\Validator\EmailAddressValidator;
-use Throwable;
 
 class SendMail extends ActionHook
 {
@@ -49,7 +48,11 @@ class SendMail extends ActionHook
 
         switch ($config['type']) {
             case 'pdf':
-                $mail->attachPdf(Pdfexport::first()->htmlToPdf($report->toPdf()), $name);
+                // TODO: Remove this once the dependency on the Pdfexport module is removed
+                $exporter = method_exists(PdfexportHook::class, 'first')
+                    ? PdfexportHook::first()
+                    : Pdfexport::first();
+                $mail->attachPdf($exporter->htmlToPdf($report->toPdf()), $name);
 
                 break;
             case 'csv':
