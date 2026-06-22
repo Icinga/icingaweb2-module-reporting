@@ -7,6 +7,7 @@ namespace Icinga\Module\Reporting\Actions;
 
 use Icinga\Application\Config;
 use Icinga\Application\Logger;
+use Icinga\Application\Modules\Module;
 use Icinga\Module\Pdfexport\ProvidedHook\Pdfexport;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Module\Reporting\Mail;
@@ -79,7 +80,12 @@ class SendMail extends ActionHook
 
     public function initConfigForm(Form $form, Report $report)
     {
-        $types = ['pdf' => 'PDF'];
+        $types = [];
+
+        // TODO: Check against Hook::has once we have removed the dependency on the pdfexport module
+        if (Module::exists('pdfexport')) {
+            $types['pdf'] = 'PDF';
+        }
 
         if ($report->providesData()) {
             $types['csv'] = 'CSV';
