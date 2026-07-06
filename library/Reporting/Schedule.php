@@ -5,6 +5,7 @@
 
 namespace Icinga\Module\Reporting;
 
+use DateTimeInterface;
 use Exception;
 use Icinga\Module\Reporting\Hook\ActionHook;
 use Icinga\Util\Json;
@@ -130,6 +131,12 @@ class Schedule implements Task
             . $this->getReport()->getChecksum(),
             true
         );
+    }
+
+    public function getLastRun(): DateTimeInterface|false|null
+    {
+        // Don't provide a last run
+        return false;
     }
 
     public function run(): PromiseInterface
