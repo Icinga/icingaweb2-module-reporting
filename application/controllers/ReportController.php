@@ -17,6 +17,7 @@ use Icinga\Module\Reporting\Web\Forms\ScheduleForm;
 use Icinga\Module\Reporting\Web\Forms\SendForm;
 use Icinga\Module\Reporting\Web\Widget\CompatDropdown;
 use Icinga\Web\Notification;
+use ipl\Html\Attributes;
 use ipl\Html\Error;
 use ipl\Html\HtmlElement;
 use ipl\Stdlib\Filter;
@@ -57,12 +58,13 @@ class ReportController extends Controller
         if ($this->isXhr()) {
             /** @var string $contentId */
             $contentId = $this->content->getAttributes()->get('id')->getValue();
+            $contentId .= '-' . bin2hex(random_bytes(4));
             $this->sendExtraUpdates([
                 $contentId => Url::fromPath('reporting/report/content', ['id' => $this->report->getId()])
             ]);
 
             // Will be replaced once the report content is rendered
-            $this->addContent(new HtmlElement('div'));
+            $this->addContent(new HtmlElement('div', Attributes::create(['id' => $contentId])));
         } else {
             Environment::raiseExecutionTime();
             Environment::raiseMemoryLimit();
